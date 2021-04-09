@@ -1,0 +1,20 @@
+{
+  "name": "khmc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-queue": "^0.0.12",
+    "fabric-ca-client": "^1.4.17",
+    "fabric-client": "^1.4.17",
+    "fabric-shim": "^2.2.1",
+    "protobufjs": "^6.10.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

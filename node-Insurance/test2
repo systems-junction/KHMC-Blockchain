@@ -1,0 +1,108 @@
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+      req.body.uemail, 
+      req.body.contact, 
+      req.body.ufirstName, 
+      req.body.ulastName, 
+      req.body.userName, 
+      req.body.ugender, 
+      req.body.udob, 
+      req.body.isActive, 
+      req.body.maritalStatus, 
+      req.body.uaddress, 
+      req.body.communicationLanguage, 
+      req.body.profilePicture, 
+      req.body.geneticDisease, 
+      req.body.knownAllergies, 
+      req.body.currentMedication, 
+      req.body.surgeries, 
+      req.body.chronicIllness, 
+      req.body.pbloodGroup, 
+      req.body.pregnancy
+
+
+      {
+      "profileNo":"0001",
+      "SIN":"4442r",
+      "title":"tfbvce",
+      "firstName":"vetrfre",
+      "lastName":"vedce" ,
+      "fullName" :"vrced",
+      "gender":"vrcd",
+      "nationality":"tcec",
+      "age":"btrbt" ,
+      "weight":"btfvdc",
+      "bloodGroup":"tbrfv", 
+      "dob" :"bgvrf",
+      "drugAllergy":"fsd",
+      "phoneNumber" :"bgrfvc",
+      "mobileNumber" :"bgfvdc",
+      "email" :"gfrerw",
+      "country":"erefdwe", 
+      "city" :"wedcrgfe",
+      "address":"uytrr", 
+      "otherDetails":"qwert", 
+      "paymentMethod":"dsvsdfdw", 
+      "depositAmount":"qwsdcr", 
+      "amountReceived":"klemwsdwmd", 
+      "bankName" :"qwrtyyd",
+      "depositorName":"velsdoewdl", 
+      "depositSlip":"edlsdmelf", 
+      "insuranceNo":"fwdedw", 
+      "insuranceVendor":"ewdscx", 
+      "coverageDetails":"fdwedxqw", 
+      "coverageTerms":"fwdsqw", 
+      "payment":"hgbvrfc", 
+      "registeredIn":"rfecdx", 
+      "receivedBy" :"tfrds",
+      "emergencyName":"fcx", 
+      "emergencyContactNo":"ewsdx", 
+      "emergencyRelation":"wewcth", 
+      "coveredFamilyMembers":"trfdfdwe", 
+      "otherCoverageDetails":"vfdvcsd", 
+      "otherCity":"vfdvfsdvf", 
+      "QR":"fdvcsdv", 
+      "createdAt":"vfdvcsfdv", 
+      "updatedAt":"gfdvcdfv", 
+      "uemail":"111111", 
+          "ucontact":"dfgg", 
+          "ufirstName":"11111", 
+          "ulastName":"11111", 
+          "userName":"2dfgd", 
+          "ugender":"22222", 
+          "udob":"333333", 
+          "isActive":"www", 
+          "maritalStatus":"eeeee", 
+          "uaddress":"eeeeeee", 
+          "communicationLanguage":"fdvwseee", 
+          "profilePicture":"fvdvf", 
+          "geneticDisease":"adc", 
+          "knownAllergies":"DAVCD", 
+          "currentMedication":"dvcsd", 
+          "surgeries":"dcxdasc", 
+          "chronicIllness":"aaaaaa", 
+          "pbloodGroup":"fvefdv", 
+          "pregnancy":"vefdvced"
+      
+
+}

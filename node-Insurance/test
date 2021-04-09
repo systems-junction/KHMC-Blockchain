@@ -1,0 +1,995 @@
+const mongoose = require('mongoose');
+
+const IPRSchema = new mongoose.Schema({
+    requestNo: {
+        type: String,
+    },
+    patientId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'patient',
+    },
+    generatedBy: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'staff',
+    },
+    consultationNote: [{
+        consultationNo: {
+            type: String,
+        },
+        date: {
+            type: Date,
+            default: Date.now,
+        },
+        description: {
+            type: String,
+        },
+        consultationNotes: {
+            type: String,
+        },
+        doctorNotes: {
+            type: String,
+        },
+        audioNotes: {
+            type: String,
+        },
+        status: {
+            type: String,
+        },
+        speciality: {
+            type: String,
+        },
+        specialist: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'staff',
+        },
+        requester: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'staff',
+        },
+        completedTime:{
+            type:Date
+        }
+    }, ],
+    residentNotes: [{
+        residentNoteNo: {
+            type: String,
+        },
+        date: {
+            type: Date,
+            default: Date.now,
+        },
+        description: {
+            type: String,
+        },
+        doctor: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'staff',
+        },
+        note: {
+            type: String,
+        },
+        status: {
+            type: String,
+        },
+        audioNotes: {
+            type: String,
+        },
+        section: {
+            type: String,
+        },
+        code: [{
+            type: String,
+        }, ],
+    }, ],
+    pharmacyRequest: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'ReplenishmentRequestBU',
+        //   PRrequestNo:{
+        //     type:String
+        // },
+        //   date: {
+        //     type: Date,
+        //     default: Date.now,
+        //   },
+        //   status: {
+        //     type: String,
+        //   },
+        //   requester: {
+        //     type: mongoose.Schema.ObjectId,
+        //     ref: 'staff',
+        //   },
+        //   medicine: [
+        //     {
+        //       itemId: {
+        //         type: mongoose.Schema.ObjectId,
+        //         ref: 'Item',
+        //       },
+        //       priority: {
+        //         type: String,
+        //       },
+        //       schedule: {
+        //         type: String,
+        //       },
+        //       dosage: {
+        //         type: Number,
+        //       },
+        //       frequency: {
+        //         type: Number,
+        //       },
+        //       duration: {
+        //         type: Number,
+        //       },
+        //       requestedQty: {
+        //         type: Number,
+        //       },
+        //       medicineName: {
+        //         type: String,
+        //       },
+        //     },
+        //   ],
+    }, ],
+    labRequest: [{
+        LRrequestNo: {
+            type: String,
+        },
+        serviceId: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'LaboratoryService',
+        },
+        price:{
+            type:Number
+        },
+        requesterName: {
+            type: String,
+        },
+        serviceCode: {
+            type: String,
+        },
+        serviceName: {
+            type: String,
+        },
+        status: {
+            type: String,
+        },
+        requester: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'staff',
+        },
+        results: {
+            type: String,
+        },
+        sampleId: {
+            type: String,
+        },
+        comments: {
+            type: String,
+        },
+        serviceType: {
+            type: String,
+        },
+        activeDate:{
+            type:Date
+        },
+        completedDate:{
+            type:Date
+        },
+        date: {
+            type: Date,
+            default: Date.now,
+        },
+    }, ],
+    radiologyRequest: [{
+        RRrequestNo: {
+            type: String,
+        },
+        serviceId: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'RadiologyService',
+        },
+        price:{
+            type:Number
+        },
+        serviceCode: {
+            type: String,
+        },
+        status: {
+            type: String,
+        },
+        requesterName: {
+            type: String,
+        },
+        serviceName: {
+            type: String,
+        },
+        requester: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'staff',
+        },
+        results: {
+            type: String,
+        },
+        comments: {
+            type: String,
+        },
+        serviceType: {
+            type: String,
+        },
+        consultationNote:{
+            type:String
+        },
+        activeDate:{
+            type:Date
+        },
+        completedDate:{
+            type:Date
+        },
+        date: {
+            type: Date,
+            default: Date.now,
+        },
+    }, ],
+    nurseService: [{
+        NSrequestNo: {
+            type: String,
+        },
+        serviceId: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'NurseService',
+        },
+        price:{
+            type:Number
+        },
+        requesterName: {
+            type: String,
+        },
+        serviceCode: {
+            type: String,
+        },
+        status: {
+            type: String,
+        },
+        serviceName: {
+            type: String,
+        },
+        comments: {
+            type: String,
+        },
+        requester: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'staff',
+        },
+        date: {
+            type: Date,
+            default: Date.now,
+        },
+    }, ],
+    dischargeRequest: {
+        dischargeSummary: {
+            dischargeNotes: {
+                type: String,
+            },
+            otherNotes: {
+                type: String,
+            },
+        },
+        dischargeMedication: {
+            date: {
+                type: Date,
+            },
+            status: {
+                type: String,
+            },
+            requester: {
+                type: mongoose.Schema.ObjectId,
+                ref: 'staff',
+            },
+            medicine: [{
+                itemId: {
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'Item',
+                },
+                priority: {
+                    type: String,
+                },
+                schedule: {
+                    type: String,
+                },
+                dosage: {
+                    type: Number,
+                },
+                frequency: {
+                    type: Number,
+                },
+                duration: {
+                    type: Number,
+                },
+                requestedQty: {
+                    type: Number,
+                },
+                medicineName: {
+                    type: String,
+                },
+                unitPrice: {
+                    type: Number,
+                },
+                totalPrice: {
+                    type: Number,
+                },
+                itemType: {
+                    type:String
+                },
+                make_model:{
+                    type:String
+                },
+                size:{
+                    type:String
+                },
+            }, ],
+        },
+        status: {
+            type: String,
+            default: 'pending',
+        },
+        inProcessDate:{type:Date},
+        completionDate:{type:Date},
+    },
+    inPatientRequest: {},
+    status: {
+        type: String,
+    },
+    triageAssessment: [{
+        status:{type:String,
+        default:"pending"},
+        reason:{type:String},
+        triageRequestNo: {
+            type: String
+        },
+        heartRate: {
+            type: String
+        },
+        bloodPressureSys: {
+            type: String
+        },
+        bloodPressureDia: {
+            type: String
+        },
+        respiratoryRate: {
+            type: String
+        },
+        temperature: {
+            type: String
+        },
+        FSBS: {
+            type: String
+        },
+        painScale: {
+            type: String
+        },
+        pulseOX: {
+            type: String
+        },
+        triageLevel: [{
+                type: String,
+            }],
+        generalAppearance:[{
+            type: String,
+        }],
+        headNeck: [{
+            type: String,
+        }],
+        respiratory: [{
+            type: String,
+        }],
+        cardiac: [{
+            type: String,
+        }],
+        abdomen: [{
+            type: String,
+        }],
+        neurological: [{
+            type: String,
+        }],
+        requester: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'staff',
+        },
+        date: {
+            type: Date,
+            default: Date.now,
+        },
+    }, ],
+    followUp: [{
+        requester: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'staff',
+        },
+        approvalNumber: {
+            type: String,
+        },
+        approvalPerson: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'staff',
+        },
+        file: {
+            type: String,
+        },
+        description: {
+            type: String,
+        },
+        notes: {
+            type: String,
+        },
+        status: {
+            type: String,
+        },
+        doctorName: {
+            type: String,
+        },
+        doctor: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'staff',
+        },
+        date: {
+            type: Date,
+            default: Date.now,
+        },
+    }, ],
+    requestType: {
+        type: String,
+        default: 'IPR',
+    },
+    functionalUnit: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'functionalUnit',
+    },
+    verified:{
+        type:Boolean
+    },
+    insurerId:{
+        type:mongoose.Schema.ObjectId,
+        ref:'insuranceVendors'
+    },
+    paymentMethod:{
+        type:String
+    },
+    claimed:{
+        type:Boolean
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now,
+    },
+});
+
+module.exports = mongoose.model('IPR', IPRSchema);
+
+
+
+
+
+
+
+
+
+
+
+{
+      "profileNo":"0001",
+      "SIN":"4442r",
+      "title":"tfbvce",
+      "firstName":"vetrfre",
+      "lastName":"vedce" ,
+      "fullName" :"vrced",
+      "gender":"vrcd",
+      "nationality":"tcec",
+      "age":"btrbt" ,
+      "weight":"btfvdc",
+      "bloodGroup":"tbrfv", 
+      "dob" :"bgvrf",
+      "drugAllergy":"fsd",
+      "phoneNumber" :"bgrfvc",
+      "mobileNumber" :"bgfvdc",
+      "email" :"gfrerw",
+      "country":"erefdwe", 
+      "city" :"wedcrgfe",
+      "address":"uytrr", 
+      "otherDetails":"qwert", 
+      "paymentMethod":"dsvsdfdw", 
+      "depositAmount":"qwsdcr", 
+      "amountReceived":"klemwsdwmd", 
+      "bankName" :"qwrtyyd",
+      "depositorName":"velsdoewdl", 
+      "depositSlip":"edlsdmelf", 
+      "insuranceNo":"fwdedw", 
+      "insuranceVendor":"ewdscx", 
+      "coverageDetails":"fdwedxqw", 
+      "coverageTerms":"fwdsqw", 
+      "payment":"hgbvrfc", 
+      "registeredIn":"rfecdx", 
+      "receivedBy" :"tfrds",
+      "emergencyName":"fcx", 
+      "emergencyContactNo":"ewsdx", 
+      "emergencyRelation":"wewcth", 
+      "coveredFamilyMembers":"trfdfdwe", 
+      "otherCoverageDetails":"vfdvcsd", 
+      "otherCity":"vfdvfsdvf", 
+      "QR":"fdvcsdv", 
+      "createdAt":"vfdvcsfdv", 
+      "updatedAt":"gfdvcdfv", 
+      "userProfile":{
+          "email":"111111", 
+          "contact":"dfgg", 
+          "firstName":"11111", 
+          "lastName":"11111", 
+          "userName":"2dfgd", 
+          "gender":"22222", 
+          "dob":"333333", 
+          "isActive":"www", 
+          "maritalStatus":"eeeee", 
+          "address":"eeeeeee", 
+          "communicationLanguage":"fdvwseee", 
+          "profilePicture":"fvdvf", 
+          "geneticDisease":"adc"
+      }, 
+      "patientMedicalProfile":{
+          "knownAllergies":"DAVCD", 
+          "currentMedication":"dvcsd", 
+          "surgeries":"dcxdasc", 
+          "chronicIllness":"aaaaaa", 
+          "bloodGroup":"fvefdv", 
+          "pregnancy":"vefdvced"
+      }
+
+}
+
+   [
+    {
+        "TxId": "2f0648716af7e0f6723729bc5e073d1502f6d75cfaa974e21b54c9f709d0f75c",
+        "Value": {
+            "Type": "Patient",
+            "profileNo": "01",
+            "SIN": "4442r",
+            "title": "tfbvce",
+            "firstName": "vetrfre",
+            "lastName": "vedce",
+            "fullName": "vrced",
+            "gender": "vrcd",
+            "nationality": "tcec",
+            "age": "btrbt",
+            "height": "ascdasx",
+            "weight": "btfvdc",
+            "bloodGroup": "tbrfv",
+            "dob": "bgvrf",
+            "drugAllergy": [
+                "qas",
+                "fsd"
+            ],
+            "phoneNumber": "bgrfvc",
+            "mobileNumber": "bgfvdc",
+            "email": "gfrerw",
+            "country": "erefdwe",
+            "city": "wedcrgfe",
+            "address": "uytrr",
+            "otherDetails": "qwert",
+            "paymentMethod": "dsvsdfdw",
+            "depositAmount": "qwsdcr",
+            "amountReceived": "klemwsdwmd",
+            "bankName": "qwrtyyd",
+            "depositorName": "velsdoewdl",
+            "depositSlip": "edlsdmelf",
+            "insuranceNo": "fwdedw",
+            "insuranceVendor": "ewdscx",
+            "coverageDetails": "fdwedxqw",
+            "coverageTerms": "fwdsqw",
+            "payment": "hgbvrfc",
+            "registeredIn": "rfecdx",
+            "receivedBy": "tfrds",
+            "emergencyName": "fcx",
+            "emergencyContactNo": "ewsdx",
+            "emergencyRelation": "wewcth",
+            "coveredFamilyMembers": "trfdfdwe",
+            "otherCoverageDetails": "vfdvcsd",
+            "otherCity": "vfdvfsdvf",
+            "QR": "fdvcsdv",
+            "createdAt": "vfdvcsfdv",
+            "updatedAt": "gfdvcdfv",
+            "UserProfile": {
+                "Type": "UserProfile",
+                "email": "111111",
+                "contact": "dfgg",
+                "firstName": "11111",
+                "lastName": "11111",
+                "userName": "2dfgd",
+                "gender": "22222",
+                "dob": "333333",
+                "isActive": "www",
+                "maritalStatus": "eeeee",
+                "address": "eeeeeee",
+                "communicationLanguage": "fdvwseee",
+                "profilePicture": "fvdvf",
+                "geneticDisease": [
+                    "jhgf",
+                    "adc"
+                ]
+            },
+            "PatientMedicalProfile": {
+                "Type": "PatientMedicalProfile",
+                "knownAllergies": [
+                    "dasd",
+                    "DAVCD"
+                ],
+                "currentMedication": [
+                    "dvcsd"
+                ],
+                "surgeries": [
+                    "dasd",
+                    "dcxdasc"
+                ],
+                "chronicIllness": [
+                    "dasd",
+                    "aaaaaa"
+                ],
+                "bloodGroup": "fvefdv",
+                "pregnancy": "vefdvced"
+            }
+        },
+        "Timestamp": "2021-03-30 15:52:18.328 +0000 UTC",
+        "IsDelete": "false"
+    },
+    {
+        "TxId": "5832497f4dab9067c83c549df44fef91fecfc51d32299b13c5c94bcc6a7b8b9e",
+        "Value": {
+            "Type": "Patient",
+            "profileNo": "0001",
+            "SIN": "4442r",
+            "title": "tfbvce",
+            "firstName": "vetrfre",
+            "lastName": "vedce",
+            "fullName": "vrced",
+            "gender": "vrcd",
+            "nationality": "tcec",
+            "age": "btrbt",
+            "height": "ascdasx",
+            "weight": "btfvdc",
+            "bloodGroup": "tbrfv",
+            "dob": "bgvrf",
+            "drugAllergy": [
+                "fsd"
+            ],
+            "phoneNumber": "bgrfvc",
+            "mobileNumber": "bgfvdc",
+            "email": "gfrerw",
+            "country": "erefdwe",
+            "city": "wedcrgfe",
+            "address": "uytrr",
+            "otherDetails": "qwert",
+            "paymentMethod": "dsvsdfdw",
+            "depositAmount": "qwsdcr",
+            "amountReceived": "klemwsdwmd",
+            "bankName": "qwrtyyd",
+            "depositorName": "velsdoewdl",
+            "depositSlip": "edlsdmelf",
+            "insuranceNo": "fwdedw",
+            "insuranceVendor": "ewdscx",
+            "coverageDetails": "fdwedxqw",
+            "coverageTerms": "fwdsqw",
+            "payment": "hgbvrfc",
+            "registeredIn": "rfecdx",
+            "receivedBy": "tfrds",
+            "emergencyName": "fcx",
+            "emergencyContactNo": "ewsdx",
+            "emergencyRelation": "wewcth",
+            "coveredFamilyMembers": "trfdfdwe",
+            "otherCoverageDetails": "vfdvcsd",
+            "otherCity": "vfdvfsdvf",
+            "QR": "fdvcsdv",
+            "createdAt": "vfdvcsfdv",
+            "updatedAt": "gfdvcdfv",
+            "UserProfile": {
+                "Type": "UserProfile",
+                "email": "111111",
+                "contact": "dfgg",
+                "firstName": "11111",
+                "lastName": "11111",
+                "userName": "2dfgd",
+                "gender": "22222",
+                "dob": "333333",
+                "isActive": "www",
+                "maritalStatus": "eeeee",
+                "address": "eeeeeee",
+                "communicationLanguage": "fdvwseee",
+                "profilePicture": "fvdvf",
+                "geneticDisease": [
+                    "adc"
+                ]
+            },
+            "PatientMedicalProfile": {
+                "Type": "PatientMedicalProfile",
+                "knownAllergies": [
+                    "DAVCD"
+                ],
+                "currentMedication": [
+                    "dvcsd"
+                ],
+                "surgeries": [
+                    "dcxdasc"
+                ],
+                "chronicIllness": [
+                    "aaaaaa"
+                ],
+                "bloodGroup": "fvefdv",
+                "pregnancy": "vefdvced"
+            }
+        },
+        "Timestamp": "2021-03-30 15:51:35.404 +0000 UTC",
+        "IsDelete": "false"
+    },
+    {
+        "TxId": "170de5b83f0ef26a24f4c99418fb749ea826b58df5a2ca2f22ad8ad9ccc64a68",
+        "Value": {
+            "Type": "Patient",
+            "profileNo": "03",
+            "SIN": "1",
+            "title": "11111",
+            "firstName": "222",
+            "lastName": "Tom",
+            "fullName": "12",
+            "gender": "pending",
+            "nationality": "pending",
+            "age": "qadf",
+            "height": "qwsa",
+            "weight": "qaw",
+            "bloodGroup": "sqa",
+            "dob": "saq",
+            "drugAllergy": [
+                "qas"
+            ],
+            "phoneNumber": "dre",
+            "mobileNumber": "der",
+            "email": "erd",
+            "country": "de",
+            "city": "ed",
+            "address": "sw",
+            "otherDetails": "ws",
+            "paymentMethod": "aq",
+            "depositAmount": "qa",
+            "amountReceived": "za",
+            "bankName": "az",
+            "depositorName": "sx",
+            "depositSlip": "xs",
+            "insuranceNo": "xx",
+            "insuranceVendor": "xc",
+            "coverageDetails": "cx",
+            "coverageTerms": "cc",
+            "payment": "pp",
+            "registeredIn": "uu",
+            "receivedBy": "ss",
+            "emergencyName": "qq",
+            "emergencyContactNo": "bb",
+            "emergencyRelation": "vv",
+            "coveredFamilyMembers": "dd",
+            "otherCoverageDetails": "ww",
+            "otherCity": "rr",
+            "QR": "tt",
+            "createdAt": "uj",
+            "updatedAt": "jhgf",
+            "UserProfile": {
+                "Type": "UserProfile",
+                "email": "jhg",
+                "contact": "sfc",
+                "firstName": "dce",
+                "lastName": "yhd",
+                "userName": "gf",
+                "gender": "c",
+                "dob": "ds",
+                "isActive": "rf",
+                "maritalStatus": "dfc",
+                "address": "hfdfc",
+                "communicationLanguage": "jhg",
+                "profilePicture": "jhmnbfg",
+                "geneticDisease": [
+                    "jhgf"
+                ]
+            },
+            "PatientMedicalProfile": {
+                "Type": "PatientMedicalProfile",
+                "knownAllergies": [
+                    "dasd"
+                ],
+                "currentMedication": [
+                    "dasd"
+                ],
+                "surgeries": [
+                    "dasd"
+                ],
+                "chronicIllness": [
+                    "[a,a,a]"
+                ],
+                "bloodGroup": "sdas",
+                "pregnancy": "sda"
+            }
+        },
+        "Timestamp": "2021-03-30 15:15:04.801068727 +0000 UTC",
+        "IsDelete": "false"
+    },
+    {
+        "TxId": "273f03ba7c3fb68d983ae79b543ff2352ab48c7e1e267a98c20fc18a83e1a750",
+        "Value": {
+            "Type": "Patient",
+            "profileNo": "02",
+            "SIN": "1",
+            "title": "11111",
+            "firstName": "222",
+            "lastName": "Tom",
+            "fullName": "12",
+            "gender": "pending",
+            "nationality": "pending",
+            "age": "qadf",
+            "height": "qwsa",
+            "weight": "qaw",
+            "bloodGroup": "sqa",
+            "dob": "saq",
+            "drugAllergy": [
+                "qas"
+            ],
+            "phoneNumber": "dre",
+            "mobileNumber": "der",
+            "email": "erd",
+            "country": "de",
+            "city": "ed",
+            "address": "sw",
+            "otherDetails": "ws",
+            "paymentMethod": "aq",
+            "depositAmount": "qa",
+            "amountReceived": "za",
+            "bankName": "az",
+            "depositorName": "sx",
+            "depositSlip": "xs",
+            "insuranceNo": "xx",
+            "insuranceVendor": "xc",
+            "coverageDetails": "cx",
+            "coverageTerms": "cc",
+            "payment": "pp",
+            "registeredIn": "uu",
+            "receivedBy": "ss",
+            "emergencyName": "qq",
+            "emergencyContactNo": "bb",
+            "emergencyRelation": "vv",
+            "coveredFamilyMembers": "dd",
+            "otherCoverageDetails": "ww",
+            "otherCity": "rr",
+            "QR": "tt",
+            "createdAt": "uj",
+            "updatedAt": "jhgf",
+            "UserProfile": {
+                "Type": "UserProfile",
+                "email": "jhg",
+                "contact": "sfc",
+                "firstName": "dce",
+                "lastName": "yhd",
+                "userName": "gf",
+                "gender": "c",
+                "dob": "ds",
+                "isActive": "rf",
+                "maritalStatus": "dfc",
+                "address": "hfdfc",
+                "communicationLanguage": "jhg",
+                "profilePicture": "jhmnbfg",
+                "geneticDisease": [
+                    "jhgf"
+                ]
+            },
+            "PatientMedicalProfile": {
+                "Type": "PatientMedicalProfile",
+                "knownAllergies": [
+                    "dasd"
+                ],
+                "currentMedication": [
+                    "dasd"
+                ],
+                "surgeries": [
+                    "dasd"
+                ],
+                "chronicIllness": [
+                    "dasd"
+                ],
+                "bloodGroup": "[sdas,asd,aws]",
+                "pregnancy": "sda"
+            }
+        },
+        "Timestamp": "2021-03-30 14:57:43.825493786 +0000 UTC",
+        "IsDelete": "false"
+    },
+    {
+        "TxId": "dc1f02ab2e652c5fc3b25d8a2dfdd19ae2f99513cc5cfffde038e3ff2dc3d1c1",
+        "Value": {
+            "Type": "Patient",
+            "profileNo": "01",
+            "SIN": "1",
+            "title": "11111",
+            "firstName": "222",
+            "lastName": "Tom",
+            "fullName": "12",
+            "gender": "pending",
+            "nationality": "pending",
+            "age": "qadf",
+            "height": "qwsa",
+            "weight": "qaw",
+            "bloodGroup": "sqa",
+            "dob": "saq",
+            "drugAllergy": [
+                "qas"
+            ],
+            "phoneNumber": "dre",
+            "mobileNumber": "der",
+            "email": "erd",
+            "country": "de",
+            "city": "ed",
+            "address": "sw",
+            "otherDetails": "ws",
+            "paymentMethod": "aq",
+            "depositAmount": "qa",
+            "amountReceived": "za",
+            "bankName": "az",
+            "depositorName": "sx",
+            "depositSlip": "xs",
+            "insuranceNo": "xx",
+            "insuranceVendor": "xc",
+            "coverageDetails": "cx",
+            "coverageTerms": "cc",
+            "payment": "pp",
+            "registeredIn": "uu",
+            "receivedBy": "ss",
+            "emergencyName": "qq",
+            "emergencyContactNo": "bb",
+            "emergencyRelation": "vv",
+            "coveredFamilyMembers": "dd",
+            "otherCoverageDetails": "ww",
+            "otherCity": "rr",
+            "QR": "tt",
+            "createdAt": "uj",
+            "updatedAt": "jhgf",
+            "UserProfile": {
+                "Type": "UserProfile",
+                "email": "jhg",
+                "contact": "sfc",
+                "firstName": "dce",
+                "lastName": "yhd",
+                "userName": "gf",
+                "gender": "c",
+                "dob": "ds",
+                "isActive": "rf",
+                "maritalStatus": "dfc",
+                "address": "hfdfc",
+                "communicationLanguage": "jhg",
+                "profilePicture": "jhmnbfg",
+                "geneticDisease": [
+                    "jhgf"
+                ]
+            },
+            "PatientMedicalProfile": {
+                "Type": "PatientMedicalProfile",
+                "knownAllergies": [
+                    "dasd"
+                ],
+                "currentMedication": [
+                    "dasd"
+                ],
+                "surgeries": [
+                    "dasd"
+                ],
+                "chronicIllness": [
+                    "dasd"
+                ],
+                "bloodGroup": "sdas",
+                "pregnancy": "sda"
+            }
+        },
+        "Timestamp": "2021-03-30 14:47:31.109544579 +0000 UTC",
+        "IsDelete": "false"
+    }
+]
