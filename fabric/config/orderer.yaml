@@ -39,7 +39,7 @@ General:
         ServerInterval: 7200s
         # ServerTimeout is the duration the server waits for a response from
         # a client before closing the connection.
-        ServerTimeout: 500s
+        ServerTimeout: 20s
     # Cluster settings for ordering service nodes that communicate with other ordering service nodes
     # such as Raft based ordering service.
     Cluster:

@@ -84,49 +84,6 @@ const IPRSchema = new mongoose.Schema({
     pharmacyRequest: [{
         type: mongoose.Schema.ObjectId,
         ref: 'ReplenishmentRequestBU',
-        //   PRrequestNo:{
-        //     type:String
-        // },
-        //   date: {
-        //     type: Date,
-        //     default: Date.now,
-        //   },
-        //   status: {
-        //     type: String,
-        //   },
-        //   requester: {
-        //     type: mongoose.Schema.ObjectId,
-        //     ref: 'staff',
-        //   },
-        //   medicine: [
-        //     {
-        //       itemId: {
-        //         type: mongoose.Schema.ObjectId,
-        //         ref: 'Item',
-        //       },
-        //       priority: {
-        //         type: String,
-        //       },
-        //       schedule: {
-        //         type: String,
-        //       },
-        //       dosage: {
-        //         type: Number,
-        //       },
-        //       frequency: {
-        //         type: Number,
-        //       },
-        //       duration: {
-        //         type: Number,
-        //       },
-        //       requestedQty: {
-        //         type: Number,
-        //       },
-        //       medicineName: {
-        //         type: String,
-        //       },
-        //     },
-        //   ],
     }, ],
     labRequest: [{
         LRrequestNo: {

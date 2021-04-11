@@ -53,7 +53,7 @@ peer:
         interval: 7200s
         # Timeout is the duration the server waits for a response
         # from the client after sending a ping before closing the connection
-        timeout: 500s
+        timeout: 20ss
         # MinInterval is the minimum permitted time between client pings.
         # If clients send pings more frequently, the peer server will
         # disconnect them
@@ -66,7 +66,7 @@ peer:
             interval: 60s
             # Timeout is the duration the client waits for a response from
             # peer nodes before closing the connection
-            timeout: 500s
+            timeout: 20ss
         # DeliveryClient keepalive settings for communication with ordering
         # nodes.
         deliveryClient:
@@ -76,7 +76,7 @@ peer:
             interval: 60s
             # Timeout is the duration the client waits for a response from
             # ordering nodes before closing the connection
-            timeout: 500s
+            timeout: 20ss
 
 
     # Gossip related configuration
@@ -142,7 +142,7 @@ peer:
         # Dial timeout(unit: second)
         dialTimeout: 3s
         # Connection timeout(unit: second)
-        connTimeout: 500s
+        connTimeout: 2s
         # Buffer size of received messages
         recvBuffSize: 20
         # Buffer size of sending messages

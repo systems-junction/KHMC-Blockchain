@@ -107,10 +107,10 @@ module.exports = {
         }
 
       } else {
-        console.log(proposalResponses[0].response.message.toString())
+        console.log("AAAAAAAAAA",proposalResponses.toString())
         return {
           status: 500,
-          message: proposalResponses[0].response.message.toString()
+          message: proposalResponses[0].toString()
         }
       }
     }

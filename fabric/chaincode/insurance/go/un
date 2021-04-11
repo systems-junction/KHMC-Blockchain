@@ -1,102 +1,417 @@
-	requestNo
-	patientId
-	generatedBy
-    consultationNo
-	date
-	description
-    consultationNotes
-	doctorNotes
-    audioNotes
-    status
-	speciality
-	specialist
-	requester
-	completedTime
-    residentNoteNo
-	date
-	description
-	doctor
-	note
-	section
-	audioNotes
-	code
-    ReplenishmentRequestBuID///////
-    lRrequestNo
-	serviceId
-	price
-	requesterName
-	serviceCode
-	serviceName
-	status
-	requester
-	results
-	sampleId
-	comments
-	serviceType
-	activeDate
-	completedDate
-	date/////////////
-    rRrequestNo
-	serviceId
-	price
-	serviceCode
-	status
-	requesterName
-	serviceName
-	requester
-	results
-	comments
-	serviceType
-	consultationNote
-    activeDate
-	completedDate
-	date////////
-    dischargeNotes
-	otherNotes
-    date
-	status
-	requester
-    itemId
-	priority
-    schedule
-	dosage
-	frequency
-	duration
-	requestedQty
-	medicineName
-	unitPrice
-	totalPrice
-	itemType
-	make_model
-	size
-    status
-	inProcessDate
-	completionDate///////
-    status//////
-    status
-	reason
-	triageRequestNo
-	heartRate
-	bloodPressureSys
-	bloodPressureDia
-	respiratoryRate
-	temperature
-	FSBS
-	painScale
-	pulseOX
-	triageLevel
-	generalAppearance
-	headNeck
-	respiratory
-	cardiac
-	abdomen
-	neurological
-	requester
-	date//////
-    requestType
-	verified
-	insurerId
-	paymentMethod
-	claimed
-	createdAt
-	updatedAt
+	requestNo :=   args[0]
+	patientId :=   args[1]
+	generatedBy :=   args[2]
+    consultationNo :=   args[3]
+	date :=   args[4]
+	description :=   args[5]
+    consultationNotes :=   args[6]
+	doctorNotes :=   args[7]
+    audioNotes :=   args[8]
+    status :=   args[9]
+	speciality :=   args[10]
+	specialist :=   args[11]
+	requester :=   args[12]
+	completedTime :=   args[13]
+    residentNoteNo :=   args[14]
+	date :=   args[15]
+	description :=   args[16]
+	doctor :=   args[17]
+	note :=   args[18]
+    status :=   args[19]
+	section :=   args[20]
+	audioNotes :=   args[21]
+	code :=   args[22]
+    ReplenishmentRequestBuID/////// :=   args[23]
+    lRrequestNo :=   args[24]
+	serviceId :=   args[25]
+	price :=   args[26]
+	requesterName :=   args[27]
+	serviceCode :=   args[28]
+	serviceName :=   args[29]
+	status :=   args[30]
+	requester :=   args[31]
+	results :=   args[32]
+	sampleId :=   args[33]
+	comments :=   args[34]
+	serviceType :=   args[35]
+	activeDate :=   args[36]
+	completedDate :=   args[37]
+	date///////////// :=   args[38]
+    rRrequestNo :=   args[39]
+	serviceId :=   args[40]
+	price :=   args[41]
+	serviceCode :=   args[42]
+	status :=   args[43]
+	requesterName :=   args[44]
+	serviceName :=   args[45]
+	requester :=   args[46]
+	results :=   args[47]
+	comments :=   args[48]
+	serviceType :=   args[49]
+	consultationNote :=   args[50]
+    activeDate :=   args[51]
+	completedDate :=   args[52]
+	date//////// :=   args[53]
+    NSrequestNo :=   args[54]
+    serviceId :=   args[55]
+    price :=   args[56]
+    requesterName :=   args[57]
+    serviceCode :=   args[58]
+    status :=   args[59]
+    serviceName :=   args[60]
+    comments :=   args[61]
+    requester :=   args[62]
+    date :=   args[63]
+    dischargeNotes :=   args[64]
+	otherNotes :=   args[65]
+    date :=   args[66]
+	status :=   args[67]
+	requester :=   args[68]
+    itemId :=   args[69]
+	priority :=   args[70]
+    schedule :=   args[71]
+	dosage :=   args[72]
+	frequency :=   args[73]
+	duration :=   args[74]
+	requestedQty :=   args[75]
+	medicineName :=   args[76]
+	unitPrice :=   args[77]
+	totalPrice :=   args[78]
+	itemType :=   args[79]
+	make_model :=   args[80]
+	size :=   args[81]
+    status :=   args[82]
+	inProcessDate :=   args[83]
+	completionDate/////// :=   args[84]
+    status////// :=   args[85]
+    status :=   args[86]
+	reason :=   args[87]
+	triageRequestNo :=   args[88]
+	heartRate :=   args[89]
+	bloodPressureSys :=   args[90]
+	bloodPressureDia :=   args[91]
+	respiratoryRate :=   args[92]
+	temperature :=   args[93]
+	FSBS :=   args[94]
+	painScale :=   args[95]
+	pulseOX :=   args[96]
+	triageLevel :=   args[97]
+	generalAppearance :=   args[98]
+	headNeck :=   args[99]
+	respiratory :=   args[100]
+	cardiac :=   args[101]
+	abdomen :=   args[102]
+	neurological :=   args[103]
+	requester :=   args[104]
+	date////// :=   args[105]
+    requester :=   args[106]
+    approvalNumber :=   args[107]
+    approvalPerson :=   args[108]
+    file :=   args[109]
+    description :=   args[110]
+    notes :=   args[111]
+    status :=   args[112]
+    doctorName :=   args[113]
+    doctor :=   args[114]
+    date :=   args[115]
+    requestType :=   args[116]
+    functionalUnit :=   args[117]
+	verified :=   args[118]
+	insurerId :=   args[119]
+	paymentMethod :=   args[120]
+	claimed :=   args[121]
+	createdAt :=   args[122]
+	updatedAt :=   args[123]
+
+
+
+args[0]
+args[1]
+args[2]
+args[3]
+args[4]
+args[5]
+args[6]
+args[7]
+args[8]
+args[9]
+args[10]
+args[11]
+args[12]
+args[13]
+args[14]
+args[15]
+args[16]
+args[17]
+args[18]
+args[19]
+args[20]
+args[21]
+args[22]
+args[23]
+args[24]
+args[25]
+args[26]
+args[27]
+args[28]
+args[29]
+args[30]
+args[31]
+args[32]
+args[33]
+args[34]
+args[35]
+args[36]
+args[37]
+args[38]
+args[39]
+args[40]
+args[41]
+args[42]
+args[43]
+args[44]
+args[45]
+args[46]
+args[47]
+args[48]
+args[49]
+args[50]
+args[51]
+args[52]
+args[53]
+args[54]
+args[55]
+args[56]
+args[57]
+args[58]
+args[59]
+args[60]
+args[61]
+args[62]
+args[63]
+args[64]
+args[65]
+args[66]
+args[67]
+args[68]
+args[69]
+args[70]
+args[71]
+args[72]
+args[73]
+args[74]
+args[75]
+args[76]
+args[77]
+args[78]
+args[79]
+args[80]
+args[81]
+args[82]
+args[83]
+args[84]
+args[85]
+args[86]
+args[87]
+args[88]
+args[89]
+args[90]
+args[91]
+args[92]
+args[93]
+args[94]
+args[95]
+args[96]
+args[97]
+args[98]
+args[99]
+args[100]
+args[101]
+args[102]
+args[103]
+args[104]
+args[105]
+args[106]
+args[107]
+args[108]
+args[109]
+args[110]
+args[111]
+args[112]
+args[113]
+args[114]
+args[115]
+args[116]
+args[117]
+args[118]
+args[119]
+args[120]
+args[121]
+args[122]
+args[123]
+args[124]
+args[125]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
