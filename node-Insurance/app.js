@@ -122,28 +122,9 @@ app.post('/api/addPatient', async function (req, res) {
       req.body.coveredFamilyMembers, 
       req.body.otherCoverageDetails, 
       req.body.otherCity, 
-      req.body.QR, 
+      req.body.paymentDate, 
       req.body.createdAt, 
-      req.body.updatedAt, 
-      req.body.userProfile.email, 
-      req.body.userProfile.contact, 
-      req.body.userProfile.firstName, 
-      req.body.userProfile.lastName, 
-      req.body.userProfile.userName, 
-      req.body.userProfile.gender, 
-      req.body.userProfile.dob, 
-      req.body.userProfile.isActive, 
-      req.body.userProfile.maritalStatus, 
-      req.body.userProfile.address, 
-      req.body.userProfile.communicationLanguage, 
-      req.body.userProfile.profilePicture, 
-      req.body.userProfile.geneticDisease.toString(), 
-      req.body.patientMedicalProfile.knownAllergies.toString(), 
-      req.body.patientMedicalProfile.currentMedication.toString(), 
-      req.body.patientMedicalProfile.surgeries.toString(), 
-      req.body.patientMedicalProfile.chronicIllness.toString(), 
-      req.body.patientMedicalProfile.bloodGroup, 
-      req.body.patientMedicalProfile.pregnancy
+      req.body.updatedAt
 
     ]
   };
@@ -204,28 +185,9 @@ app.post('/api/updatePatient', async function (req, res) {
       req.body.coveredFamilyMembers, 
       req.body.otherCoverageDetails, 
       req.body.otherCity, 
-      req.body.QR, 
+      req.body.paymentDate, 
       req.body.createdAt, 
-      req.body.updatedAt, 
-      req.body.userProfile.email, 
-      req.body.userProfile.contact, 
-      req.body.userProfile.firstName, 
-      req.body.userProfile.lastName, 
-      req.body.userProfile.userName, 
-      req.body.userProfile.gender, 
-      req.body.userProfile.dob, 
-      req.body.userProfile.isActive, 
-      req.body.userProfile.maritalStatus, 
-      req.body.userProfile.address, 
-      req.body.userProfile.communicationLanguage, 
-      req.body.userProfile.profilePicture, 
-      req.body.userProfile.geneticDisease.toString(), 
-      req.body.patientMedicalProfile.knownAllergies.toString(), 
-      req.body.patientMedicalProfile.currentMedication.toString(), 
-      req.body.patientMedicalProfile.surgeries.toString(), 
-      req.body.patientMedicalProfile.chronicIllness.toString(), 
-      req.body.patientMedicalProfile.bloodGroup, 
-      req.body.patientMedicalProfile.pregnancy
+      req.body.updatedAt
 
     ]
   };

@@ -51,6 +51,40 @@ type Item struct {
 	SecondStatus string `json:"secondStatus"`
 }
 
+type ItemSchema struct {
+	ObjectType       string   `json:"Type"`
+	Name             string   `json:"name"`
+	Description      string   `json:"description"`
+	ItemCode         string   `json:"itemCode"`
+	Form             string   `json:"form"`
+	DrugAllergy      []string `json:"drugAllergy"`
+	ReceiptUnit      string   `json:"receiptUnit"`
+	IssueUnit        string   `json:"issueUnit"`
+	VendorId         string   `json:"vendorId"`
+	PurchasePrice    string   `json:"purchasePrice"`
+	MinimumLevel     string   `json:"minimumLevel"`
+	MaximumLevel     string   `json:"maximumLevel"`
+	ReorderLevel     string   `json:"reorderLevel"`
+	Cls              string   `json:"cls"`
+	MedClass         string   `json:"medClass"`
+	SubClass         string   `json:"subClass"`
+	GrandSubClass    string   `json:"grandSubClass"`
+	Comments         string   `json:"comments"`
+	CreatedAt        string   `json:"createdAt"`
+	UpdatedAt        string   `json:"updatedAt"`
+	ReceiptUnitCost  string   `json:"receiptUnitCost"`
+	IssueUnitCost    string   `json:"issueUnitCost"`
+	ScientificName   string   `json:"scientificName"`
+	TradeName        string   `json:"tradeName"`
+	Temprature       string   `json:"temprature"`
+	Humidity         string   `json:"humidity"`
+	LightSensitive   string   `json:"lightSensitive"`
+	ResuableItem     string   `json:"resuableItem"`
+	StorageCondition string   `json:"storageCondition"`
+	Expiration       string   `json:"expiration"`
+	Tax              string   `json:"tax"`
+}
+
 type RItem struct {
 	ObjectType    string `json:"Type"`
 	ItemId        string `json:"itemId"`
@@ -213,6 +247,68 @@ type ReceiveItem struct {
 	UnitPrice string `json:"unitPrice"`
 }
 
+type ReceiveItemFUSchema struct {
+	ObjectType             string `json:"Type"`
+	ItemId                 string `json:"itemId"`
+	CurrentQty             string `json:"currentQty"`
+	RequestedQty           string `json:"requestedQty"`
+	ReceivedQty            string `json:"receivedQty"`
+	BonusQty               string `json:"bonusQty"`
+	BatchNumber            string `json:"batchNumber"`
+	LotNumber              string `json:"lotNumber"`
+	ExpiryDate             string `json:"expiryDate"`
+	Unit                   string `json:"unit"`
+	Discount               string `json:"discount"`
+	UnitDiscount           string `json:"unitDiscount"`
+	DiscountAmount         string `json:"discountAmount"`
+	Tax                    string `json:"tax"`
+	TaxAmount              string `json:"taxAmount"`
+	FinalUnitPrice         string `json:"finalUnitPrice"`
+	SubTotal               string `json:"subTotal"`
+	DiscountAmount2        string `json:"discountAmount2"`
+	TotalPrice             string `json:"totalPrice"`
+	Invoice                string `json:"invoice"`
+	DateInvoice            string `json:"dateInvoice"`
+	DateReceived           string `json:"dateReceived"`
+	Notes                  string `json:"notes"`
+	CreatedAt              string `json:"createdAt"`
+	UpdatedAt              string `json:"updatedAt"`
+	ReplenishmentRequestId string `json:"replenishmentRequestId"`
+	BatchArray
+}
+
+type ReceiveItemBUSchema struct {
+	ObjectType                 string `json:"Type"`
+	ItemId                     string `json:"itemId"`
+	CurrentQty                 string `json:"currentQty"`
+	RequestedQty               string `json:"requestedQty"`
+	ReceivedQty                string `json:"receivedQty"`
+	BonusQty                   string `json:"bonusQty"`
+	BatchNumber                string `json:"batchNumber"`
+	LotNumber                  string `json:"lotNumber"`
+	ExpiryDate                 string `json:"expiryDate"`
+	Unit                       string `json:"unit"`
+	Discount                   string `json:"discount"`
+	UnitDiscount               string `json:"unitDiscount"`
+	DiscountAmount             string `json:"discountAmount"`
+	Tax                        string `json:"tax"`
+	TaxAmount                  string `json:"taxAmount"`
+	FinalUnitPrice             string `json:"finalUnitPrice"`
+	SubTotal                   string `json:"subTotal"`
+	DiscountAmount2            string `json:"discountAmount2"`
+	TotalPrice                 string `json:"totalPrice"`
+	Invoice                    string `json:"invoice"`
+	DateInvoice                string `json:"dateInvoice"`
+	DateReceived               string `json:"dateReceived"`
+	Notes                      string `json:"notes"`
+	CreatedAt                  string `json:"createdAt"`
+	UpdatedAt                  string `json:"updatedAt"`
+	ReplenishmentRequestId     string `json:"replenishmentRequestId"`
+	ReplenishmentRequestItemId string `json:"replenishmentRequestItemId"`
+	QualityRate                string `json:"qualityRate"`
+	BatchArray
+}
+
 type WarehouseInventory struct {
 	ObjectType   string `json:"Type"`
 	ItemId       string `json:"itemId"`
@@ -228,6 +324,7 @@ type WarehouseInventory struct {
 
 type Staff struct {
 	ObjectType           string   `json:"Type"`
+	StaffId              string   `json:"staffId"`
 	StaffTypeId          string   `json:"staffTypeId"`
 	FirstName            string   `json:"firstName"`
 	LastName             string   `json:"lastName"`
@@ -272,6 +369,75 @@ type Vendor struct {
 	Compliance             string   `json:"compliance"`
 	CreatedAt              string   `json:"createdAt"`
 	UpdatedAt              string   `json:"updatedAt"`
+}
+
+type DamageReport struct {
+	ObjectType      string `json:"Type"`
+	CausedBy        string `json:"causedBy"`
+	TotalDamageCost string `json:"totalDamageCost"`
+	Date            string `json:"date"`
+	ItemCostPerUnit string `json:"itemCostPerUnit"`
+}
+
+type ReturnBatch struct {
+	BatchNumber         string `json:"batchNumber"`
+	ExpiryDatePerBatch  string `json:"expiryDatePerBatch"`
+	ReceivedQtyPerBatch string `json:"receivedQtyPerBatch"`
+	ReturnedQtyPerBatch string `json:"returnedQtyPerBatch"`
+	Price               string `json:"price"`
+}
+
+type ReturnBatchArray []ReturnBatch
+
+type InternalReturnRequestSchema struct {
+	ObjectType             string `json:"Type"`
+	ReturnRequestNo        string `json:"returnRequestNo"`
+	GeneratedBy            string `json:"generatedBy"`
+	DateGenerated          string `json:"dateGenerated"`
+	ExpiryDate             string `json:"expiryDate"`
+	To                     string `json:"to"`
+	From                   string `json:"from"`
+	CurrentQty             string `json:"currentQty"`
+	ReturnedQty            string `json:"returnedQty"`
+	ItemId                 string `json:"itemId"`
+	Description            string `json:"description"`
+	FuId                   string `json:"fuId"`
+	Reason                 string `json:"reason"`
+	ReasonDetail           string `json:"reasonDetail"`
+	BuId                   string `json:"buId"`
+	DamageReport           DamageReport
+	Status                 string `json:"status"`
+	ReplenishmentRequestBU string `json:"replenishmentRequestBU"`
+	ReplenishmentRequestFU string `json:"replenishmentRequestFU"`
+	ApprovedBy             string `json:"approvedBy"`
+	CommentNote            string `json:"commentNote"`
+	CreatedAt              string `json:"createdAt"`
+	UpdatedAt              string `json:"updatedAt"`
+	BatchNo                string `json:"batchNo"`
+	ReturnBatchArray
+}
+
+type ExternalReturnRequestSchema struct {
+	ObjectType      string `json:"Type"`
+	ReturnRequestNo string `json:"returnRequestNo"`
+	GeneratedBy     string `json:"generatedBy"`
+	Generated       string `json:"generated"`
+	DateGenerated   string `json:"dateGenerated"`
+	ExpiryDate      string `json:"expiryDate"`
+	ReturnedQty     string `json:"returnedQty"`
+	ItemId          string `json:"itemId"`
+	PrId            string `json:"prId"`
+	Description     string `json:"description"`
+	Reason          string `json:"reason"`
+	ReasonDetail    string `json:"reasonDetail"`
+	DamageReport    DamageReport
+	Status          string `json:"status"`
+	ApprovedBy      string `json:"approvedBy"`
+	CommentNote     string `json:"commentNote"`
+	InProgressTime  string `json:"inProgressTime"`
+	CreatedAt       string `json:"createdAt"`
+	UpdatedAt       string `json:"updatedAt"`
+	BatchArray
 }
 
 func (t *SmartContract) Init(stub shim.ChaincodeStubInterface) peer.Response {
@@ -413,6 +579,51 @@ func (t *SmartContract) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
 	}
 	if function == "updateVendor" {
 		return t.updateVendor(stub, args)
+	}
+	if function == "addItem" {
+		return t.addItem(stub, args)
+	}
+	if function == "queryItem" {
+		return t.queryItem(stub, args)
+	}
+	if function == "updateItem" {
+		return t.updateItem(stub, args)
+	}
+	if function == "addReceiveItemBUSchema" {
+		return t.addReceiveItemBUSchema(stub, args)
+	}
+	if function == "queryReceiveItemBU" {
+		return t.queryReceiveItemBU(stub, args)
+	}
+	if function == "addReceiveItemFUSchema" {
+		return t.addReceiveItemFUSchema(stub, args)
+	}
+	if function == "queryReceiveItemFU" {
+		return t.queryReceiveItemFU(stub, args)
+	}
+	if function == "updateReceiveItemFU" {
+		return t.updateReceiveItemFU(stub, args)
+	}
+	if function == "updateReceiveItemBU" {
+		return t.updateReceiveItemBU(stub, args)
+	}
+	if function == "addExternalReturnRequestSchema" {
+		return t.addExternalReturnRequestSchema(stub, args)
+	}
+	if function == "queryExternalReturnRequest" {
+		return t.queryExternalReturnRequest(stub, args)
+	}
+	if function == "updateExternalReturnRequestSchema" {
+		return t.updateExternalReturnRequestSchema(stub, args)
+	}
+	if function == "addInternalReturnRequestSchema" {
+		return t.addInternalReturnRequestSchema(stub, args)
+	}
+	if function == "queryInternalReturnRequest" {
+		return t.queryInternalReturnRequest(stub, args)
+	}
+	if function == "updateInternalReturnRequestSchema" {
+		return t.updateInternalReturnRequestSchema(stub, args)
 	}
 	if function == "getHistory" {
 		return t.getHistory(stub, args)
@@ -703,6 +914,193 @@ func (t *SmartContract) addPurchaseRequest(stub shim.ChaincodeStubInterface, arg
 
 	fmt.Println("Successfully Saved PurchaseRequest")
 	return shim.Success(nil)
+}
+
+func (t *SmartContract) addItem(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	var err error
+
+	if len(args) != 30 {
+		return shim.Error("Incorrect Number of Arguments. Expecting 30")
+	}
+
+	fmt.Println("Adding new PurchaseOrder")
+
+	// ==== Input sanitation ====
+	if len(args[0]) <= 0 {
+		return shim.Error("1st Argument Must be a Non-Empty String")
+	}
+	if len(args[1]) <= 0 {
+		return shim.Error("2nd Argument Must be a Non-Empty String")
+	}
+	if len(args[2]) <= 0 {
+		return shim.Error("3rd Argument Must be a Non-Empty String")
+	}
+	if len(args[3]) <= 0 {
+		return shim.Error("4th Argument Must be a Non-Empty String")
+	}
+	if len(args[4]) <= 0 {
+		return shim.Error("5th Argument Must be a Non-Empty String")
+	}
+	if len(args[5]) <= 0 {
+		return shim.Error("6th Argument Must be a Non-Empty String")
+	}
+	if len(args[6]) <= 0 {
+		return shim.Error("7th Argument Must be a Non-Empty String")
+	}
+	if len(args[7]) <= 0 {
+		return shim.Error("8th Argument Must be a Non-Empty String")
+	}
+	if len(args[8]) <= 0 {
+		return shim.Error("9th Argument Must be a Non-Empty String")
+	}
+	if len(args[9]) <= 0 {
+		return shim.Error("10th Argument Must be a Non-Empty String")
+	}
+	if len(args[10]) <= 0 {
+		return shim.Error("11th Argument Must be a Non-Empty String")
+	}
+	if len(args[11]) <= 0 {
+		return shim.Error("12th Argument Must be a Non-Empty String")
+	}
+	if len(args[12]) <= 0 {
+		return shim.Error("13th Argument Must be a Non-Empty String")
+	}
+	if len(args[13]) <= 0 {
+		return shim.Error("14th Argument Must be a Non-Empty String")
+	}
+	if len(args[14]) <= 0 {
+		return shim.Error("15th Argument Must be a Non-Empty String")
+	}
+	if len(args[15]) <= 0 {
+		return shim.Error("16th Argument Must be a Non-Empty String")
+	}
+	if len(args[16]) <= 0 {
+		return shim.Error("17th Argument Must be a Non-Empty String")
+	}
+	if len(args[17]) <= 0 {
+		return shim.Error("18th Argument Must be a Non-Empty String")
+	}
+	if len(args[18]) <= 0 {
+		return shim.Error("19th Argument Must be a Non-Empty String")
+	}
+	if len(args[19]) <= 0 {
+		return shim.Error("20th Argument Must be a Non-Empty String")
+	}
+	if len(args[20]) <= 0 {
+		return shim.Error("21th Argument Must be a Non-Empty String")
+	}
+	if len(args[21]) <= 0 {
+		return shim.Error("22th Argument Must be a Non-Empty String")
+	}
+	if len(args[22]) <= 0 {
+		return shim.Error("23th Argument Must be a Non-Empty String")
+	}
+	if len(args[23]) <= 0 {
+		return shim.Error("24th Argument Must be a Non-Empty String")
+	}
+	if len(args[24]) <= 0 {
+		return shim.Error("25th Argument Must be a Non-Empty String")
+	}
+	if len(args[25]) <= 0 {
+		return shim.Error("26th Argument Must be a Non-Empty String")
+	}
+	if len(args[26]) <= 0 {
+		return shim.Error("27th Argument Must be a Non-Empty String")
+	}
+	if len(args[27]) <= 0 {
+		return shim.Error("27th Argument Must be a Non-Empty String")
+	}
+	if len(args[28]) <= 0 {
+		return shim.Error("27th Argument Must be a Non-Empty String")
+	}
+	if len(args[29]) <= 0 {
+		return shim.Error("27th Argument Must be a Non-Empty String")
+	}
+
+	name := args[0]
+	description := args[1]
+	itemCode := args[2]
+	form := args[3]
+	drugAllergy := strings.Split(args[4], ",")
+	receiptUnit := args[5]
+	issueUnit := args[6]
+	vendorId := args[7]
+	purchasePrice := args[8]
+	minimumLevel := args[9]
+	maximumLevel := args[10]
+	reorderLevel := args[11]
+	cls := args[12]
+	medClass := args[13]
+	subClass := args[14]
+	grandSubClass := args[15]
+	comments := args[16]
+	createdAt := args[17]
+	updatedAt := args[18]
+	receiptUnitCost := args[19]
+	issueUnitCost := args[20]
+	scientificName := args[21]
+	tradeName := args[22]
+	temprature := args[23]
+	humidity := args[24]
+	lightSensitive := args[25]
+	resuableItem := args[26]
+	storageCondition := args[27]
+	expiration := args[28]
+	tax := args[29]
+
+	// ======Check if PurchaseRequest Already exists
+
+	PurchaseRequestAsBytes, err := stub.GetState(itemCode)
+	if err != nil {
+		return shim.Error("Transaction Failed with Error: " + err.Error())
+	} else if PurchaseRequestAsBytes != nil {
+		return shim.Error("The Inserted itemCode ID already Exists: " + itemCode)
+	}
+
+	// ===== Create Item Object and Marshal to JSON
+
+	objectType := "ItemSchema"
+	PurchaseRequest := &ItemSchema{objectType, name, description, itemCode, form, drugAllergy, receiptUnit, issueUnit, vendorId, purchasePrice, minimumLevel, maximumLevel, reorderLevel, cls, medClass, subClass, grandSubClass, comments, createdAt, updatedAt, receiptUnitCost, issueUnitCost, scientificName, tradeName, temprature, humidity, lightSensitive, resuableItem, storageCondition, expiration, tax}
+	PurchaseRequestJSONasBytes, err := json.Marshal(PurchaseRequest)
+
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Save PurchaseRequest to State
+
+	err = stub.PutState(itemCode, PurchaseRequestJSONasBytes)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	err = stub.PutState("ItemInfo", PurchaseRequestJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Return Success
+
+	fmt.Println("Successfully Saved PurchaseRequest")
+	return shim.Success(nil)
+}
+
+func (t *SmartContract) queryItem(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	if len(args) < 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	itemCode := args[0]
+	queryString := fmt.Sprintf("{\"selector\":{\"Type\":\"ItemSchema\",\"itemCode\":\"%s\"}}", itemCode)
+
+	queryResults, err := getQueryResultForQueryString(stub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	return shim.Success(queryResults)
 }
 
 func (t *SmartContract) addReplenishmentRequest(stub shim.ChaincodeStubInterface, args []string) peer.Response {
@@ -1466,6 +1864,358 @@ func (t *SmartContract) addReceiveItem(stub shim.ChaincodeStubInterface, args []
 	return shim.Success(nil)
 }
 
+func (t *SmartContract) addReceiveItemFUSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	var err error
+
+	if len(args) != 29 {
+		return shim.Error("Incorrect Number of Arguments. Expecting 33")
+	}
+
+	fmt.Println("Adding new ReceiveItem")
+
+	// ==== Input sanitation ====
+	if len(args[0]) <= 0 {
+		return shim.Error("1st Argument Must be a Non-Empty String")
+	}
+	if len(args[1]) <= 0 {
+		return shim.Error("2nd Argument Must be a Non-Empty String")
+	}
+	if len(args[2]) <= 0 {
+		return shim.Error("3rd Argument Must be a Non-Empty String")
+	}
+	if len(args[3]) <= 0 {
+		return shim.Error("4th Argument Must be a Non-Empty String")
+	}
+	if len(args[4]) <= 0 {
+		return shim.Error("5th Argument Must be a Non-Empty String")
+	}
+	if len(args[5]) <= 0 {
+		return shim.Error("6th Argument Must be a Non-Empty String")
+	}
+	if len(args[6]) <= 0 {
+		return shim.Error("7th Argument Must be a Non-Empty String")
+	}
+	if len(args[7]) <= 0 {
+		return shim.Error("8th Argument Must be a Non-Empty String")
+	}
+	if len(args[8]) <= 0 {
+		return shim.Error("9th Argument Must be a Non-Empty String")
+	}
+	if len(args[9]) <= 0 {
+		return shim.Error("10th Argument Must be a Non-Empty String")
+	}
+	if len(args[10]) <= 0 {
+		return shim.Error("11th Argument Must be a Non-Empty String")
+	}
+	if len(args[11]) <= 0 {
+		return shim.Error("12th Argument Must be a Non-Empty String")
+	}
+	if len(args[12]) <= 0 {
+		return shim.Error("13th Argument Must be a Non-Empty String")
+	}
+	if len(args[13]) <= 0 {
+		return shim.Error("14th Argument Must be a Non-Empty String")
+	}
+	if len(args[14]) <= 0 {
+		return shim.Error("15th Argument Must be a Non-Empty String")
+	}
+	if len(args[15]) <= 0 {
+		return shim.Error("16th Argument Must be a Non-Empty String")
+	}
+	if len(args[16]) <= 0 {
+		return shim.Error("17th Argument Must be a Non-Empty String")
+	}
+	if len(args[17]) <= 0 {
+		return shim.Error("18th Argument Must be a Non-Empty String")
+	}
+	if len(args[18]) <= 0 {
+		return shim.Error("19th Argument Must be a Non-Empty String")
+	}
+	if len(args[19]) <= 0 {
+		return shim.Error("20th Argument Must be a Non-Empty String")
+	}
+	if len(args[20]) <= 0 {
+		return shim.Error("21th Argument Must be a Non-Empty String")
+	}
+	if len(args[21]) <= 0 {
+		return shim.Error("22th Argument Must be a Non-Empty String")
+	}
+	if len(args[22]) <= 0 {
+		return shim.Error("23th Argument Must be a Non-Empty String")
+	}
+	if len(args[23]) <= 0 {
+		return shim.Error("24th Argument Must be a Non-Empty String")
+	}
+	if len(args[24]) <= 0 {
+		return shim.Error("25th Argument Must be a Non-Empty String")
+	}
+	if len(args[25]) <= 0 {
+		return shim.Error("26th Argument Must be a Non-Empty String")
+	}
+	if len(args[26]) <= 0 {
+		return shim.Error("27th Argument Must be a Non-Empty String")
+	}
+	if len(args[27]) <= 0 {
+		return shim.Error("28th Argument Must be a Non-Empty String")
+	}
+	if len(args[28]) <= 0 {
+		return shim.Error("29th Argument Must be a Non-Empty String")
+	}
+
+	itemId := args[0]
+	currentQty := args[1]
+	requestedQty := args[2]
+	receivedQty := args[3]
+	bonusQty := args[4]
+	batchNumber := args[5]
+	lotNumber := args[6]
+	expiryDate := args[7]
+	unit := args[8]
+	discount := args[9]
+	unitDiscount := args[10]
+	discountAmount := args[11]
+	tax := args[12]
+	taxAmount := args[13]
+	finalUnitPrice := args[14]
+	subTotal := args[15]
+	discountAmount2 := args[16]
+	totalPrice := args[17]
+	invoice := args[18]
+	dateInvoice := args[19]
+	dateReceived := args[20]
+	notes := args[21]
+	createdAt := args[22]
+	updatedAt := args[23]
+	replenishmentRequestId := args[24]
+	batchNumberArr := args[25]
+	expiryDateArr := args[26]
+	quantity := args[27]
+	price := args[28]
+
+	// ======Check if ReceiveItem Already exists
+
+	ReceiveItemAsBytes, err := stub.GetState(itemId)
+	if err != nil {
+		return shim.Error("Transaction Failed with Error: " + err.Error())
+	} else if ReceiveItemAsBytes != nil {
+		return shim.Error("The Inserted ReceiveItem ID already Exists: " + itemId)
+	}
+
+	// ===== Create ReceiveItem Object and Marshal to JSON
+
+	objectType := "ReceiveItemFU"
+	ReceiveItem := &ReceiveItemFUSchema{objectType, itemId, currentQty, requestedQty, receivedQty, bonusQty, batchNumber, lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal, discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, replenishmentRequestId, BatchArray{
+		Batch{
+			BatchNumber: batchNumberArr,
+			ExpiryDate:  expiryDateArr,
+			Quantity:    quantity,
+			Price:       price,
+		}}}
+	ReceiveItemJSONasBytes, err := json.Marshal(ReceiveItem)
+
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Save ReceiveItem to State
+
+	err = stub.PutState(itemId, ReceiveItemJSONasBytes)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	err = stub.PutState("ReceiveItemFU", ReceiveItemJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Return Success
+
+	fmt.Println("Successfully Saved ReceiveItem")
+	return shim.Success(nil)
+}
+
+func (t *SmartContract) addReceiveItemBUSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	var err error
+
+	if len(args) != 31 {
+		return shim.Error("Incorrect Number of Arguments. Expecting 33")
+	}
+
+	fmt.Println("Adding new ReceiveItem")
+
+	// ==== Input sanitation ====
+	if len(args[0]) <= 0 {
+		return shim.Error("1st Argument Must be a Non-Empty String")
+	}
+	if len(args[1]) <= 0 {
+		return shim.Error("2nd Argument Must be a Non-Empty String")
+	}
+	if len(args[2]) <= 0 {
+		return shim.Error("3rd Argument Must be a Non-Empty String")
+	}
+	if len(args[3]) <= 0 {
+		return shim.Error("4th Argument Must be a Non-Empty String")
+	}
+	if len(args[4]) <= 0 {
+		return shim.Error("5th Argument Must be a Non-Empty String")
+	}
+	if len(args[5]) <= 0 {
+		return shim.Error("6th Argument Must be a Non-Empty String")
+	}
+	if len(args[6]) <= 0 {
+		return shim.Error("7th Argument Must be a Non-Empty String")
+	}
+	if len(args[7]) <= 0 {
+		return shim.Error("8th Argument Must be a Non-Empty String")
+	}
+	if len(args[8]) <= 0 {
+		return shim.Error("9th Argument Must be a Non-Empty String")
+	}
+	if len(args[9]) <= 0 {
+		return shim.Error("10th Argument Must be a Non-Empty String")
+	}
+	if len(args[10]) <= 0 {
+		return shim.Error("11th Argument Must be a Non-Empty String")
+	}
+	if len(args[11]) <= 0 {
+		return shim.Error("12th Argument Must be a Non-Empty String")
+	}
+	if len(args[12]) <= 0 {
+		return shim.Error("13th Argument Must be a Non-Empty String")
+	}
+	if len(args[13]) <= 0 {
+		return shim.Error("14th Argument Must be a Non-Empty String")
+	}
+	if len(args[14]) <= 0 {
+		return shim.Error("15th Argument Must be a Non-Empty String")
+	}
+	if len(args[15]) <= 0 {
+		return shim.Error("16th Argument Must be a Non-Empty String")
+	}
+	if len(args[16]) <= 0 {
+		return shim.Error("17th Argument Must be a Non-Empty String")
+	}
+	if len(args[17]) <= 0 {
+		return shim.Error("18th Argument Must be a Non-Empty String")
+	}
+	if len(args[18]) <= 0 {
+		return shim.Error("19th Argument Must be a Non-Empty String")
+	}
+	if len(args[19]) <= 0 {
+		return shim.Error("20th Argument Must be a Non-Empty String")
+	}
+	if len(args[20]) <= 0 {
+		return shim.Error("21th Argument Must be a Non-Empty String")
+	}
+	if len(args[21]) <= 0 {
+		return shim.Error("22th Argument Must be a Non-Empty String")
+	}
+	if len(args[22]) <= 0 {
+		return shim.Error("23th Argument Must be a Non-Empty String")
+	}
+	if len(args[23]) <= 0 {
+		return shim.Error("24th Argument Must be a Non-Empty String")
+	}
+	if len(args[24]) <= 0 {
+		return shim.Error("25th Argument Must be a Non-Empty String")
+	}
+	if len(args[25]) <= 0 {
+		return shim.Error("26th Argument Must be a Non-Empty String")
+	}
+	if len(args[26]) <= 0 {
+		return shim.Error("27th Argument Must be a Non-Empty String")
+	}
+	if len(args[27]) <= 0 {
+		return shim.Error("28th Argument Must be a Non-Empty String")
+	}
+	if len(args[28]) <= 0 {
+		return shim.Error("29th Argument Must be a Non-Empty String")
+	}
+	if len(args[29]) <= 0 {
+		return shim.Error("29th Argument Must be a Non-Empty String")
+	}
+	if len(args[30]) <= 0 {
+		return shim.Error("29th Argument Must be a Non-Empty String")
+	}
+
+	itemId := args[0]
+	currentQty := args[1]
+	requestedQty := args[2]
+	receivedQty := args[3]
+	bonusQty := args[4]
+	batchNumber := args[5]
+	lotNumber := args[6]
+	expiryDate := args[7]
+	unit := args[8]
+	discount := args[9]
+	unitDiscount := args[10]
+	discountAmount := args[11]
+	tax := args[12]
+	taxAmount := args[13]
+	finalUnitPrice := args[14]
+	subTotal := args[15]
+	discountAmount2 := args[16]
+	totalPrice := args[17]
+	invoice := args[18]
+	dateInvoice := args[19]
+	dateReceived := args[20]
+	notes := args[21]
+	createdAt := args[22]
+	updatedAt := args[23]
+	replenishmentRequestId := args[24]
+	replenishmentRequestItemId := args[25]
+	qualityRate := args[26]
+	batchNumberArr := args[27]
+	expiryDateArr := args[28]
+	quantity := args[29]
+	price := args[30]
+
+	// ======Check if ReceiveItem Already exists
+
+	ReceiveItemAsBytes, err := stub.GetState(itemId)
+	if err != nil {
+		return shim.Error("Transaction Failed with Error: " + err.Error())
+	} else if ReceiveItemAsBytes != nil {
+		return shim.Error("The Inserted ReceiveItem ID already Exists: " + itemId)
+	}
+
+	// ===== Create ReceiveItem Object and Marshal to JSON
+
+	objectType := "ReceiveItemBU"
+	ReceiveItem := &ReceiveItemBUSchema{objectType, itemId, currentQty, requestedQty, receivedQty, bonusQty, batchNumber, lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal, discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, replenishmentRequestId, replenishmentRequestItemId, qualityRate, BatchArray{
+		Batch{
+			BatchNumber: batchNumberArr,
+			ExpiryDate:  expiryDateArr,
+			Quantity:    quantity,
+			Price:       price,
+		}}}
+	ReceiveItemJSONasBytes, err := json.Marshal(ReceiveItem)
+
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Save ReceiveItem to State
+
+	err = stub.PutState(itemId, ReceiveItemJSONasBytes)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	err = stub.PutState("ReceiveItemBU", ReceiveItemJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Return Success
+
+	fmt.Println("Successfully Saved ReceiveItem")
+	return shim.Success(nil)
+}
+
 func (t *SmartContract) queryReceiveItem(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	if len(args) < 1 {
@@ -1475,6 +2225,42 @@ func (t *SmartContract) queryReceiveItem(stub shim.ChaincodeStubInterface, args 
 	itemId := args[0]
 
 	queryString := fmt.Sprintf("{\"selector\":{\"Type\":\"ReceiveItem\",\"itemId\":\"%s\"}}", itemId)
+
+	queryResults, err := getQueryResultForQueryString(stub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	return shim.Success(queryResults)
+}
+
+func (t *SmartContract) queryReceiveItemFU(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	if len(args) < 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	itemId := args[0]
+
+	queryString := fmt.Sprintf("{\"selector\":{\"Type\":\"ReceiveItemFU\",\"itemId\":\"%s\"}}", itemId)
+
+	queryResults, err := getQueryResultForQueryString(stub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	return shim.Success(queryResults)
+}
+
+func (t *SmartContract) queryReceiveItemBU(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	if len(args) < 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	itemId := args[0]
+
+	queryString := fmt.Sprintf("{\"selector\":{\"Type\":\"ReceiveItemBU\",\"itemId\":\"%s\"}}", itemId)
 
 	queryResults, err := getQueryResultForQueryString(stub, queryString)
 	if err != nil {
@@ -1627,7 +2413,7 @@ func (t *SmartContract) addStaff(stub shim.ChaincodeStubInterface, args []string
 
 	var err error
 
-	if len(args) != 15 {
+	if len(args) != 16 {
 		return shim.Error("Incorrect Number of Aruments. Expecting 14")
 	}
 
@@ -1680,35 +2466,36 @@ func (t *SmartContract) addStaff(stub shim.ChaincodeStubInterface, args []string
 		return shim.Error("14th Argument Must be a Non-Empty String")
 	}
 
-	staffTypeId := args[0]
-	firstName := args[1]
-	lastName := args[2]
-	designation := args[3]
-	contactNumber := args[4]
-	identificationNumber := args[5]
-	email := args[6]
-	password := args[7]
-	gender := args[8]
-	dob := args[9]
-	address := args[10]
-	functionalUnit := args[11]
-	systemAdminId := args[12]
-	status := args[13]
-	routes := strings.Split(args[14], ",")
+	staffId := args[0]
+	staffTypeId := args[1]
+	firstName := args[2]
+	lastName := args[3]
+	designation := args[4]
+	contactNumber := args[5]
+	identificationNumber := args[6]
+	email := args[7]
+	password := args[8]
+	gender := args[9]
+	dob := args[10]
+	address := args[11]
+	functionalUnit := args[12]
+	systemAdminId := args[13]
+	status := args[14]
+	routes := strings.Split(args[15], ",")
 
 	// ======Check if PurchaseOrder Already exists
 
-	PurchaseOrderAsBytes, err := stub.GetState(staffTypeId)
+	PurchaseOrderAsBytes, err := stub.GetState(staffId)
 	if err != nil {
 		return shim.Error("Transaction Failed with Error: " + err.Error())
 	} else if PurchaseOrderAsBytes != nil {
-		return shim.Error("The Inserted staffTypeId ID already Exists: " + staffTypeId)
+		return shim.Error("The Inserted staffTypeId ID already Exists: " + staffId)
 	}
 
 	// ===== Create PurchaseOrder Object and Marshal to JSON
 
 	objectType := "Staff"
-	Staff := &Staff{objectType, staffTypeId, firstName, lastName, designation, contactNumber, identificationNumber, email, password, gender, dob, address, functionalUnit, systemAdminId, status, routes}
+	Staff := &Staff{objectType, staffId, staffTypeId, firstName, lastName, designation, contactNumber, identificationNumber, email, password, gender, dob, address, functionalUnit, systemAdminId, status, routes}
 	PurchaseOrderJSONasBytes, err := json.Marshal(Staff)
 
 	if err != nil {
@@ -1717,7 +2504,7 @@ func (t *SmartContract) addStaff(stub shim.ChaincodeStubInterface, args []string
 
 	// ======= Save PurchaseOrder to State
 
-	err = stub.PutState(staffTypeId, PurchaseOrderJSONasBytes)
+	err = stub.PutState(staffId, PurchaseOrderJSONasBytes)
 	if err != nil {
 		return shim.Error(err.Error())
 	}
@@ -1739,9 +2526,9 @@ func (t *SmartContract) queryStaff(stub shim.ChaincodeStubInterface, args []stri
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
-	staffTypeId := args[0]
+	staffId := args[0]
 
-	queryString := fmt.Sprintf("{\"selector\":{\"Type\":\"Staff\",\"staffTypeId\":\"%s\"}}", staffTypeId)
+	queryString := fmt.Sprintf("{\"selector\":{\"Type\":\"Staff\",\"staffId\":\"%s\"}}", staffId)
 
 	queryResults, err := getQueryResultForQueryString(stub, queryString)
 	if err != nil {
@@ -1910,6 +2697,381 @@ func (t *SmartContract) queryVendor(stub shim.ChaincodeStubInterface, args []str
 	uuid := args[0]
 
 	queryString := fmt.Sprintf("{\"selector\":{\"Type\":\"Vendor\",\"uuid\":\"%s\"}}", uuid)
+
+	queryResults, err := getQueryResultForQueryString(stub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	return shim.Success(queryResults)
+}
+
+func (t *SmartContract) addInternalReturnRequestSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	var err error
+
+	if len(args) != 31 {
+		return shim.Error("Incorrect Number of Arguments. Expecting 33")
+	}
+
+	fmt.Println("Adding new InternalReturnRequestSchema")
+
+	// ==== Input sanitation ====
+	if len(args[0]) <= 0 {
+		return shim.Error("1st Argument Must be a Non-Empty String")
+	}
+	if len(args[1]) <= 0 {
+		return shim.Error("2nd Argument Must be a Non-Empty String")
+	}
+	if len(args[2]) <= 0 {
+		return shim.Error("3rd Argument Must be a Non-Empty String")
+	}
+	if len(args[3]) <= 0 {
+		return shim.Error("4th Argument Must be a Non-Empty String")
+	}
+	if len(args[4]) <= 0 {
+		return shim.Error("5th Argument Must be a Non-Empty String")
+	}
+	if len(args[5]) <= 0 {
+		return shim.Error("6th Argument Must be a Non-Empty String")
+	}
+	if len(args[6]) <= 0 {
+		return shim.Error("7th Argument Must be a Non-Empty String")
+	}
+	if len(args[7]) <= 0 {
+		return shim.Error("8th Argument Must be a Non-Empty String")
+	}
+	if len(args[8]) <= 0 {
+		return shim.Error("9th Argument Must be a Non-Empty String")
+	}
+	if len(args[9]) <= 0 {
+		return shim.Error("10th Argument Must be a Non-Empty String")
+	}
+	if len(args[10]) <= 0 {
+		return shim.Error("11th Argument Must be a Non-Empty String")
+	}
+	if len(args[11]) <= 0 {
+		return shim.Error("12th Argument Must be a Non-Empty String")
+	}
+	if len(args[12]) <= 0 {
+		return shim.Error("13th Argument Must be a Non-Empty String")
+	}
+	if len(args[13]) <= 0 {
+		return shim.Error("14th Argument Must be a Non-Empty String")
+	}
+	if len(args[14]) <= 0 {
+		return shim.Error("15th Argument Must be a Non-Empty String")
+	}
+	if len(args[15]) <= 0 {
+		return shim.Error("16th Argument Must be a Non-Empty String")
+	}
+	if len(args[16]) <= 0 {
+		return shim.Error("17th Argument Must be a Non-Empty String")
+	}
+	if len(args[17]) <= 0 {
+		return shim.Error("18th Argument Must be a Non-Empty String")
+	}
+	if len(args[18]) <= 0 {
+		return shim.Error("19th Argument Must be a Non-Empty String")
+	}
+	if len(args[19]) <= 0 {
+		return shim.Error("20th Argument Must be a Non-Empty String")
+	}
+	if len(args[20]) <= 0 {
+		return shim.Error("21th Argument Must be a Non-Empty String")
+	}
+	if len(args[21]) <= 0 {
+		return shim.Error("22th Argument Must be a Non-Empty String")
+	}
+	if len(args[22]) <= 0 {
+		return shim.Error("23th Argument Must be a Non-Empty String")
+	}
+	if len(args[23]) <= 0 {
+		return shim.Error("24th Argument Must be a Non-Empty String")
+	}
+	if len(args[24]) <= 0 {
+		return shim.Error("25th Argument Must be a Non-Empty String")
+	}
+	if len(args[25]) <= 0 {
+		return shim.Error("26th Argument Must be a Non-Empty String")
+	}
+	if len(args[26]) <= 0 {
+		return shim.Error("27th Argument Must be a Non-Empty String")
+	}
+	if len(args[27]) <= 0 {
+		return shim.Error("28th Argument Must be a Non-Empty String")
+	}
+	if len(args[28]) <= 0 {
+		return shim.Error("29th Argument Must be a Non-Empty String")
+	}
+	if len(args[29]) <= 0 {
+		return shim.Error("29th Argument Must be a Non-Empty String")
+	}
+	if len(args[30]) <= 0 {
+		return shim.Error("29th Argument Must be a Non-Empty String")
+	}
+
+	returnRequestNo := args[0]
+	generatedBy := args[1]
+	dateGenerated := args[2]
+	expiryDate := args[3]
+	to := args[4]
+	from := args[5]
+	currentQty := args[6]
+	returnedQty := args[7]
+	itemId := args[8]
+	description := args[9]
+	fuId := args[10]
+	reason := args[11]
+	reasonDetail := args[12]
+	buId := args[13]
+	causedBy := args[14]
+	totalDamageCost := args[15]
+	date := args[16]
+	itemCostPerUnit := args[17]
+	status := args[18]
+	replenishmentRequestBU := args[19]
+	replenishmentRequestFU := args[20]
+	approvedBy := args[21]
+	commentNote := args[22]
+	createdAt := args[23]
+	updatedAt := args[24]
+	batchNo := args[25]
+	batchNumber := args[26]
+	expiryDatePerBatch := args[27]
+	receivedQtyPerBatch := args[28]
+	returnedQtyPerBatch := args[29]
+	price := args[30]
+
+	// ======Check if ReceiveItem Already exists
+
+	ReceiveItemAsBytes, err := stub.GetState(returnRequestNo)
+	if err != nil {
+		return shim.Error("Transaction Failed with Error: " + err.Error())
+	} else if ReceiveItemAsBytes != nil {
+		return shim.Error("The Inserted ReceiveItem ID already Exists: " + returnRequestNo)
+	}
+
+	// ===== Create ReceiveItem Object and Marshal to JSON
+
+	objectType := "InternalReturnRequest"
+	object := "DamageReport"
+	ReceiveItem := &InternalReturnRequestSchema{objectType, returnRequestNo, generatedBy, dateGenerated, expiryDate, to, from, currentQty, returnedQty, itemId, description, fuId, reason, reasonDetail, buId, DamageReport{object, causedBy, totalDamageCost, date, itemCostPerUnit}, status, replenishmentRequestBU, replenishmentRequestFU, approvedBy, commentNote, createdAt, updatedAt, batchNo, ReturnBatchArray{
+		ReturnBatch{
+			BatchNumber:         batchNumber,
+			ExpiryDatePerBatch:  expiryDatePerBatch,
+			ReceivedQtyPerBatch: receivedQtyPerBatch,
+			ReturnedQtyPerBatch: returnedQtyPerBatch,
+			Price:               price,
+		}}}
+	ReceiveItemJSONasBytes, err := json.Marshal(ReceiveItem)
+
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Save ReceiveItem to State
+
+	err = stub.PutState(returnRequestNo, ReceiveItemJSONasBytes)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	err = stub.PutState("InternalReturnRequest", ReceiveItemJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Return Success
+
+	fmt.Println("Successfully Saved ReceiveItem")
+	return shim.Success(nil)
+}
+
+func (t *SmartContract) addExternalReturnRequestSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	var err error
+
+	if len(args) != 25 {
+		return shim.Error("Incorrect Number of Arguments. Expecting 33")
+	}
+
+	fmt.Println("Adding new ExternalReturnRequestSchema")
+
+	// ==== Input sanitation ====
+	if len(args[0]) <= 0 {
+		return shim.Error("1st Argument Must be a Non-Empty String")
+	}
+	if len(args[1]) <= 0 {
+		return shim.Error("2nd Argument Must be a Non-Empty String")
+	}
+	if len(args[2]) <= 0 {
+		return shim.Error("3rd Argument Must be a Non-Empty String")
+	}
+	if len(args[3]) <= 0 {
+		return shim.Error("4th Argument Must be a Non-Empty String")
+	}
+	if len(args[4]) <= 0 {
+		return shim.Error("5th Argument Must be a Non-Empty String")
+	}
+	if len(args[5]) <= 0 {
+		return shim.Error("6th Argument Must be a Non-Empty String")
+	}
+	if len(args[6]) <= 0 {
+		return shim.Error("7th Argument Must be a Non-Empty String")
+	}
+	if len(args[7]) <= 0 {
+		return shim.Error("8th Argument Must be a Non-Empty String")
+	}
+	if len(args[8]) <= 0 {
+		return shim.Error("9th Argument Must be a Non-Empty String")
+	}
+	if len(args[9]) <= 0 {
+		return shim.Error("10th Argument Must be a Non-Empty String")
+	}
+	if len(args[10]) <= 0 {
+		return shim.Error("11th Argument Must be a Non-Empty String")
+	}
+	if len(args[11]) <= 0 {
+		return shim.Error("12th Argument Must be a Non-Empty String")
+	}
+	if len(args[12]) <= 0 {
+		return shim.Error("13th Argument Must be a Non-Empty String")
+	}
+	if len(args[13]) <= 0 {
+		return shim.Error("14th Argument Must be a Non-Empty String")
+	}
+	if len(args[14]) <= 0 {
+		return shim.Error("15th Argument Must be a Non-Empty String")
+	}
+	if len(args[15]) <= 0 {
+		return shim.Error("16th Argument Must be a Non-Empty String")
+	}
+	if len(args[16]) <= 0 {
+		return shim.Error("17th Argument Must be a Non-Empty String")
+	}
+	if len(args[17]) <= 0 {
+		return shim.Error("18th Argument Must be a Non-Empty String")
+	}
+	if len(args[18]) <= 0 {
+		return shim.Error("19th Argument Must be a Non-Empty String")
+	}
+	if len(args[19]) <= 0 {
+		return shim.Error("20th Argument Must be a Non-Empty String")
+	}
+	if len(args[20]) <= 0 {
+		return shim.Error("21th Argument Must be a Non-Empty String")
+	}
+	if len(args[21]) <= 0 {
+		return shim.Error("22th Argument Must be a Non-Empty String")
+	}
+	if len(args[22]) <= 0 {
+		return shim.Error("23th Argument Must be a Non-Empty String")
+	}
+	if len(args[23]) <= 0 {
+		return shim.Error("24th Argument Must be a Non-Empty String")
+	}
+	if len(args[24]) <= 0 {
+		return shim.Error("25th Argument Must be a Non-Empty String")
+	}
+
+	returnRequestNo := args[0]
+	generatedBy := args[1]
+	generated := args[2]
+	dateGenerated := args[3]
+	expiryDate := args[4]
+	returnedQty := args[5]
+	itemId := args[6]
+	prId := args[7]
+	description := args[8]
+	reason := args[9]
+	reasonDetail := args[10]
+	causedBy := args[11]
+	totalDamageCost := args[12]
+	date := args[13]
+	itemCostPerUnit := args[14]
+	status := args[15]
+	approvedBy := args[16]
+	commentNote := args[17]
+	inProgressTime := args[18]
+	createdAt := args[19]
+	updatedAt := args[20]
+	batchNumber := args[21]
+	expiryDateArr := args[22]
+	quantity := args[23]
+	price := args[24]
+
+	// ======Check if ReceiveItem Already exists
+
+	ReceiveItemAsBytes, err := stub.GetState(returnRequestNo)
+	if err != nil {
+		return shim.Error("Transaction Failed with Error: " + err.Error())
+	} else if ReceiveItemAsBytes != nil {
+		return shim.Error("The Inserted ReceiveItem ID already Exists: " + returnRequestNo)
+	}
+
+	// ===== Create ReceiveItem Object and Marshal to JSON
+
+	objectType := "ExternalReturnRequest"
+	object := "DamageReport"
+	ReceiveItem := &ExternalReturnRequestSchema{objectType, returnRequestNo, generatedBy, generated, dateGenerated, expiryDate, returnedQty, itemId, prId, description, reason, reasonDetail, DamageReport{object, causedBy, totalDamageCost, date, itemCostPerUnit}, status, approvedBy, commentNote, inProgressTime, createdAt, updatedAt, BatchArray{
+		Batch{
+			BatchNumber: batchNumber,
+			ExpiryDate:  expiryDateArr,
+			Quantity:    quantity,
+			Price:       price,
+		}}}
+	ReceiveItemJSONasBytes, err := json.Marshal(ReceiveItem)
+
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Save ReceiveItem to State
+
+	err = stub.PutState(returnRequestNo, ReceiveItemJSONasBytes)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	err = stub.PutState("ExternalReturnRequest", ReceiveItemJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Return Success
+
+	fmt.Println("Successfully Saved ReceiveItem")
+	return shim.Success(nil)
+}
+
+func (t *SmartContract) queryInternalReturnRequest(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	if len(args) < 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	returnRequestNo := args[0]
+
+	queryString := fmt.Sprintf("{\"selector\":{\"Type\":\"InternalReturnRequest\",\"returnRequestNo\":\"%s\"}}", returnRequestNo)
+
+	queryResults, err := getQueryResultForQueryString(stub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	return shim.Success(queryResults)
+}
+
+func (t *SmartContract) queryExternalReturnRequest(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	if len(args) < 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	returnRequestNo := args[0]
+
+	queryString := fmt.Sprintf("{\"selector\":{\"Type\":\"ExternalReturnRequest\",\"returnRequestNo\":\"%s\"}}", returnRequestNo)
 
 	queryResults, err := getQueryResultForQueryString(stub, queryString)
 	if err != nil {
@@ -2896,6 +4058,206 @@ func (t *SmartContract) updateReceiveItem(stub shim.ChaincodeStubInterface, args
 	return shim.Success(nil)
 }
 
+func (t *SmartContract) updateReceiveItemFU(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	if len(args) < 29 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	itemId := args[0]
+	currentQty := args[1]
+	requestedQty := args[2]
+	receivedQty := args[3]
+	bonusQty := args[4]
+	batchNumber := args[5]
+	lotNumber := args[6]
+	expiryDate := args[7]
+	unit := args[8]
+	discount := args[9]
+	unitDiscount := args[10]
+	discountAmount := args[11]
+	tax := args[12]
+	taxAmount := args[13]
+	finalUnitPrice := args[14]
+	subTotal := args[15]
+	discountAmount2 := args[16]
+	totalPrice := args[17]
+	invoice := args[18]
+	dateInvoice := args[19]
+	dateReceived := args[20]
+	notes := args[21]
+	createdAt := args[22]
+	updatedAt := args[23]
+	replenishmentRequestId := args[24]
+	batchNumberArr := args[25]
+	expiryDateArr := args[26]
+	quantity := args[27]
+	price := args[28]
+
+	fmt.Println("- start   ", itemId, currentQty, requestedQty, receivedQty, bonusQty, batchNumber,
+		lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal,
+		discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, replenishmentRequestId,
+		batchNumberArr, expiryDateArr, quantity, price)
+
+	ReceiveItemAsBytes, err := stub.GetState(itemId)
+	if err != nil {
+		return shim.Error("Failed to get status:" + err.Error())
+	} else if ReceiveItemAsBytes == nil {
+		return shim.Error("ReceiveItem does not exist")
+	}
+
+	ReceiveItemToUpdate := ReceiveItemFUSchema{}
+	err = json.Unmarshal(ReceiveItemAsBytes, &ReceiveItemToUpdate) //unmarshal it aka JSON.parse()
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	ReceiveItemToUpdate.CurrentQty = currentQty
+	ReceiveItemToUpdate.RequestedQty = requestedQty
+	ReceiveItemToUpdate.ReceivedQty = receivedQty
+	ReceiveItemToUpdate.BonusQty = bonusQty
+	ReceiveItemToUpdate.BatchNumber = batchNumber
+	ReceiveItemToUpdate.LotNumber = lotNumber
+	ReceiveItemToUpdate.ExpiryDate = expiryDate
+	ReceiveItemToUpdate.Unit = unit
+	ReceiveItemToUpdate.Discount = discount
+	ReceiveItemToUpdate.UnitDiscount = unitDiscount
+	ReceiveItemToUpdate.DiscountAmount = discountAmount
+	ReceiveItemToUpdate.Tax = tax
+	ReceiveItemToUpdate.TaxAmount = taxAmount
+	ReceiveItemToUpdate.FinalUnitPrice = finalUnitPrice
+	ReceiveItemToUpdate.SubTotal = subTotal
+	ReceiveItemToUpdate.DiscountAmount2 = discountAmount2
+	ReceiveItemToUpdate.TotalPrice = totalPrice
+	ReceiveItemToUpdate.Invoice = invoice
+	ReceiveItemToUpdate.DateInvoice = dateInvoice
+	ReceiveItemToUpdate.DateReceived = dateReceived
+	ReceiveItemToUpdate.Notes = notes
+	ReceiveItemToUpdate.CreatedAt = createdAt
+	ReceiveItemToUpdate.UpdatedAt = updatedAt
+	ReceiveItemToUpdate.ReplenishmentRequestId = replenishmentRequestId
+	ReceiveItemToUpdate.BatchArray = append(ReceiveItemToUpdate.BatchArray, Batch{
+		BatchNumber: batchNumberArr,
+		ExpiryDate:  expiryDateArr,
+		Quantity:    quantity,
+		Price:       price,
+	})
+	ReceiveItemJSONasBytes, _ := json.Marshal(ReceiveItemToUpdate)
+	err = stub.PutState(itemId, ReceiveItemJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	err = stub.PutState("ReceiveItemFU", ReceiveItemJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	fmt.Println("- end  (success)")
+	return shim.Success(nil)
+}
+
+func (t *SmartContract) updateReceiveItemBU(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	if len(args) < 31 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	itemId := args[0]
+	currentQty := args[1]
+	requestedQty := args[2]
+	receivedQty := args[3]
+	bonusQty := args[4]
+	batchNumber := args[5]
+	lotNumber := args[6]
+	expiryDate := args[7]
+	unit := args[8]
+	discount := args[9]
+	unitDiscount := args[10]
+	discountAmount := args[11]
+	tax := args[12]
+	taxAmount := args[13]
+	finalUnitPrice := args[14]
+	subTotal := args[15]
+	discountAmount2 := args[16]
+	totalPrice := args[17]
+	invoice := args[18]
+	dateInvoice := args[19]
+	dateReceived := args[20]
+	notes := args[21]
+	createdAt := args[22]
+	updatedAt := args[23]
+	replenishmentRequestId := args[24]
+	replenishmentRequestItemId := args[25]
+	qualityRate := args[26]
+	batchNumberArr := args[27]
+	expiryDateArr := args[28]
+	quantity := args[29]
+	price := args[30]
+
+	fmt.Println("- start   ", itemId, currentQty, requestedQty, receivedQty, bonusQty, batchNumber,
+		lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal,
+		discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, replenishmentRequestId,
+		replenishmentRequestItemId, qualityRate, batchNumberArr, expiryDateArr, quantity, price)
+
+	ReceiveItemAsBytes, err := stub.GetState(itemId)
+	if err != nil {
+		return shim.Error("Failed to get status:" + err.Error())
+	} else if ReceiveItemAsBytes == nil {
+		return shim.Error("ReceiveItem does not exist")
+	}
+
+	ReceiveItemToUpdate := ReceiveItemBUSchema{}
+	err = json.Unmarshal(ReceiveItemAsBytes, &ReceiveItemToUpdate) //unmarshal it aka JSON.parse()
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	ReceiveItemToUpdate.CurrentQty = currentQty
+	ReceiveItemToUpdate.RequestedQty = requestedQty
+	ReceiveItemToUpdate.ReceivedQty = receivedQty
+	ReceiveItemToUpdate.BonusQty = bonusQty
+	ReceiveItemToUpdate.BatchNumber = batchNumber
+	ReceiveItemToUpdate.LotNumber = lotNumber
+	ReceiveItemToUpdate.ExpiryDate = expiryDate
+	ReceiveItemToUpdate.Unit = unit
+	ReceiveItemToUpdate.Discount = discount
+	ReceiveItemToUpdate.UnitDiscount = unitDiscount
+	ReceiveItemToUpdate.DiscountAmount = discountAmount
+	ReceiveItemToUpdate.Tax = tax
+	ReceiveItemToUpdate.TaxAmount = taxAmount
+	ReceiveItemToUpdate.FinalUnitPrice = finalUnitPrice
+	ReceiveItemToUpdate.SubTotal = subTotal
+	ReceiveItemToUpdate.DiscountAmount2 = discountAmount2
+	ReceiveItemToUpdate.TotalPrice = totalPrice
+	ReceiveItemToUpdate.Invoice = invoice
+	ReceiveItemToUpdate.DateInvoice = dateInvoice
+	ReceiveItemToUpdate.DateReceived = dateReceived
+	ReceiveItemToUpdate.Notes = notes
+	ReceiveItemToUpdate.CreatedAt = createdAt
+	ReceiveItemToUpdate.UpdatedAt = updatedAt
+	ReceiveItemToUpdate.ReplenishmentRequestId = replenishmentRequestId
+	ReceiveItemToUpdate.ReplenishmentRequestItemId = replenishmentRequestItemId
+	ReceiveItemToUpdate.QualityRate = qualityRate
+	ReceiveItemToUpdate.BatchArray = append(ReceiveItemToUpdate.BatchArray, Batch{
+		BatchNumber: batchNumberArr,
+		ExpiryDate:  expiryDateArr,
+		Quantity:    quantity,
+		Price:       price,
+	})
+	ReceiveItemJSONasBytes, _ := json.Marshal(ReceiveItemToUpdate)
+	err = stub.PutState(itemId, ReceiveItemJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	err = stub.PutState("ReceiveItemBU", ReceiveItemJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	fmt.Println("- end  (success)")
+	return shim.Success(nil)
+}
+
 func (t *SmartContract) getHistory(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	if len(args) < 1 {
@@ -2967,28 +4329,29 @@ func (t *SmartContract) updateStaff(stub shim.ChaincodeStubInterface, args []str
 		return shim.Error("Incorrect number of arguments. Expecting 14")
 	}
 
-	staffTypeId := args[0]
-	firstName := args[1]
-	lastName := args[2]
-	designation := args[3]
-	contactNumber := args[4]
-	identificationNumber := args[5]
-	email := args[6]
-	password := args[7]
-	gender := args[8]
-	dob := args[9]
-	address := args[10]
-	functionalUnit := args[11]
-	systemAdminId := args[12]
-	status := args[13]
-	routes := strings.Split(args[14], ",")
-	fmt.Println("- start  ", staffTypeId, firstName, lastName, designation, contactNumber, identificationNumber, email, password, gender, dob, address, functionalUnit, systemAdminId, status, routes)
+	staffId := args[0]
+	staffTypeId := args[1]
+	firstName := args[2]
+	lastName := args[3]
+	designation := args[4]
+	contactNumber := args[5]
+	identificationNumber := args[6]
+	email := args[7]
+	password := args[8]
+	gender := args[9]
+	dob := args[10]
+	address := args[11]
+	functionalUnit := args[12]
+	systemAdminId := args[13]
+	status := args[14]
+	routes := strings.Split(args[15], ",")
+	fmt.Println("- start  ", staffId, staffTypeId, firstName, lastName, designation, contactNumber, identificationNumber, email, password, gender, dob, address, functionalUnit, systemAdminId, status, routes)
 
-	PurchaseOrderAsBytes, err := stub.GetState(staffTypeId)
+	PurchaseOrderAsBytes, err := stub.GetState(staffId)
 	if err != nil {
 		return shim.Error("Failed to get status:" + err.Error())
 	} else if PurchaseOrderAsBytes == nil {
-		return shim.Error("staffTypeId does not exist")
+		return shim.Error("staffId does not exist")
 	}
 
 	PurchaseOrderToUpdate := Staff{}
@@ -2997,6 +4360,7 @@ func (t *SmartContract) updateStaff(stub shim.ChaincodeStubInterface, args []str
 		return shim.Error(err.Error())
 	}
 
+	PurchaseOrderToUpdate.StaffTypeId = staffTypeId                   //change the status
 	PurchaseOrderToUpdate.FirstName = firstName                       //change the status
 	PurchaseOrderToUpdate.LastName = lastName                         //change the status
 	PurchaseOrderToUpdate.Designation = designation                   //change the status
@@ -3013,7 +4377,7 @@ func (t *SmartContract) updateStaff(stub shim.ChaincodeStubInterface, args []str
 	PurchaseOrderToUpdate.Routes = append(PurchaseOrderToUpdate.Routes, routes...) //change the status
 
 	PurchaseOrderJSONasBytes, _ := json.Marshal(PurchaseOrderToUpdate)
-	err = stub.PutState(staffTypeId, PurchaseOrderJSONasBytes) //rewrite the marble
+	err = stub.PutState(staffId, PurchaseOrderJSONasBytes) //rewrite the marble
 	if err != nil {
 		return shim.Error(err.Error())
 	}
@@ -3107,6 +4471,299 @@ func (t *SmartContract) updateVendor(stub shim.ChaincodeStubInterface, args []st
 	}
 
 	err = stub.PutState("Vendor", PurchaseOrderJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	fmt.Println("- end  (success)")
+	return shim.Success(nil)
+}
+
+func (t *SmartContract) updateItem(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	if len(args) < 30 {
+		return shim.Error("Incorrect number of arguments. Expecting 14")
+	}
+
+	name := args[0]
+	description := args[1]
+	itemCode := args[2]
+	form := args[3]
+	drugAllergy := strings.Split(args[4], ",")
+	receiptUnit := args[5]
+	issueUnit := args[6]
+	vendorId := args[7]
+	purchasePrice := args[8]
+	minimumLevel := args[9]
+	maximumLevel := args[10]
+	reorderLevel := args[11]
+	cls := args[12]
+	medClass := args[13]
+	subClass := args[14]
+	grandSubClass := args[15]
+	comments := args[16]
+	createdAt := args[17]
+	updatedAt := args[18]
+	receiptUnitCost := args[19]
+	issueUnitCost := args[20]
+	scientificName := args[21]
+	tradeName := args[22]
+	temprature := args[23]
+	humidity := args[24]
+	lightSensitive := args[25]
+	resuableItem := args[26]
+	storageCondition := args[27]
+	expiration := args[28]
+	tax := args[29]
+	fmt.Println("- start  ", name, description, itemCode, form, drugAllergy, receiptUnit, issueUnit, vendorId, purchasePrice,
+		minimumLevel, maximumLevel, reorderLevel, cls, medClass, subClass, grandSubClass, comments, createdAt, updatedAt,
+		receiptUnitCost, issueUnitCost, scientificName, tradeName, temprature, humidity, lightSensitive, resuableItem,
+		storageCondition, expiration, tax)
+
+	PurchaseOrderAsBytes, err := stub.GetState(itemCode)
+	if err != nil {
+		return shim.Error("Failed to get status:" + err.Error())
+	} else if PurchaseOrderAsBytes == nil {
+		return shim.Error("item does not exist")
+	}
+
+	PurchaseOrderToUpdate := ItemSchema{}
+	err = json.Unmarshal(PurchaseOrderAsBytes, &PurchaseOrderToUpdate) //unmarshal it aka JSON.parse()
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	PurchaseOrderToUpdate.Name = name               //change the status
+	PurchaseOrderToUpdate.Description = description //change the status
+	PurchaseOrderToUpdate.Form = form               //change the status
+	PurchaseOrderToUpdate.DrugAllergy = append(PurchaseOrderToUpdate.DrugAllergy, drugAllergy...)
+	PurchaseOrderToUpdate.ReceiptUnit = receiptUnit     //change the status
+	PurchaseOrderToUpdate.IssueUnit = issueUnit         //change the status
+	PurchaseOrderToUpdate.VendorId = vendorId           //change the status
+	PurchaseOrderToUpdate.PurchasePrice = purchasePrice //change the status
+	PurchaseOrderToUpdate.MinimumLevel = minimumLevel   //change the status
+	PurchaseOrderToUpdate.MaximumLevel = maximumLevel
+	PurchaseOrderToUpdate.ReorderLevel = reorderLevel //change the status
+	PurchaseOrderToUpdate.Cls = cls                   //change the status
+	PurchaseOrderToUpdate.MedClass = medClass
+	PurchaseOrderToUpdate.SubClass = subClass
+	PurchaseOrderToUpdate.GrandSubClass = grandSubClass
+	PurchaseOrderToUpdate.Comments = comments
+	PurchaseOrderToUpdate.CreatedAt = createdAt
+	PurchaseOrderToUpdate.UpdatedAt = updatedAt
+	PurchaseOrderToUpdate.ReceiptUnitCost = receiptUnitCost
+	PurchaseOrderToUpdate.IssueUnitCost = issueUnitCost
+	PurchaseOrderToUpdate.ScientificName = scientificName //change the status
+	PurchaseOrderToUpdate.TradeName = tradeName
+	PurchaseOrderToUpdate.Temprature = temprature
+	PurchaseOrderToUpdate.Humidity = humidity
+	PurchaseOrderToUpdate.LightSensitive = lightSensitive
+	PurchaseOrderToUpdate.ResuableItem = resuableItem
+	PurchaseOrderToUpdate.StorageCondition = storageCondition
+	PurchaseOrderToUpdate.Expiration = expiration
+	PurchaseOrderToUpdate.Tax = tax
+
+	PurchaseOrderJSONasBytes, _ := json.Marshal(PurchaseOrderToUpdate)
+	err = stub.PutState(itemCode, PurchaseOrderJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	err = stub.PutState("ItemInfo", PurchaseOrderJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	fmt.Println("- end  (success)")
+	return shim.Success(nil)
+}
+
+func (t *SmartContract) updateInternalReturnRequestSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	if len(args) < 31 {
+		return shim.Error("Incorrect number of arguments. Expecting 14")
+	}
+
+	returnRequestNo := args[0]
+	generatedBy := args[1]
+	dateGenerated := args[2]
+	expiryDate := args[3]
+	to := args[4]
+	from := args[5]
+	currentQty := args[6]
+	returnedQty := args[7]
+	itemId := args[8]
+	description := args[9]
+	fuId := args[10]
+	reason := args[11]
+	reasonDetail := args[12]
+	buId := args[13]
+	causedBy := args[14]
+	totalDamageCost := args[15]
+	date := args[16]
+	itemCostPerUnit := args[17]
+	status := args[18]
+	replenishmentRequestBU := args[19]
+	replenishmentRequestFU := args[20]
+	approvedBy := args[21]
+	commentNote := args[22]
+	createdAt := args[23]
+	updatedAt := args[24]
+	batchNo := args[25]
+	batchNumber := args[26]
+	expiryDatePerBatch := args[27]
+	receivedQtyPerBatch := args[28]
+	returnedQtyPerBatch := args[29]
+	price := args[30]
+	fmt.Println("- start  ", returnRequestNo, generatedBy, dateGenerated, expiryDate, to, from, currentQty, returnedQty,
+		itemId, description, fuId, reason, reasonDetail, buId, causedBy, totalDamageCost, date, itemCostPerUnit, status,
+		replenishmentRequestBU, replenishmentRequestFU, approvedBy, commentNote, createdAt, updatedAt, batchNo, batchNumber,
+		expiryDatePerBatch, receivedQtyPerBatch, returnedQtyPerBatch, price)
+
+	PurchaseOrderAsBytes, err := stub.GetState(returnRequestNo)
+	if err != nil {
+		return shim.Error("Failed to get status:" + err.Error())
+	} else if PurchaseOrderAsBytes == nil {
+		return shim.Error("item does not exist")
+	}
+
+	PurchaseOrderToUpdate := InternalReturnRequestSchema{}
+	err = json.Unmarshal(PurchaseOrderAsBytes, &PurchaseOrderToUpdate) //unmarshal it aka JSON.parse()
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	PurchaseOrderToUpdate.GeneratedBy = generatedBy     //change the status
+	PurchaseOrderToUpdate.DateGenerated = dateGenerated //change the status
+	PurchaseOrderToUpdate.ExpiryDate = expiryDate
+	PurchaseOrderToUpdate.To = to                   //change the status
+	PurchaseOrderToUpdate.From = from               //change the status
+	PurchaseOrderToUpdate.CurrentQty = currentQty   //change the status
+	PurchaseOrderToUpdate.ReturnedQty = returnedQty //change the status
+	PurchaseOrderToUpdate.ItemId = itemId           //change the status
+	PurchaseOrderToUpdate.Description = description
+	PurchaseOrderToUpdate.FuId = fuId     //change the status
+	PurchaseOrderToUpdate.Reason = reason //change the status
+	PurchaseOrderToUpdate.ReasonDetail = reasonDetail
+	PurchaseOrderToUpdate.BuId = buId
+	PurchaseOrderToUpdate.DamageReport.CausedBy = causedBy
+	PurchaseOrderToUpdate.DamageReport.TotalDamageCost = totalDamageCost
+	PurchaseOrderToUpdate.DamageReport.Date = date
+	PurchaseOrderToUpdate.DamageReport.ItemCostPerUnit = itemCostPerUnit
+	PurchaseOrderToUpdate.Status = status
+	PurchaseOrderToUpdate.ReplenishmentRequestBU = replenishmentRequestBU //change the status
+	PurchaseOrderToUpdate.ReplenishmentRequestFU = replenishmentRequestFU
+	PurchaseOrderToUpdate.ApprovedBy = approvedBy
+	PurchaseOrderToUpdate.CommentNote = commentNote
+	PurchaseOrderToUpdate.CreatedAt = createdAt
+	PurchaseOrderToUpdate.UpdatedAt = updatedAt
+	PurchaseOrderToUpdate.BatchNo = batchNo
+	PurchaseOrderToUpdate.ReturnBatchArray = append(PurchaseOrderToUpdate.ReturnBatchArray, ReturnBatch{
+		BatchNumber:         batchNumber,
+		ExpiryDatePerBatch:  expiryDatePerBatch,
+		ReceivedQtyPerBatch: receivedQtyPerBatch,
+		ReturnedQtyPerBatch: returnedQtyPerBatch,
+		Price:               price,
+	})
+
+	PurchaseOrderJSONasBytes, _ := json.Marshal(PurchaseOrderToUpdate)
+	err = stub.PutState(returnRequestNo, PurchaseOrderJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	err = stub.PutState("InternalReturnRequest", PurchaseOrderJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	fmt.Println("- end  (success)")
+	return shim.Success(nil)
+}
+
+func (t *SmartContract) updateExternalReturnRequestSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	if len(args) < 25 {
+		return shim.Error("Incorrect number of arguments. Expecting 14")
+	}
+
+	returnRequestNo := args[0]
+	generatedBy := args[1]
+	generated := args[2]
+	dateGenerated := args[3]
+	expiryDate := args[4]
+	returnedQty := args[5]
+	itemId := args[6]
+	prId := args[7]
+	description := args[8]
+	reason := args[9]
+	reasonDetail := args[10]
+	causedBy := args[11]
+	totalDamageCost := args[12]
+	date := args[13]
+	itemCostPerUnit := args[14]
+	status := args[15]
+	approvedBy := args[16]
+	commentNote := args[17]
+	inProgressTime := args[18]
+	createdAt := args[19]
+	updatedAt := args[20]
+	batchNumber := args[21]
+	expiryDateArr := args[22]
+	quantity := args[23]
+	price := args[24]
+	fmt.Println("- start  ", returnRequestNo, generatedBy, generated, dateGenerated, expiryDate, returnedQty,
+		itemId, prId, description, reason, reasonDetail, causedBy, totalDamageCost, date, itemCostPerUnit, status,
+		approvedBy, commentNote, inProgressTime, createdAt, updatedAt, batchNumber,
+		expiryDateArr, quantity, price)
+
+	PurchaseOrderAsBytes, err := stub.GetState(returnRequestNo)
+	if err != nil {
+		return shim.Error("Failed to get status:" + err.Error())
+	} else if PurchaseOrderAsBytes == nil {
+		return shim.Error("item does not exist")
+	}
+
+	PurchaseOrderToUpdate := ExternalReturnRequestSchema{}
+	err = json.Unmarshal(PurchaseOrderAsBytes, &PurchaseOrderToUpdate) //unmarshal it aka JSON.parse()
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	PurchaseOrderToUpdate.GeneratedBy = generatedBy     //change the status
+	PurchaseOrderToUpdate.Generated = generated         //change the status
+	PurchaseOrderToUpdate.DateGenerated = dateGenerated //change the status
+	PurchaseOrderToUpdate.ExpiryDate = expiryDate
+	PurchaseOrderToUpdate.ReturnedQty = returnedQty //change the status
+	PurchaseOrderToUpdate.ItemId = itemId
+	PurchaseOrderToUpdate.PrId = prId //change the status
+	PurchaseOrderToUpdate.Description = description
+	PurchaseOrderToUpdate.Reason = reason //change the status
+	PurchaseOrderToUpdate.ReasonDetail = reasonDetail
+	PurchaseOrderToUpdate.DamageReport.CausedBy = causedBy
+	PurchaseOrderToUpdate.DamageReport.TotalDamageCost = totalDamageCost
+	PurchaseOrderToUpdate.DamageReport.Date = date
+	PurchaseOrderToUpdate.DamageReport.ItemCostPerUnit = itemCostPerUnit
+	PurchaseOrderToUpdate.Status = status
+	PurchaseOrderToUpdate.ApprovedBy = approvedBy
+	PurchaseOrderToUpdate.CommentNote = commentNote
+	PurchaseOrderToUpdate.InProgressTime = inProgressTime
+	PurchaseOrderToUpdate.CreatedAt = createdAt
+	PurchaseOrderToUpdate.UpdatedAt = updatedAt
+	PurchaseOrderToUpdate.BatchArray = append(PurchaseOrderToUpdate.BatchArray, Batch{
+		BatchNumber: batchNumber,
+		ExpiryDate:  expiryDateArr,
+		Quantity:    quantity,
+		Price:       price,
+	})
+
+	PurchaseOrderJSONasBytes, _ := json.Marshal(PurchaseOrderToUpdate)
+	err = stub.PutState(returnRequestNo, PurchaseOrderJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	err = stub.PutState("ExternalReturnRequest", PurchaseOrderJSONasBytes) //rewrite the marble
 	if err != nil {
 		return shim.Error(err.Error())
 	}

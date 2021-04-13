@@ -362,6 +362,106 @@ console.log(req.body);
   }
 });
 
+app.post('/api/addReceiveItemFU', async function (req, res) {
+
+  var request = {
+    chaincodeId: 'khmc',
+    fcn: 'addReceiveItemFUSchema',
+    args: [
+      
+      req.body.itemId,
+      req.body.currentQty,
+      req.body.requestedQty,
+      req.body.receivedQty,
+      req.body.bonusQty,
+      req.body.batchNumber,
+      req.body.lotNumber,
+      req.body.expiryDate,
+      req.body.unit,
+      req.body.discount,
+      req.body.unitDiscount ,
+      req.body.discountAmount ,
+      req.body.tax ,
+      req.body.taxAmount ,
+      req.body.finalUnitPrice ,
+      req.body.subTotal ,
+      req.body.discountAmount2 ,
+      req.body.totalPrice ,
+      req.body.invoice ,
+      req.body.dateInvoice ,
+      req.body.dateReceived ,
+      req.body.notes ,
+      req.body.createdAt ,
+      req.body.updatedAt ,
+      req.body.replenishmentRequestId ,
+      req.body.batchNumberArr ,
+      req.body.expiryDateArr ,
+      req.body.quantity ,
+      req.body.price 
+
+    ]
+  };
+console.log(req.body);
+  let response = await invoke.invokeCreate(request);
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: "The ReceiveItemFU with ID: "+req.body.itemId+ " is stored in the blockchain with " +response.message  });
+    else
+    res.status(response.status).send({ message: response.message});
+  }
+});
+
+app.post('/api/addReceiveItemBU', async function (req, res) {
+
+  var request = {
+    chaincodeId: 'khmc',
+    fcn: 'addReceiveItemBUSchema',
+    args: [
+      
+      req.body.itemId,
+      req.body.currentQty,
+      req.body.requestedQty,
+      req.body.receivedQty,
+      req.body.bonusQty,
+      req.body.batchNumber,
+      req.body.lotNumber,
+      req.body.expiryDate,
+      req.body.unit,
+      req.body.discount,
+      req.body.unitDiscount ,
+      req.body.discountAmount ,
+      req.body.tax ,
+      req.body.taxAmount ,
+      req.body.finalUnitPrice ,
+      req.body.subTotal ,
+      req.body.discountAmount2 ,
+      req.body.totalPrice ,
+      req.body.invoice ,
+      req.body.dateInvoice ,
+      req.body.dateReceived ,
+      req.body.notes ,
+      req.body.createdAt ,
+      req.body.updatedAt ,
+      req.body.replenishmentRequestId ,
+      req.body.replenishmentRequestItemId,
+      req.body.qualityRate,
+      req.body.batchNumberArr ,
+      req.body.expiryDateArr ,
+      req.body.quantity ,
+      req.body.price 
+
+    ]
+  };
+console.log(req.body);
+  let response = await invoke.invokeCreate(request);
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: "The ReceiveItemFU with ID: "+req.body.itemId+ " is stored in the blockchain with " +response.message  });
+    else
+    res.status(response.status).send({ message: response.message});
+  }
+});
+
 app.post('/api/addStaff', async function (req, res) {
 
   var request = {
@@ -369,6 +469,7 @@ app.post('/api/addStaff', async function (req, res) {
     fcn: 'addStaff',
     args: [
 
+      req.body.staffId,
       req.body.staffTypeId,
       req.body.firstName,
       req.body.lastName,
@@ -392,7 +493,156 @@ console.log(req.body);
   let response = await invoke.invokeCreate(request);
   if (response) {
     if(response.status == 200)
-    res.status(response.status).send({ message: "The Staff with ID: "+req.body.staffTypeId+ " is stored in the blockchain with " +response.message  });
+    res.status(response.status).send({ message: "The Staff with ID: "+req.body.staffId+ " is stored in the blockchain with " +response.message  });
+    else
+    res.status(response.status).send({ message: response.message});
+  }
+});
+
+app.post('/api/addItem', async function (req, res) {
+
+  var request = {
+    chaincodeId: 'khmc',
+    fcn: 'addItem',
+    args: [
+
+      req.body.name,
+      req.body.description,
+      req.body.itemCode,
+      req.body.form,
+      req.body.drugAllergy.toString(),
+      req.body.receiptUnit,
+      req.body.issueUnit,
+      req.body.vendorId,
+      req.body.purchasePrice,
+      req.body.minimumLevel,
+      req.body.maximumLevel ,
+      req.body.reorderLevel ,
+      req.body.cls ,
+      req.body.medClass ,
+      req.body.subClass ,
+      req.body.grandSubClass ,
+      req.body.comments ,
+      req.body.createdAt ,
+      req.body.updatedAt ,
+      req.body.receiptUnitCost ,
+      req.body.issueUnitCost ,
+      req.body.scientificName ,
+      req.body.tradeName ,
+      req.body.temprature ,
+      req.body.humidity ,
+      req.body.lightSensitive ,
+      req.body.resuableItem ,
+      req.body.storageCondition ,
+      req.body.expiration ,
+      req.body.tax  
+
+
+    ]
+  };
+console.log(req.body);
+  let response = await invoke.invokeCreate(request);
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: "The Staff with ID: "+req.body.itemCode+ " is stored in the blockchain with " +response.message  });
+    else
+    res.status(response.status).send({ message: response.message});
+  }
+});
+
+app.post('/api/addInternalReturnRequestSchema', async function (req, res) {
+
+  var request = {
+    chaincodeId: 'khmc',
+    fcn: 'addInternalReturnRequestSchema',
+    args: [
+
+      req.body.returnRequestNo,
+      req.body.generatedBy,
+      req.body.dateGenerated,
+      req.body.expiryDate,
+      req.body.to,
+      req.body.from,
+      req.body.currentQty,
+      req.body.returnedQty,
+      req.body.itemId,
+      req.body.description,
+      req.body.fuId ,
+      req.body.reason ,
+      req.body.reasonDetail ,
+      req.body.buId ,
+      req.body.causedBy ,
+      req.body.totalDamageCost ,
+      req.body.date ,
+      req.body.itemCostPerUnit ,
+      req.body.status ,
+      req.body.replenishmentRequestBU ,
+      req.body.replenishmentRequestFU ,
+      req.body.approvedBy ,
+      req.body.commentNote ,
+      req.body.createdAt ,
+      req.body.updatedAt ,
+      req.body.batchNo ,
+      req.body.batchNumber ,
+      req.body.expiryDatePerBatch ,
+      req.body.receivedQtyPerBatch ,
+      req.body.returnedQtyPerBatch ,
+      req.body.price
+
+
+    ]
+  };
+console.log(req.body);
+  let response = await invoke.invokeCreate(request);
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: "The Staff with ID: "+req.body.returnRequestNo+ " is stored in the blockchain with " +response.message  });
+    else
+    res.status(response.status).send({ message: response.message});
+  }
+});
+
+app.post('/api/addExternalReturnRequestSchema', async function (req, res) {
+
+  var request = {
+    chaincodeId: 'khmc',
+    fcn: 'addExternalReturnRequestSchema',
+    args: [
+
+      req.body.returnRequestNo,
+      req.body.generatedBy,
+      req.body.generated,
+      req.body.dateGenerated,
+      req.body.expiryDate,
+      req.body.returnedQty,
+      req.body.itemId,
+      req.body.prId,
+      req.body.description,
+      req.body.reason,
+      req.body.reasonDetail ,
+      req.body.causedBy ,
+      req.body.totalDamageCost ,
+      req.body.date ,
+      req.body.itemCostPerUnit ,
+      req.body.status ,
+      req.body.approvedBy ,
+      req.body.commentNote ,
+      req.body.inProgressTime ,
+      req.body.createdAt ,
+      req.body.updatedAt ,
+      req.body.batchNumber ,
+      req.body.expiryDateArr ,
+      req.body.quantity ,
+      req.body.price
+
+
+    ]
+  };
+console.log(req.body);
+  let response = await invoke.invokeCreate(request);
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: "The Staff with ID: "+req.body.returnRequestNo+ " is stored in the blockchain with " +response.message  });
     else
     res.status(response.status).send({ message: response.message});
   }
@@ -439,6 +689,255 @@ console.log(req.body);
   if (response) {
     if(response.status == 200)
     res.status(response.status).send({ message: "The Vendor with ID: "+req.body.uuid+ " is stored in the blockchain with " +response.message  });
+    else
+    res.status(response.status).send({ message: response.message});
+  }
+});
+
+app.post('/api/updateReceiveItemFU', async function (req, res) {
+
+  var request = {
+    chaincodeId: 'khmc',
+    fcn: 'updateReceiveItemFU',
+    args: [
+      
+      req.body.itemId,
+      req.body.currentQty,
+      req.body.requestedQty,
+      req.body.receivedQty,
+      req.body.bonusQty,
+      req.body.batchNumber,
+      req.body.lotNumber,
+      req.body.expiryDate,
+      req.body.unit,
+      req.body.discount,
+      req.body.unitDiscount ,
+      req.body.discountAmount ,
+      req.body.tax ,
+      req.body.taxAmount ,
+      req.body.finalUnitPrice ,
+      req.body.subTotal ,
+      req.body.discountAmount2 ,
+      req.body.totalPrice ,
+      req.body.invoice ,
+      req.body.dateInvoice ,
+      req.body.dateReceived ,
+      req.body.notes ,
+      req.body.createdAt ,
+      req.body.updatedAt ,
+      req.body.replenishmentRequestId ,
+      req.body.batchNumberArr ,
+      req.body.expiryDateArr ,
+      req.body.quantity ,
+      req.body.price 
+
+    ]
+  };
+console.log(req.body);
+  let response = await invoke.invokeCreate(request);
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: "The ReceiveItemFU with ID: "+req.body.itemId+ " is updated in the blockchain with " +response.message  });
+    else
+    res.status(response.status).send({ message: response.message});
+  }
+});
+
+app.post('/api/updateReceiveItemBU', async function (req, res) {
+
+  var request = {
+    chaincodeId: 'khmc',
+    fcn: 'updateReceiveItemBU',
+    args: [
+      
+      req.body.itemId,
+      req.body.currentQty,
+      req.body.requestedQty,
+      req.body.receivedQty,
+      req.body.bonusQty,
+      req.body.batchNumber,
+      req.body.lotNumber,
+      req.body.expiryDate,
+      req.body.unit,
+      req.body.discount,
+      req.body.unitDiscount ,
+      req.body.discountAmount ,
+      req.body.tax ,
+      req.body.taxAmount ,
+      req.body.finalUnitPrice ,
+      req.body.subTotal ,
+      req.body.discountAmount2 ,
+      req.body.totalPrice ,
+      req.body.invoice ,
+      req.body.dateInvoice ,
+      req.body.dateReceived ,
+      req.body.notes ,
+      req.body.createdAt ,
+      req.body.updatedAt ,
+      req.body.replenishmentRequestId ,
+      req.body.replenishmentRequestItemId,
+      req.body.qualityRate,
+      req.body.batchNumberArr ,
+      req.body.expiryDateArr ,
+      req.body.quantity ,
+      req.body.price 
+
+    ]
+  };
+console.log(req.body);
+  let response = await invoke.invokeCreate(request);
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: "The ReceiveItemFU with ID: "+req.body.itemId+ " is updated in the blockchain with " +response.message  });
+    else
+    res.status(response.status).send({ message: response.message});
+  }
+});
+
+app.post('/api/updateItem', async function (req, res) {
+
+  var request = {
+    chaincodeId: 'khmc',
+    fcn: 'updateItem',
+    args: [
+
+      req.body.name,
+      req.body.description,
+      req.body.itemCode,
+      req.body.form,
+      req.body.drugAllergy.toString(),
+      req.body.receiptUnit,
+      req.body.issueUnit,
+      req.body.vendorId,
+      req.body.purchasePrice,
+      req.body.minimumLevel,
+      req.body.maximumLevel ,
+      req.body.reorderLevel ,
+      req.body.cls ,
+      req.body.medClass ,
+      req.body.subClass ,
+      req.body.grandSubClass ,
+      req.body.comments ,
+      req.body.createdAt ,
+      req.body.updatedAt ,
+      req.body.receiptUnitCost ,
+      req.body.issueUnitCost ,
+      req.body.scientificName ,
+      req.body.tradeName ,
+      req.body.temprature ,
+      req.body.humidity ,
+      req.body.lightSensitive ,
+      req.body.resuableItem ,
+      req.body.storageCondition ,
+      req.body.expiration ,
+      req.body.tax  
+
+
+    ]
+  };
+console.log(req.body);
+  let response = await invoke.invokeCreate(request);
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: "The Staff with ID: "+req.body.itemCode+ " is updated in the blockchain with " +response.message  });
+    else
+    res.status(response.status).send({ message: response.message});
+  }
+});
+
+app.post('/api/updateExternalReturnRequestSchema', async function (req, res) {
+
+  var request = {
+    chaincodeId: 'khmc',
+    fcn: 'updateExternalReturnRequestSchema',
+    args: [
+
+      req.body.returnRequestNo,
+      req.body.generatedBy,
+      req.body.generated,
+      req.body.dateGenerated,
+      req.body.expiryDate,
+      req.body.returnedQty,
+      req.body.itemId,
+      req.body.prId,
+      req.body.description,
+      req.body.reason,
+      req.body.reasonDetail ,
+      req.body.causedBy ,
+      req.body.totalDamageCost ,
+      req.body.date ,
+      req.body.itemCostPerUnit ,
+      req.body.status ,
+      req.body.approvedBy ,
+      req.body.commentNote ,
+      req.body.inProgressTime ,
+      req.body.createdAt ,
+      req.body.updatedAt ,
+      req.body.batchNumber ,
+      req.body.expiryDateArr ,
+      req.body.quantity ,
+      req.body.price
+
+
+    ]
+  };
+console.log(req.body);
+  let response = await invoke.invokeCreate(request);
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: "The Staff with ID: "+req.body.returnRequestNo+ " is updated in the blockchain with " +response.message  });
+    else
+    res.status(response.status).send({ message: response.message});
+  }
+});
+
+app.post('/api/updateInternalReturnRequestSchema', async function (req, res) {
+
+  var request = {
+    chaincodeId: 'khmc',
+    fcn: 'updateInternalReturnRequestSchema',
+    args: [
+
+      req.body.returnRequestNo,
+      req.body.generatedBy,
+      req.body.dateGenerated,
+      req.body.expiryDate,
+      req.body.to,
+      req.body.from,
+      req.body.currentQty,
+      req.body.returnedQty,
+      req.body.itemId,
+      req.body.description,
+      req.body.fuId ,
+      req.body.reason ,
+      req.body.reasonDetail ,
+      req.body.buId ,
+      req.body.causedBy ,
+      req.body.totalDamageCost ,
+      req.body.date ,
+      req.body.itemCostPerUnit ,
+      req.body.status ,
+      req.body.replenishmentRequestBU ,
+      req.body.replenishmentRequestFU ,
+      req.body.approvedBy ,
+      req.body.commentNote ,
+      req.body.createdAt ,
+      req.body.updatedAt ,
+      req.body.batchNo ,
+      req.body.batchNumber ,
+      req.body.expiryDatePerBatch ,
+      req.body.receivedQtyPerBatch ,
+      req.body.returnedQtyPerBatch ,
+      req.body.price
+
+
+    ]
+  };
+console.log(req.body);
+  let response = await invoke.invokeCreate(request);
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: "The Staff with ID: "+req.body.returnRequestNo+ " is updated in the blockchain with " +response.message  });
     else
     res.status(response.status).send({ message: response.message});
   }
@@ -743,6 +1242,7 @@ app.post('/api/updateStaff', async function (req, res) {
     fcn: 'updateStaff',
     args: [
 
+      req.body.staffId,
       req.body.staffTypeId,
       req.body.firstName,
       req.body.lastName,
@@ -766,7 +1266,7 @@ console.log(req.body);
   let response = await invoke.invokeCreate(request);
   if (response) {
     if(response.status == 200)
-    res.status(response.status).send({ message: "The Staff with ID: "+req.body.staffTypeId+ " is Updated in the blockchain with " +response.message  });
+    res.status(response.status).send({ message: "The Staff with ID: "+req.body.staffId+ " is Updated in the blockchain with " +response.message  });
     else
     res.status(response.status).send({ message: response.message});
   }
@@ -1245,13 +1745,108 @@ app.get('/api/queryReceiveItem', async function (req, res) {
   }
 });
 
+app.get('/api/queryItem', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'khmc',
+    fcn: 'queryItem',
+    args: [
+      req.query.itemCode
+    ]
+  };
+  console.log(req.query);
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200)
+      res.status(response.status).send(JSON.parse(response.message));
+    else
+      res.status(response.status).send({ message: response.message });
+  }
+});
+
+app.get('/api/queryInternalReturnRequest', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'khmc',
+    fcn: 'queryInternalReturnRequest',
+    args: [
+      req.query.returnRequestNo
+    ]
+  };
+  console.log(req.query);
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200)
+      res.status(response.status).send(JSON.parse(response.message));
+    else
+      res.status(response.status).send({ message: response.message });
+  }
+});
+
+app.get('/api/queryExternalReturnRequest', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'khmc',
+    fcn: 'queryExternalReturnRequest',
+    args: [
+      req.query.returnRequestNo
+    ]
+  };
+  console.log(req.query);
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200)
+      res.status(response.status).send(JSON.parse(response.message));
+    else
+      res.status(response.status).send({ message: response.message });
+  }
+});
+
+app.get('/api/queryReceiveItemBU', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'khmc',
+    fcn: 'queryReceiveItemBU',
+    args: [
+      req.query.itemId
+    ]
+  };
+  console.log(req.query);
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200)
+      res.status(response.status).send(JSON.parse(response.message));
+    else
+      res.status(response.status).send({ message: response.message });
+  }
+});
+
+app.get('/api/queryReceiveItemFU', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'khmc',
+    fcn: 'queryReceiveItemFU',
+    args: [
+      req.query.itemId
+    ]
+  };
+  console.log(req.query);
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200)
+      res.status(response.status).send(JSON.parse(response.message));
+    else
+      res.status(response.status).send({ message: response.message });
+  }
+});
+
 app.get('/api/queryStaff', async function (req, res) {
 
   const request = {
     chaincodeId: 'khmc',
     fcn: 'queryStaff',
     args: [
-      req.query.staffTypeId
+      req.query.staffId
     ]
   };
   console.log(req.query);
@@ -1452,6 +2047,111 @@ app.get('/api/getHistoryStaff', async function (req, res) {
 });
 
 app.get('/api/getHistoryVendor', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'khmc',
+    fcn: 'getHistory',
+    args: [
+      req.query.info
+    ]
+  };
+  console.log(req.query);
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200){
+    res.status(response.status).send((JSON.parse(response.message)));
+
+  }
+    else
+      res.status(response.status).send({ message: response.message });
+  }
+});
+
+app.get('/api/getHistoryItem', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'khmc',
+    fcn: 'getHistory',
+    args: [
+      req.query.info
+    ]
+  };
+  console.log(req.query);
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200){
+    res.status(response.status).send((JSON.parse(response.message)));
+
+  }
+    else
+      res.status(response.status).send({ message: response.message });
+  }
+});
+
+app.get('/api/getHistoryReceiveItemFU', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'khmc',
+    fcn: 'getHistory',
+    args: [
+      req.query.info
+    ]
+  };
+  console.log(req.query);
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200){
+    res.status(response.status).send((JSON.parse(response.message)));
+
+  }
+    else
+      res.status(response.status).send({ message: response.message });
+  }
+});
+
+app.get('/api/getHistoryReceiveItemBU', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'khmc',
+    fcn: 'getHistory',
+    args: [
+      req.query.info
+    ]
+  };
+  console.log(req.query);
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200){
+    res.status(response.status).send((JSON.parse(response.message)));
+
+  }
+    else
+      res.status(response.status).send({ message: response.message });
+  }
+});
+
+app.get('/api/getHistoryInternalReturnRequest', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'khmc',
+    fcn: 'getHistory',
+    args: [
+      req.query.info
+    ]
+  };
+  console.log(req.query);
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200){
+    res.status(response.status).send((JSON.parse(response.message)));
+
+  }
+    else
+      res.status(response.status).send({ message: response.message });
+  }
+});
+
+app.get('/api/getHistoryExternalReturnRequest', async function (req, res) {
 
   const request = {
     chaincodeId: 'khmc',
