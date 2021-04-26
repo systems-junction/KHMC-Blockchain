@@ -603,13 +603,13 @@ func (t *SmartContract) addEDRSchema(stub shim.ChaincodeStubInterface, args []st
 
 	var err error
 
-	if len(args) != 102 {
+	if len(args) != 26 {
 		return shim.Error("Incorrect Number of Aruments. Expecting 62")
 	}
 
 	fmt.Println("Adding new EDR Info")
 
-	for i := 0; i < 102; i++ {
+	for i := 0; i < 26; i++ {
 		if len(args[i]) <= 0 {
 			argument0 := "Argument "
 			argument := " Must be a Non-Empty String"
@@ -622,105 +622,58 @@ func (t *SmartContract) addEDRSchema(stub shim.ChaincodeStubInterface, args []st
 	requestNo := args[0]
 	patientId := args[1]
 	generatedBy := args[2]
-	consultationNo := args[3]
-	date := args[4]
-	description := args[5]
-	consultationNotes := args[6]
-	doctorNotes := args[7]
-	audioNotes := args[8]
-	consultStatus := args[9]
-	speciality := args[10]
-	specialist := args[11]
-	requester := args[12]
-	completedTime := args[13]
-	residentNoteNo := args[14]
-	residentdate := args[15]
-	residentdescription := args[16]
-	doctor := args[17]
-	note := args[18]
-	section := args[19]
-	residentaudioNotes := args[20]
-	code := strings.Split(args[21], ",")
-	ReplenishmentRequestBuID := args[22]
-	lRrequestNo := args[23]
-	serviceId := args[24]
-	price := args[25]
-	requesterName := args[26]
-	serviceCode := args[27]
-	serviceName := args[28]
-	lStatus := args[29]
-	lRequester := args[30]
-	results := args[31]
-	sampleId := args[32]
-	comments := args[33]
-	serviceType := args[34]
-	activeDate := args[35]
-	completedDate := args[36]
-	lDate := args[37]
-	rRrequestNo := args[38]
-	rServiceId := args[39]
-	rPrice := args[40]
-	rServiceCode := args[41]
-	rStatus := args[42]
-	rRequesterName := args[43]
-	rServiceName := args[44]
-	rRequester := args[45]
-	rResults := args[46]
-	rComments := args[47]
-	rServiceType := args[48]
-	consultationNote := args[49]
-	rActiveDate := args[50]
-	rCompletedDate := args[51]
-	rDate := args[52]
-	dischargeNotes := args[53]
-	otherNotes := args[54]
-	dDate := args[55]
-	dStatus := args[56]
-	dRequester := args[57]
-	itemId := args[58]
-	priority := args[59]
-	schedule := args[60]
-	dosage := args[61]
-	frequency := args[62]
-	duration := args[63]
-	requestedQty := args[64]
-	medicineName := args[65]
-	unitPrice := args[66]
-	totalPrice := args[67]
-	itemType := args[68]
-	make_model := args[69]
-	size := args[70]
-	drStatus := args[71]
-	inProcessDate := args[72]
-	completionDate := args[73]
-	status := args[74]
-	tStatus := args[75]
-	reason := args[76]
-	triageRequestNo := args[77]
-	heartRate := args[78]
-	bloodPressureSys := args[79]
-	bloodPressureDia := args[80]
-	respiratoryRate := args[81]
-	temperature := args[82]
-	FSBS := args[83]
-	painScale := args[84]
-	pulseOX := args[85]
-	triageLevel := strings.Split(args[86], ",")
-	generalAppearance := strings.Split(args[87], ",")
-	headNeck := strings.Split(args[88], ",")
-	respiratory := strings.Split(args[89], ",")
-	cardiac := strings.Split(args[90], ",")
-	abdomen := strings.Split(args[91], ",")
-	neurological := strings.Split(args[92], ",")
-	tRequester := args[93]
-	tDate := args[94]
-	requestType := args[95]
-	verified := args[96]
-	insurerId := args[97]
-	paymentMethod := args[98]
-	claimed := args[99]
-	createdAt := args[100]
-	updatedAt := args[101]
+	consultationNote := args[3]
+
+	var consult []Consultation
+	json.Unmarshal([]byte(consultationNote), &consult)
+
+	residentNotes := args[4]
+
+	var resident []Resident
+	json.Unmarshal([]byte(residentNotes), &resident)
+
+	pharmacyRequest := args[5]
+
+	var pharmacy []PharmacyReq
+	json.Unmarshal([]byte(pharmacyRequest), &pharmacy)
+
+	labRequest := args[6]
+
+	var lab []LabReq
+	json.Unmarshal([]byte(labRequest), &lab)
+
+	radiologyRequest := args[7]
+
+	var radiology []RadiologyReq
+	json.Unmarshal([]byte(radiologyRequest), &radiology)
+
+	dischargeNotes := args[8]
+	otherNotes := args[9]
+	dDate := args[10]
+	dStatus := args[11]
+	dRequester := args[12]
+
+	medicine := args[13]
+
+	var med []Med
+	json.Unmarshal([]byte(medicine), &med)
+
+	drStatus := args[14]
+	inProcessDate := args[15]
+	completionDate := args[16]
+	status := args[17]
+	triageAssessment := args[18]
+
+	var triage []Triage
+	json.Unmarshal([]byte(triageAssessment), &triage)
+
+	requestType := args[19]
+	verified := args[20]
+	insurerId := args[21]
+	paymentMethod := args[22]
+	claimed := args[23]
+	createdAt := args[24]
+	updatedAt := args[25]
 
 	// ======Check if PatientINFO Already exists
 
@@ -735,97 +688,11 @@ func (t *SmartContract) addEDRSchema(stub shim.ChaincodeStubInterface, args []st
 
 	objectType := "EDR"
 	objectType1 := "DischargeRequest"
-	EDRSchema := &EDRSchema{objectType, requestNo, patientId, generatedBy, ConsultationNote{Consultation{
-		ConsultationNo:    consultationNo,
-		Date:              date,
-		Description:       description,
-		ConsultationNotes: consultationNotes,
-		DoctorNotes:       doctorNotes,
-		AudioNotes:        audioNotes,
-		Status:            consultStatus,
-		Speciality:        speciality,
-		Specialist:        specialist,
-		Requester:         requester,
-		CompletedTime:     completedTime,
-	}}, ResidentNotes{Resident{
-		ResidentNoteNo: residentNoteNo,
-		Date:           residentdate,
-		Description:    residentdescription,
-		Doctor:         doctor,
-		Note:           note,
-		Section:        section,
-		AudioNotes:     residentaudioNotes,
-		Code:           code,
-	}}, PharmacyRequest{PharmacyReq{
-		ReplenishmentRequestBuID: ReplenishmentRequestBuID,
-	}}, LabRequest{LabReq{
-		LRrequestNo:   lRrequestNo,
-		ServiceId:     serviceId,
-		Price:         price,
-		RequesterName: requesterName,
-		ServiceCode:   serviceCode,
-		ServiceName:   serviceName,
-		Status:        lStatus,
-		Requester:     lRequester,
-		Results:       results,
-		SampleId:      sampleId,
-		Comments:      comments,
-		ServiceType:   serviceType,
-		ActiveDate:    activeDate,
-		CompletedDate: completedDate,
-		Date:          lDate,
-	}}, RadiologyRequest{RadiologyReq{
-		RRrequestNo:      rRrequestNo,
-		ServiceId:        rServiceId,
-		Price:            rPrice,
-		ServiceCode:      rServiceCode,
-		Status:           rStatus,
-		RequesterName:    rRequesterName,
-		ServiceName:      rServiceName,
-		Requester:        rRequester,
-		Results:          rResults,
-		Comments:         rComments,
-		ServiceType:      rServiceType,
-		ConsultationNote: consultationNote,
-		ActiveDate:       rActiveDate,
-		CompletedDate:    rCompletedDate,
-		Date:             rDate,
-	}}, DischargeRequest{objectType1, DischargeSummary{dischargeNotes, otherNotes}, DischargeMedication{dDate, dStatus, dRequester, Medicine{Med{
-		ItemId:       itemId,
-		Priority:     priority,
-		Schedule:     schedule,
-		Dosage:       dosage,
-		Frequency:    frequency,
-		Duration:     duration,
-		RequestedQty: requestedQty,
-		MedicineName: medicineName,
-		UnitPrice:    unitPrice,
-		TotalPrice:   totalPrice,
-		ItemType:     itemType,
-		Make_model:   make_model,
-		Size:         size,
-	}}}, drStatus, inProcessDate, completionDate}, status, TriageAssessment{Triage{
-		Status:            tStatus,
-		Reason:            reason,
-		TriageRequestNo:   triageRequestNo,
-		HeartRate:         heartRate,
-		BloodPressureSys:  bloodPressureSys,
-		BloodPressureDia:  bloodPressureDia,
-		RespiratoryRate:   respiratoryRate,
-		Temperature:       temperature,
-		FSBS:              FSBS,
-		PainScale:         painScale,
-		PulseOX:           pulseOX,
-		TriageLevel:       triageLevel,
-		GeneralAppearance: generalAppearance,
-		HeadNeck:          headNeck,
-		Respiratory:       respiratory,
-		Cardiac:           cardiac,
-		Abdomen:           abdomen,
-		Neurological:      neurological,
-		Requester:         tRequester,
-		Date:              tDate,
-	}}, requestType, verified, insurerId, paymentMethod, claimed, createdAt, updatedAt}
+	EDRSchema := &EDRSchema{objectType, requestNo, patientId, generatedBy, append(EDRSchema{}.ConsultationNote, consult...),
+		append(EDRSchema{}.ResidentNotes, resident...), append(EDRSchema{}.PharmacyRequest, pharmacy...), append(EDRSchema{}.LabRequest, lab...),
+		append(EDRSchema{}.RadiologyRequest, radiology...), DischargeRequest{objectType1, DischargeSummary{dischargeNotes, otherNotes}, DischargeMedication{dDate, dStatus, dRequester,
+			append(EDRSchema{}.DischargeRequest.DischargeMedication.Medicine, med...)}, drStatus, inProcessDate, completionDate}, status,
+		append(EDRSchema{}.TriageAssessment, triage...), requestType, verified, insurerId, paymentMethod, claimed, createdAt, updatedAt}
 	InsuranceJSONasBytes, err := json.Marshal(EDRSchema)
 
 	if err != nil {
@@ -872,13 +739,13 @@ func (t *SmartContract) addIPRSchema(stub shim.ChaincodeStubInterface, args []st
 
 	var err error
 
-	if len(args) != 124 {
+	if len(args) != 29 {
 		return shim.Error("Incorrect Number of Aruments. Expecting 62")
 	}
 
 	fmt.Println("Adding new EDR Info")
 
-	for i := 0; i < 124; i++ {
+	for i := 0; i < 29; i++ {
 		if len(args[i]) <= 0 {
 			argument0 := "Argument "
 			argument := " Must be a Non-Empty String"
@@ -891,127 +758,68 @@ func (t *SmartContract) addIPRSchema(stub shim.ChaincodeStubInterface, args []st
 	requestNo := args[0]
 	patientId := args[1]
 	generatedBy := args[2]
-	consultationNo := args[3]
-	date := args[4]
-	description := args[5]
-	consultationNotes := args[6]
-	doctorNotes := args[7]
-	audioNotes := args[8]
-	consultStatus := args[9]
-	speciality := args[10]
-	specialist := args[11]
-	requester := args[12]
-	completedTime := args[13]
-	residentNoteNo := args[14]
-	residentdate := args[15]
-	residentdescription := args[16]
-	doctor := args[17]
-	note := args[18]
-	residentStatus := args[19]
-	section := args[20]
-	residentaudioNotes := args[21]
-	code := strings.Split(args[22], ",")
-	ReplenishmentRequestBuID := args[23]
-	lRrequestNo := args[24]
-	serviceId := args[25]
-	price := args[26]
-	requesterName := args[27]
-	serviceCode := args[28]
-	serviceName := args[29]
-	lStatus := args[30]
-	lRequester := args[31]
-	results := args[32]
-	sampleId := args[33]
-	comments := args[34]
-	serviceType := args[35]
-	activeDate := args[36]
-	completedDate := args[37]
-	lDate := args[38]
-	rRrequestNo := args[39]
-	rServiceId := args[40]
-	rPrice := args[41]
-	rServiceCode := args[42]
-	rStatus := args[43]
-	rRequesterName := args[44]
-	rServiceName := args[45]
-	rRequester := args[46]
-	rResults := args[47]
-	rComments := args[48]
-	rServiceType := args[49]
-	consultationNote := args[50]
-	rActiveDate := args[51]
-	rCompletedDate := args[52]
-	rDate := args[53]
-	NSrequestNo := args[54]
-	nServiceId := args[55]
-	nPrice := args[56]
-	nRequesterName := args[57]
-	nServiceCode := args[58]
-	nStatus := args[59]
-	nServiceName := args[60]
-	nComments := args[61]
-	nRequester := args[62]
-	nDate := args[63]
-	dischargeNotes := args[64]
-	otherNotes := args[65]
-	dDate := args[66]
-	dStatus := args[67]
-	dRequester := args[68]
-	itemId := args[69]
-	priority := args[70]
-	schedule := args[71]
-	dosage := args[72]
-	frequency := args[73]
-	duration := args[74]
-	requestedQty := args[75]
-	medicineName := args[76]
-	unitPrice := args[77]
-	totalPrice := args[78]
-	itemType := args[79]
-	make_model := args[80]
-	size := args[81]
-	drStatus := args[82]
-	inProcessDate := args[83]
-	completionDate := args[84]
-	status := args[85]
-	tStatus := args[86]
-	reason := args[87]
-	triageRequestNo := args[88]
-	heartRate := args[89]
-	bloodPressureSys := args[90]
-	bloodPressureDia := args[91]
-	respiratoryRate := args[92]
-	temperature := args[93]
-	FSBS := args[94]
-	painScale := args[95]
-	pulseOX := args[96]
-	triageLevel := strings.Split(args[97], ",")
-	generalAppearance := strings.Split(args[98], ",")
-	headNeck := strings.Split(args[99], ",")
-	respiratory := strings.Split(args[100], ",")
-	cardiac := strings.Split(args[101], ",")
-	abdomen := strings.Split(args[102], ",")
-	neurological := strings.Split(args[103], ",")
-	tRequester := args[104]
-	tDate := args[105]
-	fRequester := args[106]
-	approvalNumber := args[107]
-	approvalPerson := args[108]
-	file := args[109]
-	fDescription := args[110]
-	notes := args[111]
-	fStatus := args[112]
-	fDoctorName := args[113]
-	fDoctor := args[114]
-	fDate := args[115]
-	requestType := args[116]
-	functionalUnit := args[117]
-	verified := args[118]
-	insurerId := args[119]
-	paymentMethod := args[120]
-	claimed := args[121]
-	createdAt := args[122]
-	updatedAt := args[123]
+	consultationNote := args[3]
+
+	var consult []Consultation
+	json.Unmarshal([]byte(consultationNote), &consult)
+
+	residentNotes := args[4]
+
+	var resident []ResidentIPR
+	json.Unmarshal([]byte(residentNotes), &resident)
+
+	pharmacyRequest := args[5]
+
+	var pharmacy []PharmacyReq
+	json.Unmarshal([]byte(pharmacyRequest), &pharmacy)
+
+	labRequest := args[6]
+
+	var lab []LabReq
+	json.Unmarshal([]byte(labRequest), &lab)
+
+	radiologyRequest := args[7]
+
+	var radiology []RadiologyReq
+	json.Unmarshal([]byte(radiologyRequest), &radiology)
+
+	nurseService := args[8]
+
+	var nurse []NurseServ
+	json.Unmarshal([]byte(nurseService), &nurse)
+
+	dischargeNotes := args[9]
+	otherNotes := args[10]
+	dDate := args[11]
+	dStatus := args[12]
+	dRequester := args[13]
+	medicine := args[14]
+
+	var med []Med
+	json.Unmarshal([]byte(medicine), &med)
+
+	drStatus := args[15]
+	inProcessDate := args[16]
+	completionDate := args[17]
+	status := args[18]
+	triageAssessment := args[19]
+
+	var triage []Triage
+	json.Unmarshal([]byte(triageAssessment), &triage)
+
+	followUp := args[20]
+
+	var follow []Follow
+	json.Unmarshal([]byte(followUp), &follow)
+
+	requestType := args[21]
+	functionalUnit := args[22]
+	verified := args[23]
+	insurerId := args[24]
+	paymentMethod := args[25]
+	claimed := args[26]
+	createdAt := args[27]
+	updatedAt := args[28]
 
 	// ======Check if PatientINFO Already exists
 
@@ -1026,120 +834,12 @@ func (t *SmartContract) addIPRSchema(stub shim.ChaincodeStubInterface, args []st
 
 	objectType := "IPR"
 	objectType1 := "DischargeRequest"
-	IPRSchema := &IPRSchema{objectType, requestNo, patientId, generatedBy, ConsultationNote{Consultation{
-		ConsultationNo:    consultationNo,
-		Date:              date,
-		Description:       description,
-		ConsultationNotes: consultationNotes,
-		DoctorNotes:       doctorNotes,
-		AudioNotes:        audioNotes,
-		Status:            consultStatus,
-		Speciality:        speciality,
-		Specialist:        specialist,
-		Requester:         requester,
-		CompletedTime:     completedTime,
-	}}, ResidentNotesIPR{ResidentIPR{
-		ResidentNoteNo: residentNoteNo,
-		Date:           residentdate,
-		Description:    residentdescription,
-		Doctor:         doctor,
-		Note:           note,
-		Status:         residentStatus,
-		Section:        section,
-		AudioNotes:     residentaudioNotes,
-		Code:           code,
-	}}, PharmacyRequest{PharmacyReq{
-		ReplenishmentRequestBuID: ReplenishmentRequestBuID,
-	}}, LabRequest{LabReq{
-		LRrequestNo:   lRrequestNo,
-		ServiceId:     serviceId,
-		Price:         price,
-		RequesterName: requesterName,
-		ServiceCode:   serviceCode,
-		ServiceName:   serviceName,
-		Status:        lStatus,
-		Requester:     lRequester,
-		Results:       results,
-		SampleId:      sampleId,
-		Comments:      comments,
-		ServiceType:   serviceType,
-		ActiveDate:    activeDate,
-		CompletedDate: completedDate,
-		Date:          lDate,
-	}}, RadiologyRequest{RadiologyReq{
-		RRrequestNo:      rRrequestNo,
-		ServiceId:        rServiceId,
-		Price:            rPrice,
-		ServiceCode:      rServiceCode,
-		Status:           rStatus,
-		RequesterName:    rRequesterName,
-		ServiceName:      rServiceName,
-		Requester:        rRequester,
-		Results:          rResults,
-		Comments:         rComments,
-		ServiceType:      rServiceType,
-		ConsultationNote: consultationNote,
-		ActiveDate:       rActiveDate,
-		CompletedDate:    rCompletedDate,
-		Date:             rDate,
-	}}, NurseService{NurseServ{
-		NSrequestNo:   NSrequestNo,
-		ServiceId:     nServiceId,
-		Price:         nPrice,
-		RequesterName: nRequesterName,
-		ServiceCode:   nServiceCode,
-		Status:        nStatus,
-		ServiceName:   nServiceName,
-		Comments:      nComments,
-		Requester:     nRequester,
-		Date:          nDate,
-	}}, DischargeRequest{objectType1, DischargeSummary{dischargeNotes, otherNotes}, DischargeMedication{dDate, dStatus, dRequester, Medicine{Med{
-		ItemId:       itemId,
-		Priority:     priority,
-		Schedule:     schedule,
-		Dosage:       dosage,
-		Frequency:    frequency,
-		Duration:     duration,
-		RequestedQty: requestedQty,
-		MedicineName: medicineName,
-		UnitPrice:    unitPrice,
-		TotalPrice:   totalPrice,
-		ItemType:     itemType,
-		Make_model:   make_model,
-		Size:         size,
-	}}}, drStatus, inProcessDate, completionDate}, status, TriageAssessment{Triage{
-		Status:            tStatus,
-		Reason:            reason,
-		TriageRequestNo:   triageRequestNo,
-		HeartRate:         heartRate,
-		BloodPressureSys:  bloodPressureSys,
-		BloodPressureDia:  bloodPressureDia,
-		RespiratoryRate:   respiratoryRate,
-		Temperature:       temperature,
-		FSBS:              FSBS,
-		PainScale:         painScale,
-		PulseOX:           pulseOX,
-		TriageLevel:       triageLevel,
-		GeneralAppearance: generalAppearance,
-		HeadNeck:          headNeck,
-		Respiratory:       respiratory,
-		Cardiac:           cardiac,
-		Abdomen:           abdomen,
-		Neurological:      neurological,
-		Requester:         tRequester,
-		Date:              tDate,
-	}}, FollowUp{Follow{
-		Requester:      fRequester,
-		ApprovalNumber: approvalNumber,
-		ApprovalPerson: approvalPerson,
-		File:           file,
-		Description:    fDescription,
-		Notes:          notes,
-		Status:         fStatus,
-		DoctorName:     fDoctorName,
-		Doctor:         fDoctor,
-		Date:           fDate,
-	}}, requestType, functionalUnit, verified, insurerId, paymentMethod, claimed, createdAt, updatedAt}
+	IPRSchema := &IPRSchema{objectType, requestNo, patientId, generatedBy, append(IPRSchema{}.ConsultationNote, consult...),
+		append(IPRSchema{}.ResidentNotesIPR, resident...), append(IPRSchema{}.PharmacyRequest, pharmacy...),
+		append(IPRSchema{}.LabRequest, lab...), append(IPRSchema{}.RadiologyRequest, radiology...), append(IPRSchema{}.NurseService, nurse...),
+		DischargeRequest{objectType1, DischargeSummary{dischargeNotes, otherNotes}, DischargeMedication{dDate, dStatus, dRequester,
+			append(IPRSchema{}.DischargeRequest.DischargeMedication.Medicine, med...)}, drStatus, inProcessDate, completionDate}, status,
+		append(IPRSchema{}.TriageAssessment, triage...), append(IPRSchema{}.FollowUp, follow...), requestType, functionalUnit, verified, insurerId, paymentMethod, claimed, createdAt, updatedAt}
 	InsuranceJSONasBytes, err := json.Marshal(IPRSchema)
 
 	if err != nil {
@@ -1184,116 +884,67 @@ func (t *SmartContract) queryIPRSchema(stub shim.ChaincodeStubInterface, args []
 
 func (t *SmartContract) updateEDRSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	if len(args) < 102 {
+	if len(args) < 26 {
 		return shim.Error("Incorrect number of arguments. Expecting 63")
 	}
 
 	requestNo := args[0]
 	patientId := args[1]
 	generatedBy := args[2]
-	consultationNo := args[3]
-	date := args[4]
-	description := args[5]
-	consultationNotes := args[6]
-	doctorNotes := args[7]
-	audioNotes := args[8]
-	consultStatus := args[9]
-	speciality := args[10]
-	specialist := args[11]
-	requester := args[12]
-	completedTime := args[13]
-	residentNoteNo := args[14]
-	residentdate := args[15]
-	residentdescription := args[16]
-	doctor := args[17]
-	note := args[18]
-	section := args[19]
-	residentaudioNotes := args[20]
-	code := strings.Split(args[21], ",")
-	ReplenishmentRequestBuID := args[22]
-	lRrequestNo := args[23]
-	serviceId := args[24]
-	price := args[25]
-	requesterName := args[26]
-	serviceCode := args[27]
-	serviceName := args[28]
-	lStatus := args[29]
-	lRequester := args[30]
-	results := args[31]
-	sampleId := args[32]
-	comments := args[33]
-	serviceType := args[34]
-	activeDate := args[35]
-	completedDate := args[36]
-	lDate := args[37]
-	rRrequestNo := args[38]
-	rServiceId := args[39]
-	rPrice := args[40]
-	rServiceCode := args[41]
-	rStatus := args[42]
-	rRequesterName := args[43]
-	rServiceName := args[44]
-	rRequester := args[45]
-	rResults := args[46]
-	rComments := args[47]
-	rServiceType := args[48]
-	consultationNote := args[49]
-	rActiveDate := args[50]
-	rCompletedDate := args[51]
-	rDate := args[52]
-	dischargeNotes := args[53]
-	otherNotes := args[54]
-	dDate := args[55]
-	dStatus := args[56]
-	dRequester := args[57]
-	itemId := args[58]
-	priority := args[59]
-	schedule := args[60]
-	dosage := args[61]
-	frequency := args[62]
-	duration := args[63]
-	requestedQty := args[64]
-	medicineName := args[65]
-	unitPrice := args[66]
-	totalPrice := args[67]
-	itemType := args[68]
-	make_model := args[69]
-	size := args[70]
-	drStatus := args[71]
-	inProcessDate := args[72]
-	completionDate := args[73]
-	status := args[74]
-	tStatus := args[75]
-	reason := args[76]
-	triageRequestNo := args[77]
-	heartRate := args[78]
-	bloodPressureSys := args[79]
-	bloodPressureDia := args[80]
-	respiratoryRate := args[81]
-	temperature := args[82]
-	FSBS := args[83]
-	painScale := args[84]
-	pulseOX := args[85]
-	triageLevel := strings.Split(args[86], ",")
-	generalAppearance := strings.Split(args[87], ",")
-	headNeck := strings.Split(args[88], ",")
-	respiratory := strings.Split(args[89], ",")
-	cardiac := strings.Split(args[90], ",")
-	abdomen := strings.Split(args[91], ",")
-	neurological := strings.Split(args[92], ",")
-	tRequester := args[93]
-	tDate := args[94]
-	requestType := args[95]
-	verified := args[96]
-	insurerId := args[97]
-	paymentMethod := args[98]
-	claimed := args[99]
-	createdAt := args[100]
-	updatedAt := args[101]
-	fmt.Println("- start  ", requestNo, patientId, generatedBy, consultationNo, date, description, consultationNotes, doctorNotes, audioNotes, consultStatus, speciality, specialist, requester, completedTime, residentNoteNo, residentdate, residentdescription, doctor, note, section, residentaudioNotes, code,
-		ReplenishmentRequestBuID, lRrequestNo, serviceId, price, requesterName, serviceCode, serviceName, lStatus, lRequester, results, sampleId, comments, serviceType, activeDate, completedDate, lDate, rRrequestNo, rServiceId, rPrice, rServiceCode, rStatus, rRequesterName, rServiceName, rRequester, rResults,
-		rComments, rServiceType, consultationNote, rActiveDate, rCompletedDate, rDate, dischargeNotes, otherNotes, dDate, dStatus, dRequester, itemId, priority, schedule, dosage, frequency, duration, requestedQty, medicineName, unitPrice, totalPrice, itemType, make_model, size, drStatus, inProcessDate,
-		completionDate, status, tStatus, reason, triageRequestNo, heartRate, bloodPressureSys, bloodPressureDia, respiratoryRate, temperature, FSBS, painScale, pulseOX, triageLevel, generalAppearance, headNeck, respiratory, cardiac, abdomen, neurological, tRequester, tDate, requestType, verified, insurerId,
+	consultationNote := args[3]
+
+	var consult []Consultation
+	json.Unmarshal([]byte(consultationNote), &consult)
+
+	residentNotes := args[4]
+
+	var resident []Resident
+	json.Unmarshal([]byte(residentNotes), &resident)
+
+	pharmacyRequest := args[5]
+
+	var pharmacy []PharmacyReq
+	json.Unmarshal([]byte(pharmacyRequest), &pharmacy)
+
+	labRequest := args[6]
+
+	var lab []LabReq
+	json.Unmarshal([]byte(labRequest), &lab)
+
+	radiologyRequest := args[7]
+
+	var radiology []RadiologyReq
+	json.Unmarshal([]byte(radiologyRequest), &radiology)
+
+	dischargeNotes := args[8]
+	otherNotes := args[9]
+	dDate := args[10]
+	dStatus := args[11]
+	dRequester := args[12]
+
+	medicine := args[13]
+
+	var med []Med
+	json.Unmarshal([]byte(medicine), &med)
+
+	drStatus := args[14]
+	inProcessDate := args[15]
+	completionDate := args[16]
+	status := args[17]
+	triageAssessment := args[18]
+
+	var triage []Triage
+	json.Unmarshal([]byte(triageAssessment), &triage)
+
+	requestType := args[19]
+	verified := args[20]
+	insurerId := args[21]
+	paymentMethod := args[22]
+	claimed := args[23]
+	createdAt := args[24]
+	updatedAt := args[25]
+	fmt.Println("- start  ", requestNo, patientId, generatedBy, consultationNote, residentNotes, pharmacyRequest, labRequest, radiologyRequest, dischargeNotes, otherNotes, dDate, dStatus, dRequester, medicine, drStatus, inProcessDate,
+		completionDate, status, triageAssessment, requestType, verified, insurerId,
 		paymentMethod, claimed, createdAt, updatedAt)
 
 	PatientAsBytes, err := stub.GetState(requestNo)
@@ -1311,112 +962,22 @@ func (t *SmartContract) updateEDRSchema(stub shim.ChaincodeStubInterface, args [
 
 	EDRToUpdate.PatientId = patientId
 	EDRToUpdate.GeneratedBy = generatedBy
-	EDRToUpdate.ConsultationNote = append(EDRToUpdate.ConsultationNote, Consultation{
-		ConsultationNo:    consultationNo,
-		Date:              date,
-		Description:       description,
-		ConsultationNotes: consultationNotes,
-		DoctorNotes:       doctorNotes,
-		AudioNotes:        audioNotes,
-		Status:            consultStatus,
-		Speciality:        speciality,
-		Specialist:        specialist,
-		Requester:         requester,
-		CompletedTime:     completedTime,
-	})
-	EDRToUpdate.ResidentNotes = append(EDRToUpdate.ResidentNotes, Resident{
-		ResidentNoteNo: residentNoteNo,
-		Date:           residentdate,
-		Description:    residentdescription,
-		Doctor:         doctor,
-		Note:           note,
-		Section:        section,
-		AudioNotes:     residentaudioNotes,
-		Code:           code,
-	})
-	EDRToUpdate.PharmacyRequest = append(EDRToUpdate.PharmacyRequest, PharmacyReq{
-		ReplenishmentRequestBuID: ReplenishmentRequestBuID,
-	})
-	EDRToUpdate.LabRequest = append(EDRToUpdate.LabRequest, LabReq{
-		LRrequestNo:   lRrequestNo,
-		ServiceId:     serviceId,
-		Price:         price,
-		RequesterName: requesterName,
-		ServiceCode:   serviceCode,
-		ServiceName:   serviceName,
-		Status:        lStatus,
-		Requester:     lRequester,
-		Results:       results,
-		SampleId:      sampleId,
-		Comments:      comments,
-		ServiceType:   serviceType,
-		ActiveDate:    activeDate,
-		CompletedDate: completedDate,
-		Date:          lDate,
-	})
-	EDRToUpdate.RadiologyRequest = append(EDRToUpdate.RadiologyRequest, RadiologyReq{
-		RRrequestNo:      rRrequestNo,
-		ServiceId:        rServiceId,
-		Price:            rPrice,
-		ServiceCode:      rServiceCode,
-		Status:           rStatus,
-		RequesterName:    rRequesterName,
-		ServiceName:      rServiceName,
-		Requester:        rRequester,
-		Results:          rResults,
-		Comments:         rComments,
-		ServiceType:      rServiceType,
-		ConsultationNote: consultationNote,
-		ActiveDate:       rActiveDate,
-		CompletedDate:    rCompletedDate,
-		Date:             rDate,
-	})
+	EDRToUpdate.ConsultationNote = append(EDRToUpdate.ConsultationNote, consult...)
+	EDRToUpdate.ResidentNotes = append(EDRToUpdate.ResidentNotes, resident...)
+	EDRToUpdate.PharmacyRequest = append(EDRToUpdate.PharmacyRequest, pharmacy...)
+	EDRToUpdate.LabRequest = append(EDRToUpdate.LabRequest, lab...)
+	EDRToUpdate.RadiologyRequest = append(EDRToUpdate.RadiologyRequest, radiology...)
 	EDRToUpdate.DischargeRequest.DischargeSummary.DischargeNotes = dischargeNotes
 	EDRToUpdate.DischargeRequest.DischargeSummary.OtherNotes = otherNotes
 	EDRToUpdate.DischargeRequest.DischargeMedication.Date = dDate
 	EDRToUpdate.DischargeRequest.DischargeMedication.Status = dStatus
 	EDRToUpdate.DischargeRequest.DischargeMedication.Requester = dRequester
-	EDRToUpdate.DischargeRequest.DischargeMedication.Medicine = append(EDRToUpdate.DischargeRequest.DischargeMedication.Medicine, Med{
-		ItemId:       itemId,
-		Priority:     priority,
-		Schedule:     schedule,
-		Dosage:       dosage,
-		Frequency:    frequency,
-		Duration:     duration,
-		RequestedQty: requestedQty,
-		MedicineName: medicineName,
-		UnitPrice:    unitPrice,
-		TotalPrice:   totalPrice,
-		ItemType:     itemType,
-		Make_model:   make_model,
-		Size:         size,
-	})
+	EDRToUpdate.DischargeRequest.DischargeMedication.Medicine = append(EDRToUpdate.DischargeRequest.DischargeMedication.Medicine, med...)
 	EDRToUpdate.DischargeRequest.Status = drStatus
 	EDRToUpdate.DischargeRequest.InProcessDate = inProcessDate
 	EDRToUpdate.DischargeRequest.CompletionDate = completionDate
 	EDRToUpdate.Status = status
-	EDRToUpdate.TriageAssessment = append(EDRToUpdate.TriageAssessment, Triage{
-		Status:            tStatus,
-		Reason:            reason,
-		TriageRequestNo:   triageRequestNo,
-		HeartRate:         heartRate,
-		BloodPressureSys:  bloodPressureSys,
-		BloodPressureDia:  bloodPressureDia,
-		RespiratoryRate:   respiratoryRate,
-		Temperature:       temperature,
-		FSBS:              FSBS,
-		PainScale:         painScale,
-		PulseOX:           pulseOX,
-		TriageLevel:       triageLevel,
-		GeneralAppearance: generalAppearance,
-		HeadNeck:          headNeck,
-		Respiratory:       respiratory,
-		Cardiac:           cardiac,
-		Abdomen:           abdomen,
-		Neurological:      neurological,
-		Requester:         tRequester,
-		Date:              tDate,
-	})
+	EDRToUpdate.TriageAssessment = append(EDRToUpdate.TriageAssessment, triage...)
 	EDRToUpdate.RequestType = requestType
 	EDRToUpdate.Verified = verified
 	EDRToUpdate.InsurerId = insurerId
@@ -1441,140 +1002,79 @@ func (t *SmartContract) updateEDRSchema(stub shim.ChaincodeStubInterface, args [
 
 func (t *SmartContract) updateIPRSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	if len(args) < 102 {
+	if len(args) < 29 {
 		return shim.Error("Incorrect number of arguments. Expecting 63")
 	}
 
 	requestNo := args[0]
 	patientId := args[1]
 	generatedBy := args[2]
-	consultationNo := args[3]
-	date := args[4]
-	description := args[5]
-	consultationNotes := args[6]
-	doctorNotes := args[7]
-	audioNotes := args[8]
-	consultStatus := args[9]
-	speciality := args[10]
-	specialist := args[11]
-	requester := args[12]
-	completedTime := args[13]
-	residentNoteNo := args[14]
-	residentdate := args[15]
-	residentdescription := args[16]
-	doctor := args[17]
-	note := args[18]
-	residentStatus := args[19]
-	section := args[20]
-	residentaudioNotes := args[21]
-	code := strings.Split(args[22], ",")
-	ReplenishmentRequestBuID := args[23]
-	lRrequestNo := args[24]
-	serviceId := args[25]
-	price := args[26]
-	requesterName := args[27]
-	serviceCode := args[28]
-	serviceName := args[29]
-	lStatus := args[30]
-	lRequester := args[31]
-	results := args[32]
-	sampleId := args[33]
-	comments := args[34]
-	serviceType := args[35]
-	activeDate := args[36]
-	completedDate := args[37]
-	lDate := args[38]
-	rRrequestNo := args[39]
-	rServiceId := args[40]
-	rPrice := args[41]
-	rServiceCode := args[42]
-	rStatus := args[43]
-	rRequesterName := args[44]
-	rServiceName := args[45]
-	rRequester := args[46]
-	rResults := args[47]
-	rComments := args[48]
-	rServiceType := args[49]
-	consultationNote := args[50]
-	rActiveDate := args[51]
-	rCompletedDate := args[52]
-	rDate := args[53]
-	NSrequestNo := args[54]
-	nServiceId := args[55]
-	nPrice := args[56]
-	nRequesterName := args[57]
-	nServiceCode := args[58]
-	nStatus := args[59]
-	nServiceName := args[60]
-	nComments := args[61]
-	nRequester := args[62]
-	nDate := args[63]
-	dischargeNotes := args[64]
-	otherNotes := args[65]
-	dDate := args[66]
-	dStatus := args[67]
-	dRequester := args[68]
-	itemId := args[69]
-	priority := args[70]
-	schedule := args[71]
-	dosage := args[72]
-	frequency := args[73]
-	duration := args[74]
-	requestedQty := args[75]
-	medicineName := args[76]
-	unitPrice := args[77]
-	totalPrice := args[78]
-	itemType := args[79]
-	make_model := args[80]
-	size := args[81]
-	drStatus := args[82]
-	inProcessDate := args[83]
-	completionDate := args[84]
-	status := args[85]
-	tStatus := args[86]
-	reason := args[87]
-	triageRequestNo := args[88]
-	heartRate := args[89]
-	bloodPressureSys := args[90]
-	bloodPressureDia := args[91]
-	respiratoryRate := args[92]
-	temperature := args[93]
-	FSBS := args[94]
-	painScale := args[95]
-	pulseOX := args[96]
-	triageLevel := strings.Split(args[97], ",")
-	generalAppearance := strings.Split(args[98], ",")
-	headNeck := strings.Split(args[99], ",")
-	respiratory := strings.Split(args[100], ",")
-	cardiac := strings.Split(args[101], ",")
-	abdomen := strings.Split(args[102], ",")
-	neurological := strings.Split(args[103], ",")
-	tRequester := args[104]
-	tDate := args[105]
-	fRequester := args[106]
-	approvalNumber := args[107]
-	approvalPerson := args[108]
-	file := args[109]
-	fDescription := args[110]
-	notes := args[111]
-	fStatus := args[112]
-	fDoctorName := args[113]
-	fDoctor := args[114]
-	fDate := args[115]
-	requestType := args[116]
-	functionalUnit := args[117]
-	verified := args[118]
-	insurerId := args[119]
-	paymentMethod := args[120]
-	claimed := args[121]
-	createdAt := args[122]
-	updatedAt := args[123]
+	consultationNote := args[3]
 
-	fmt.Println("- start  ", requestNo, patientId, generatedBy, consultationNo, date, description, consultationNotes, doctorNotes, audioNotes, consultStatus, speciality, specialist, requester, completedTime, residentNoteNo, residentdate, residentdescription, doctor, note, residentStatus, section, residentaudioNotes, code,
-		ReplenishmentRequestBuID, lRrequestNo, serviceId, price, requesterName, serviceCode, serviceName, lStatus, lRequester, results, sampleId, comments, serviceType, activeDate, completedDate, lDate, rRrequestNo, rServiceId, rPrice, rServiceCode, rStatus, rRequesterName, rServiceName, rRequester, rResults, rComments,
-		rServiceType, consultationNote, rActiveDate, rCompletedDate, rDate, NSrequestNo, nServiceId, nPrice, nRequesterName, nServiceCode, nStatus, nServiceName, nComments, nRequester, nDate, dischargeNotes, otherNotes, dDate, dStatus, dRequester, itemId, priority, schedule, dosage, frequency, duration, requestedQty,
-		medicineName, unitPrice, totalPrice, itemType, make_model, size, drStatus, inProcessDate, completionDate, status, tStatus, reason, triageRequestNo, heartRate, bloodPressureSys, bloodPressureDia, respiratoryRate, temperature, FSBS, painScale, pulseOX, triageLevel, generalAppearance, headNeck, respiratory, cardiac,
-		abdomen, neurological, tRequester, tDate, fRequester, approvalNumber, approvalPerson, file, fDescription, notes, fStatus, fDoctorName, fDoctor, fDate, requestType, functionalUnit, verified, insurerId, paymentMethod, claimed, createdAt, updatedAt)
+	var consult []Consultation
+	json.Unmarshal([]byte(consultationNote), &consult)
+
+	residentNotes := args[4]
+
+	var resident []ResidentIPR
+	json.Unmarshal([]byte(residentNotes), &resident)
+
+	pharmacyRequest := args[5]
+
+	var pharmacy []PharmacyReq
+	json.Unmarshal([]byte(pharmacyRequest), &pharmacy)
+
+	labRequest := args[6]
+
+	var lab []LabReq
+	json.Unmarshal([]byte(labRequest), &lab)
+
+	radiologyRequest := args[7]
+
+	var radiology []RadiologyReq
+	json.Unmarshal([]byte(radiologyRequest), &radiology)
+
+	nurseService := args[8]
+
+	var nurse []NurseServ
+	json.Unmarshal([]byte(nurseService), &nurse)
+
+	dischargeNotes := args[9]
+	otherNotes := args[10]
+	dDate := args[11]
+	dStatus := args[12]
+	dRequester := args[13]
+	medicine := args[14]
+
+	var med []Med
+	json.Unmarshal([]byte(medicine), &med)
+
+	drStatus := args[15]
+	inProcessDate := args[16]
+	completionDate := args[17]
+	status := args[18]
+	triageAssessment := args[19]
+
+	var triage []Triage
+	json.Unmarshal([]byte(triageAssessment), &triage)
+
+	followUp := args[20]
+
+	var follow []Follow
+	json.Unmarshal([]byte(followUp), &follow)
+
+	requestType := args[21]
+	functionalUnit := args[22]
+	verified := args[23]
+	insurerId := args[24]
+	paymentMethod := args[25]
+	claimed := args[26]
+	createdAt := args[27]
+	updatedAt := args[28]
+
+	fmt.Println("- start  ", requestNo, patientId, generatedBy, consultationNote, residentNotes, pharmacyRequest, labRequest, radiologyRequest, nurseService, dischargeNotes, otherNotes, dDate, dStatus, dRequester, medicine, drStatus, inProcessDate,
+		completionDate, status, triageAssessment, followUp, requestType, functionalUnit, verified, insurerId,
+		paymentMethod, claimed, createdAt, updatedAt)
 
 	PatientAsBytes, err := stub.GetState(requestNo)
 	if err != nil {
@@ -1591,137 +1091,24 @@ func (t *SmartContract) updateIPRSchema(stub shim.ChaincodeStubInterface, args [
 
 	IPRToUpdate.PatientId = patientId
 	IPRToUpdate.GeneratedBy = generatedBy
-	IPRToUpdate.ConsultationNote = append(IPRToUpdate.ConsultationNote, Consultation{
-		ConsultationNo:    consultationNo,
-		Date:              date,
-		Description:       description,
-		ConsultationNotes: consultationNotes,
-		DoctorNotes:       doctorNotes,
-		AudioNotes:        audioNotes,
-		Status:            consultStatus,
-		Speciality:        speciality,
-		Specialist:        specialist,
-		Requester:         requester,
-		CompletedTime:     completedTime,
-	})
-	IPRToUpdate.ResidentNotesIPR = append(IPRToUpdate.ResidentNotesIPR, ResidentIPR{
-		ResidentNoteNo: residentNoteNo,
-		Date:           residentdate,
-		Description:    residentdescription,
-		Doctor:         doctor,
-		Note:           note,
-		Status:         residentStatus,
-		Section:        section,
-		AudioNotes:     residentaudioNotes,
-		Code:           code,
-	})
-	IPRToUpdate.PharmacyRequest = append(IPRToUpdate.PharmacyRequest, PharmacyReq{
-		ReplenishmentRequestBuID: ReplenishmentRequestBuID,
-	})
-	IPRToUpdate.LabRequest = append(IPRToUpdate.LabRequest, LabReq{
-		LRrequestNo:   lRrequestNo,
-		ServiceId:     serviceId,
-		Price:         price,
-		RequesterName: requesterName,
-		ServiceCode:   serviceCode,
-		ServiceName:   serviceName,
-		Status:        lStatus,
-		Requester:     lRequester,
-		Results:       results,
-		SampleId:      sampleId,
-		Comments:      comments,
-		ServiceType:   serviceType,
-		ActiveDate:    activeDate,
-		CompletedDate: completedDate,
-		Date:          lDate,
-	})
-	IPRToUpdate.RadiologyRequest = append(IPRToUpdate.RadiologyRequest, RadiologyReq{
-		RRrequestNo:      rRrequestNo,
-		ServiceId:        rServiceId,
-		Price:            rPrice,
-		ServiceCode:      rServiceCode,
-		Status:           rStatus,
-		RequesterName:    rRequesterName,
-		ServiceName:      rServiceName,
-		Requester:        rRequester,
-		Results:          rResults,
-		Comments:         rComments,
-		ServiceType:      rServiceType,
-		ConsultationNote: consultationNote,
-		ActiveDate:       rActiveDate,
-		CompletedDate:    rCompletedDate,
-		Date:             rDate,
-	})
-	IPRToUpdate.NurseService = append(IPRToUpdate.NurseService, NurseServ{
-		NSrequestNo:   NSrequestNo,
-		ServiceId:     nServiceId,
-		Price:         nPrice,
-		RequesterName: nRequesterName,
-		ServiceCode:   nServiceCode,
-		Status:        nStatus,
-		ServiceName:   nServiceName,
-		Comments:      nComments,
-		Requester:     nRequester,
-		Date:          nDate,
-	})
+	IPRToUpdate.ConsultationNote = append(IPRToUpdate.ConsultationNote, consult...)
+	IPRToUpdate.ResidentNotesIPR = append(IPRToUpdate.ResidentNotesIPR, resident...)
+	IPRToUpdate.PharmacyRequest = append(IPRToUpdate.PharmacyRequest, pharmacy...)
+	IPRToUpdate.LabRequest = append(IPRToUpdate.LabRequest, lab...)
+	IPRToUpdate.RadiologyRequest = append(IPRToUpdate.RadiologyRequest, radiology...)
+	IPRToUpdate.NurseService = append(IPRToUpdate.NurseService, nurse...)
 	IPRToUpdate.DischargeRequest.DischargeSummary.DischargeNotes = dischargeNotes
 	IPRToUpdate.DischargeRequest.DischargeSummary.OtherNotes = otherNotes
 	IPRToUpdate.DischargeRequest.DischargeMedication.Date = dDate
 	IPRToUpdate.DischargeRequest.DischargeMedication.Status = dStatus
 	IPRToUpdate.DischargeRequest.DischargeMedication.Requester = dRequester
-	IPRToUpdate.DischargeRequest.DischargeMedication.Medicine = append(IPRToUpdate.DischargeRequest.DischargeMedication.Medicine, Med{
-		ItemId:       itemId,
-		Priority:     priority,
-		Schedule:     schedule,
-		Dosage:       dosage,
-		Frequency:    frequency,
-		Duration:     duration,
-		RequestedQty: requestedQty,
-		MedicineName: medicineName,
-		UnitPrice:    unitPrice,
-		TotalPrice:   totalPrice,
-		ItemType:     itemType,
-		Make_model:   make_model,
-		Size:         size,
-	})
+	IPRToUpdate.DischargeRequest.DischargeMedication.Medicine = append(IPRToUpdate.DischargeRequest.DischargeMedication.Medicine, med...)
 	IPRToUpdate.DischargeRequest.Status = drStatus
 	IPRToUpdate.DischargeRequest.InProcessDate = inProcessDate
 	IPRToUpdate.DischargeRequest.CompletionDate = completionDate
 	IPRToUpdate.Status = status
-	IPRToUpdate.TriageAssessment = append(IPRToUpdate.TriageAssessment, Triage{
-		Status:            tStatus,
-		Reason:            reason,
-		TriageRequestNo:   triageRequestNo,
-		HeartRate:         heartRate,
-		BloodPressureSys:  bloodPressureSys,
-		BloodPressureDia:  bloodPressureDia,
-		RespiratoryRate:   respiratoryRate,
-		Temperature:       temperature,
-		FSBS:              FSBS,
-		PainScale:         painScale,
-		PulseOX:           pulseOX,
-		TriageLevel:       triageLevel,
-		GeneralAppearance: generalAppearance,
-		HeadNeck:          headNeck,
-		Respiratory:       respiratory,
-		Cardiac:           cardiac,
-		Abdomen:           abdomen,
-		Neurological:      neurological,
-		Requester:         tRequester,
-		Date:              tDate,
-	})
-	IPRToUpdate.FollowUp = append(IPRToUpdate.FollowUp, Follow{
-		Requester:      fRequester,
-		ApprovalNumber: approvalNumber,
-		ApprovalPerson: approvalPerson,
-		File:           file,
-		Description:    fDescription,
-		Notes:          notes,
-		Status:         fStatus,
-		DoctorName:     fDoctorName,
-		Doctor:         fDoctor,
-		Date:           fDate,
-	})
+	IPRToUpdate.TriageAssessment = append(IPRToUpdate.TriageAssessment, triage...)
+	IPRToUpdate.FollowUp = append(IPRToUpdate.FollowUp, follow...)
 	IPRToUpdate.RequestType = requestType
 	IPRToUpdate.FunctionalUnit = functionalUnit
 	IPRToUpdate.Verified = verified
@@ -1747,7 +1134,7 @@ func (t *SmartContract) updateIPRSchema(stub shim.ChaincodeStubInterface, args [
 
 func (t *SmartContract) updatePatient(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	if len(args) < 62 {
+	if len(args) < 42 {
 		return shim.Error("Incorrect number of arguments. Expecting 63")
 	}
 

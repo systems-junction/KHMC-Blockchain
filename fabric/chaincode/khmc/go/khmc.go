@@ -1107,7 +1107,7 @@ func (t *SmartContract) addReplenishmentRequest(stub shim.ChaincodeStubInterface
 
 	var err error
 
-	if len(args) != 36 {
+	if len(args) != 32 {
 		return shim.Error("Incorrect Number of Arguments. Expecting 36")
 	}
 
@@ -1210,18 +1210,6 @@ func (t *SmartContract) addReplenishmentRequest(stub shim.ChaincodeStubInterface
 	if len(args[31]) <= 0 {
 		return shim.Error("28th Argument Must be a Non-Empty String")
 	}
-	if len(args[32]) <= 0 {
-		return shim.Error("28th Argument Must be a Non-Empty String")
-	}
-	if len(args[33]) <= 0 {
-		return shim.Error("28th Argument Must be a Non-Empty String")
-	}
-	if len(args[34]) <= 0 {
-		return shim.Error("28th Argument Must be a Non-Empty String")
-	}
-	if len(args[35]) <= 0 {
-		return shim.Error("28th Argument Must be a Non-Empty String")
-	}
 
 	requestNo := args[0]
 	generated := args[1]
@@ -1241,24 +1229,32 @@ func (t *SmartContract) addReplenishmentRequest(stub shim.ChaincodeStubInterface
 	description := args[15]
 	rstatus := args[16]
 	rsecondStatus := args[17]
-	batchNumber := args[18]
-	expiryDate := args[19]
-	quantity := args[20]
-	tempbatchNumber := args[21]
-	tempexpiryDate := args[22]
-	tempquantity := args[23]
-	status := args[24]
-	secondStatus := args[25]
-	rrB := args[26]
-	approvedBy := args[27]
-	requesterName := args[28]
-	orderType := args[29]
-	department := args[30]
-	commentNote := args[31]
-	inProgressTime := args[32]
-	completedTime := args[33]
-	createdAt := args[34]
-	updatedAt := args[35]
+	batchArray := args[18]
+	tempBatchArray := args[19]
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
+
+	var tempbatch []TempBatch
+	json.Unmarshal([]byte(tempBatchArray), &tempbatch)
+	// batchNumber := args[18]
+	// expiryDate := args[19]
+	// quantity := args[20]
+	// tempbatchNumber := args[21]
+	// tempexpiryDate := args[22]
+	// tempquantity := args[23]
+	status := args[20]
+	secondStatus := args[21]
+	rrB := args[22]
+	approvedBy := args[23]
+	requesterName := args[24]
+	orderType := args[25]
+	department := args[26]
+	commentNote := args[27]
+	inProgressTime := args[28]
+	completedTime := args[29]
+	createdAt := args[30]
+	updatedAt := args[31]
 
 	// ======Check if PurchaseRequest Already exists
 
@@ -1274,15 +1270,7 @@ func (t *SmartContract) addReplenishmentRequest(stub shim.ChaincodeStubInterface
 	objectType := "ReplenishmentRequest"
 	object := "RItem"
 	ReplenishmentRequest := &ReplenishmentRequest{objectType, requestNo, generated, generatedBy, dateGenerated, reason, fuId, to, from, comments, RItem{object, itemId, currentQty, requestedQty, recieptUnit, issueUnit, fuItemCost, description, rstatus, rsecondStatus,
-		BatchArray{Batch{
-			BatchNumber: batchNumber,
-			ExpiryDate:  expiryDate,
-			Quantity:    quantity,
-		}}, TempBatchArray{TempBatch{
-			BatchNumber: tempbatchNumber,
-			ExpiryDate:  tempexpiryDate,
-			Quantity:    tempquantity,
-		}}}, status, secondStatus, rrB, approvedBy, requesterName, orderType, department, commentNote, inProgressTime, completedTime, createdAt, updatedAt}
+		append(ReplenishmentRequest{}.RItem.BatchArray, batch...), append(ReplenishmentRequest{}.RItem.TempBatchArray, tempbatch...)}, status, secondStatus, rrB, approvedBy, requesterName, orderType, department, commentNote, inProgressTime, completedTime, createdAt, updatedAt}
 	ReplenishmentRequestJSONasBytes, err := json.Marshal(ReplenishmentRequest)
 
 	if err != nil {
@@ -1546,7 +1534,7 @@ func (t *SmartContract) addFuInventory(stub shim.ChaincodeStubInterface, args []
 
 	var err error
 
-	if len(args) != 14 {
+	if len(args) != 10 {
 		return shim.Error("Incorrect Number of Aruments. Expecting 14")
 	}
 
@@ -1583,18 +1571,18 @@ func (t *SmartContract) addFuInventory(stub shim.ChaincodeStubInterface, args []
 	if len(args[9]) <= 0 {
 		return shim.Error("10th Argument Must be a Non-Empty String")
 	}
-	if len(args[10]) <= 0 {
-		return shim.Error("11th Argument Must be a Non-Empty String")
-	}
-	if len(args[11]) <= 0 {
-		return shim.Error("12th Argument Must be a Non-Empty String")
-	}
-	if len(args[12]) <= 0 {
-		return shim.Error("13th Argument Must be a Non-Empty String")
-	}
-	if len(args[13]) <= 0 {
-		return shim.Error("14th Argument Must be a Non-Empty String")
-	}
+	// if len(args[10]) <= 0 {
+	// 	return shim.Error("11th Argument Must be a Non-Empty String")
+	// }
+	// if len(args[11]) <= 0 {
+	// 	return shim.Error("12th Argument Must be a Non-Empty String")
+	// }
+	// if len(args[12]) <= 0 {
+	// 	return shim.Error("13th Argument Must be a Non-Empty String")
+	// }
+	// if len(args[13]) <= 0 {
+	// 	return shim.Error("14th Argument Must be a Non-Empty String")
+	// }
 
 	fuId := args[0]
 	itemId := args[1]
@@ -1604,12 +1592,21 @@ func (t *SmartContract) addFuInventory(stub shim.ChaincodeStubInterface, args []
 	minimumLevel := args[5]
 	createdAt := args[6]
 	updatedAt := args[7]
-	batchNumber := args[8]
-	expiryDate := args[9]
-	quantity := args[10]
-	tempbatchNumber := args[11]
-	tempexpiryDate := args[12]
-	tempquantity := args[13]
+	batchArray := args[8]
+	tempBatchArray := args[9]
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
+
+	var tempbatch []TempBatch
+	json.Unmarshal([]byte(tempBatchArray), &tempbatch)
+
+	// batchNumber := args[8]
+	// expiryDate := args[9]
+	// quantity := args[10]
+	// tempbatchNumber := args[11]
+	// tempexpiryDate := args[12]
+	// tempquantity := args[13]
 
 	// ======Check if FuInventory Already exists
 
@@ -1623,16 +1620,7 @@ func (t *SmartContract) addFuInventory(stub shim.ChaincodeStubInterface, args []
 	// ===== Create FuInventory Object and Marshal to JSON
 
 	objectType := "FuInventory"
-	FuInventory := &FuInventory{objectType, fuId, itemId, qty, maximumLevel, reorderLevel, minimumLevel, createdAt, updatedAt, BatchArray{
-		{
-			BatchNumber: batchNumber,
-			ExpiryDate:  expiryDate,
-			Quantity:    quantity,
-		}}, TempBatchArray{TempBatch{
-		BatchNumber: tempbatchNumber,
-		ExpiryDate:  tempexpiryDate,
-		Quantity:    tempquantity,
-	}}}
+	FuInventory := &FuInventory{objectType, fuId, itemId, qty, maximumLevel, reorderLevel, minimumLevel, createdAt, updatedAt, append(FuInventory{}.BatchArray, batch...), append(FuInventory{}.TempBatchArray, tempbatch...)}
 	FuInventoryJSONasBytes, err := json.Marshal(FuInventory)
 
 	if err != nil {
@@ -1676,195 +1664,6 @@ func (t *SmartContract) queryFuInventory(stub shim.ChaincodeStubInterface, args 
 }
 
 func (t *SmartContract) addReceiveItem(stub shim.ChaincodeStubInterface, args []string) peer.Response {
-
-	var err error
-
-	if len(args) != 33 {
-		return shim.Error("Incorrect Number of Arguments. Expecting 33")
-	}
-
-	fmt.Println("Adding new ReceiveItem")
-
-	// ==== Input sanitation ====
-	if len(args[0]) <= 0 {
-		return shim.Error("1st Argument Must be a Non-Empty String")
-	}
-	if len(args[1]) <= 0 {
-		return shim.Error("2nd Argument Must be a Non-Empty String")
-	}
-	if len(args[2]) <= 0 {
-		return shim.Error("3rd Argument Must be a Non-Empty String")
-	}
-	if len(args[3]) <= 0 {
-		return shim.Error("4th Argument Must be a Non-Empty String")
-	}
-	if len(args[4]) <= 0 {
-		return shim.Error("5th Argument Must be a Non-Empty String")
-	}
-	if len(args[5]) <= 0 {
-		return shim.Error("6th Argument Must be a Non-Empty String")
-	}
-	if len(args[6]) <= 0 {
-		return shim.Error("7th Argument Must be a Non-Empty String")
-	}
-	if len(args[7]) <= 0 {
-		return shim.Error("8th Argument Must be a Non-Empty String")
-	}
-	if len(args[8]) <= 0 {
-		return shim.Error("9th Argument Must be a Non-Empty String")
-	}
-	if len(args[9]) <= 0 {
-		return shim.Error("10th Argument Must be a Non-Empty String")
-	}
-	if len(args[10]) <= 0 {
-		return shim.Error("11th Argument Must be a Non-Empty String")
-	}
-	if len(args[11]) <= 0 {
-		return shim.Error("12th Argument Must be a Non-Empty String")
-	}
-	if len(args[12]) <= 0 {
-		return shim.Error("13th Argument Must be a Non-Empty String")
-	}
-	if len(args[13]) <= 0 {
-		return shim.Error("14th Argument Must be a Non-Empty String")
-	}
-	if len(args[14]) <= 0 {
-		return shim.Error("15th Argument Must be a Non-Empty String")
-	}
-	if len(args[15]) <= 0 {
-		return shim.Error("16th Argument Must be a Non-Empty String")
-	}
-	if len(args[16]) <= 0 {
-		return shim.Error("17th Argument Must be a Non-Empty String")
-	}
-	if len(args[17]) <= 0 {
-		return shim.Error("18th Argument Must be a Non-Empty String")
-	}
-	if len(args[18]) <= 0 {
-		return shim.Error("19th Argument Must be a Non-Empty String")
-	}
-	if len(args[19]) <= 0 {
-		return shim.Error("20th Argument Must be a Non-Empty String")
-	}
-	if len(args[20]) <= 0 {
-		return shim.Error("21th Argument Must be a Non-Empty String")
-	}
-	if len(args[21]) <= 0 {
-		return shim.Error("22th Argument Must be a Non-Empty String")
-	}
-	if len(args[22]) <= 0 {
-		return shim.Error("23th Argument Must be a Non-Empty String")
-	}
-	if len(args[23]) <= 0 {
-		return shim.Error("24th Argument Must be a Non-Empty String")
-	}
-	if len(args[24]) <= 0 {
-		return shim.Error("25th Argument Must be a Non-Empty String")
-	}
-	if len(args[25]) <= 0 {
-		return shim.Error("26th Argument Must be a Non-Empty String")
-	}
-	if len(args[26]) <= 0 {
-		return shim.Error("27th Argument Must be a Non-Empty String")
-	}
-	if len(args[27]) <= 0 {
-		return shim.Error("28th Argument Must be a Non-Empty String")
-	}
-	if len(args[28]) <= 0 {
-		return shim.Error("29th Argument Must be a Non-Empty String")
-	}
-	if len(args[29]) <= 0 {
-		return shim.Error("29th Argument Must be a Non-Empty String")
-	}
-	if len(args[30]) <= 0 {
-		return shim.Error("29th Argument Must be a Non-Empty String")
-	}
-	if len(args[31]) <= 0 {
-		return shim.Error("29th Argument Must be a Non-Empty String")
-	}
-	if len(args[32]) <= 0 {
-		return shim.Error("29th Argument Must be a Non-Empty String")
-	}
-
-	itemId := args[0]
-	prId := args[1]
-	status := args[2]
-	currentQty := args[3]
-	requestedQty := args[4]
-	receivedQty := args[5]
-	bonusQty := args[6]
-	batchNumber := args[7]
-	lotNumber := args[8]
-	expiryDate := args[9]
-	unit := args[10]
-	discount := args[11]
-	unitDiscount := args[12]
-	discountAmount := args[13]
-	tax := args[14]
-	taxAmount := args[15]
-	finalUnitPrice := args[16]
-	subTotal := args[17]
-	discountAmount2 := args[18]
-	totalPrice := args[19]
-	invoice := args[20]
-	dateInvoice := args[21]
-	dateReceived := args[22]
-	notes := args[23]
-	createdAt := args[24]
-	updatedAt := args[25]
-	returnedQty := args[26]
-	batchNumberArr := args[27]
-	expiryDateArr := args[28]
-	quantity := args[29]
-	price := args[30]
-	qrCode := args[31]
-	unitPrice := args[32]
-
-	// ======Check if ReceiveItem Already exists
-
-	ReceiveItemAsBytes, err := stub.GetState(itemId)
-	if err != nil {
-		return shim.Error("Transaction Failed with Error: " + err.Error())
-	} else if ReceiveItemAsBytes != nil {
-		return shim.Error("The Inserted ReceiveItem ID already Exists: " + itemId)
-	}
-
-	// ===== Create ReceiveItem Object and Marshal to JSON
-
-	objectType := "ReceiveItem"
-	ReceiveItem := &ReceiveItem{objectType, itemId, prId, status, currentQty, requestedQty, receivedQty, bonusQty, batchNumber, lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal, discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, returnedQty, BatchArray{
-		Batch{
-			BatchNumber: batchNumberArr,
-			ExpiryDate:  expiryDateArr,
-			Quantity:    quantity,
-			Price:       price,
-			QrCode:      qrCode,
-		}}, unitPrice}
-	ReceiveItemJSONasBytes, err := json.Marshal(ReceiveItem)
-
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-
-	// ======= Save ReceiveItem to State
-
-	err = stub.PutState(itemId, ReceiveItemJSONasBytes)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-
-	err = stub.PutState("ReceiveItem", ReceiveItemJSONasBytes) //rewrite the marble
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-
-	// ======= Return Success
-
-	fmt.Println("Successfully Saved ReceiveItem")
-	return shim.Success(nil)
-}
-
-func (t *SmartContract) addReceiveItemFUSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	var err error
 
@@ -1964,6 +1763,167 @@ func (t *SmartContract) addReceiveItemFUSchema(stub shim.ChaincodeStubInterface,
 	}
 
 	itemId := args[0]
+	prId := args[1]
+	status := args[2]
+	currentQty := args[3]
+	requestedQty := args[4]
+	receivedQty := args[5]
+	bonusQty := args[6]
+	batchNumber := args[7]
+	lotNumber := args[8]
+	expiryDate := args[9]
+	unit := args[10]
+	discount := args[11]
+	unitDiscount := args[12]
+	discountAmount := args[13]
+	tax := args[14]
+	taxAmount := args[15]
+	finalUnitPrice := args[16]
+	subTotal := args[17]
+	discountAmount2 := args[18]
+	totalPrice := args[19]
+	invoice := args[20]
+	dateInvoice := args[21]
+	dateReceived := args[22]
+	notes := args[23]
+	createdAt := args[24]
+	updatedAt := args[25]
+	returnedQty := args[26]
+	batchArray := args[27]
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
+
+	unitPrice := args[28]
+
+	// ======Check if ReceiveItem Already exists
+
+	ReceiveItemAsBytes, err := stub.GetState(itemId)
+	if err != nil {
+		return shim.Error("Transaction Failed with Error: " + err.Error())
+	} else if ReceiveItemAsBytes != nil {
+		return shim.Error("The Inserted ReceiveItem ID already Exists: " + itemId)
+	}
+
+	// ===== Create ReceiveItem Object and Marshal to JSON
+
+	objectType := "ReceiveItem"
+	ReceiveItem := &ReceiveItem{objectType, itemId, prId, status, currentQty, requestedQty, receivedQty, bonusQty, batchNumber, lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal, discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, returnedQty, append(ReceiveItem{}.BatchArray, batch...), unitPrice}
+	ReceiveItemJSONasBytes, err := json.Marshal(ReceiveItem)
+
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Save ReceiveItem to State
+
+	err = stub.PutState(itemId, ReceiveItemJSONasBytes)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	err = stub.PutState("ReceiveItem", ReceiveItemJSONasBytes) //rewrite the marble
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	// ======= Return Success
+
+	fmt.Println("Successfully Saved ReceiveItem")
+	return shim.Success(nil)
+}
+
+func (t *SmartContract) addReceiveItemFUSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+
+	var err error
+
+	if len(args) != 26 {
+		return shim.Error("Incorrect Number of Arguments. Expecting 33")
+	}
+
+	fmt.Println("Adding new ReceiveItem")
+
+	// ==== Input sanitation ====
+	if len(args[0]) <= 0 {
+		return shim.Error("1st Argument Must be a Non-Empty String")
+	}
+	if len(args[1]) <= 0 {
+		return shim.Error("2nd Argument Must be a Non-Empty String")
+	}
+	if len(args[2]) <= 0 {
+		return shim.Error("3rd Argument Must be a Non-Empty String")
+	}
+	if len(args[3]) <= 0 {
+		return shim.Error("4th Argument Must be a Non-Empty String")
+	}
+	if len(args[4]) <= 0 {
+		return shim.Error("5th Argument Must be a Non-Empty String")
+	}
+	if len(args[5]) <= 0 {
+		return shim.Error("6th Argument Must be a Non-Empty String")
+	}
+	if len(args[6]) <= 0 {
+		return shim.Error("7th Argument Must be a Non-Empty String")
+	}
+	if len(args[7]) <= 0 {
+		return shim.Error("8th Argument Must be a Non-Empty String")
+	}
+	if len(args[8]) <= 0 {
+		return shim.Error("9th Argument Must be a Non-Empty String")
+	}
+	if len(args[9]) <= 0 {
+		return shim.Error("10th Argument Must be a Non-Empty String")
+	}
+	if len(args[10]) <= 0 {
+		return shim.Error("11th Argument Must be a Non-Empty String")
+	}
+	if len(args[11]) <= 0 {
+		return shim.Error("12th Argument Must be a Non-Empty String")
+	}
+	if len(args[12]) <= 0 {
+		return shim.Error("13th Argument Must be a Non-Empty String")
+	}
+	if len(args[13]) <= 0 {
+		return shim.Error("14th Argument Must be a Non-Empty String")
+	}
+	if len(args[14]) <= 0 {
+		return shim.Error("15th Argument Must be a Non-Empty String")
+	}
+	if len(args[15]) <= 0 {
+		return shim.Error("16th Argument Must be a Non-Empty String")
+	}
+	if len(args[16]) <= 0 {
+		return shim.Error("17th Argument Must be a Non-Empty String")
+	}
+	if len(args[17]) <= 0 {
+		return shim.Error("18th Argument Must be a Non-Empty String")
+	}
+	if len(args[18]) <= 0 {
+		return shim.Error("19th Argument Must be a Non-Empty String")
+	}
+	if len(args[19]) <= 0 {
+		return shim.Error("20th Argument Must be a Non-Empty String")
+	}
+	if len(args[20]) <= 0 {
+		return shim.Error("21th Argument Must be a Non-Empty String")
+	}
+	if len(args[21]) <= 0 {
+		return shim.Error("22th Argument Must be a Non-Empty String")
+	}
+	if len(args[22]) <= 0 {
+		return shim.Error("23th Argument Must be a Non-Empty String")
+	}
+	if len(args[23]) <= 0 {
+		return shim.Error("24th Argument Must be a Non-Empty String")
+	}
+	if len(args[24]) <= 0 {
+		return shim.Error("25th Argument Must be a Non-Empty String")
+	}
+	if len(args[25]) <= 0 {
+		return shim.Error("26th Argument Must be a Non-Empty String")
+	}
+
+	itemId := args[0]
 	currentQty := args[1]
 	requestedQty := args[2]
 	receivedQty := args[3]
@@ -1988,10 +1948,10 @@ func (t *SmartContract) addReceiveItemFUSchema(stub shim.ChaincodeStubInterface,
 	createdAt := args[22]
 	updatedAt := args[23]
 	replenishmentRequestId := args[24]
-	batchNumberArr := args[25]
-	expiryDateArr := args[26]
-	quantity := args[27]
-	price := args[28]
+	batchArray := args[25]
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
 
 	// ======Check if ReceiveItem Already exists
 
@@ -2005,13 +1965,7 @@ func (t *SmartContract) addReceiveItemFUSchema(stub shim.ChaincodeStubInterface,
 	// ===== Create ReceiveItem Object and Marshal to JSON
 
 	objectType := "ReceiveItemFU"
-	ReceiveItem := &ReceiveItemFUSchema{objectType, itemId, currentQty, requestedQty, receivedQty, bonusQty, batchNumber, lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal, discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, replenishmentRequestId, BatchArray{
-		Batch{
-			BatchNumber: batchNumberArr,
-			ExpiryDate:  expiryDateArr,
-			Quantity:    quantity,
-			Price:       price,
-		}}}
+	ReceiveItem := &ReceiveItemFUSchema{objectType, itemId, currentQty, requestedQty, receivedQty, bonusQty, batchNumber, lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal, discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, replenishmentRequestId, append(ReceiveItemFUSchema{}.BatchArray, batch...)}
 	ReceiveItemJSONasBytes, err := json.Marshal(ReceiveItem)
 
 	if err != nil {
@@ -2040,7 +1994,7 @@ func (t *SmartContract) addReceiveItemBUSchema(stub shim.ChaincodeStubInterface,
 
 	var err error
 
-	if len(args) != 31 {
+	if len(args) != 28 {
 		return shim.Error("Incorrect Number of Arguments. Expecting 33")
 	}
 
@@ -2131,15 +2085,6 @@ func (t *SmartContract) addReceiveItemBUSchema(stub shim.ChaincodeStubInterface,
 	if len(args[27]) <= 0 {
 		return shim.Error("28th Argument Must be a Non-Empty String")
 	}
-	if len(args[28]) <= 0 {
-		return shim.Error("29th Argument Must be a Non-Empty String")
-	}
-	if len(args[29]) <= 0 {
-		return shim.Error("29th Argument Must be a Non-Empty String")
-	}
-	if len(args[30]) <= 0 {
-		return shim.Error("29th Argument Must be a Non-Empty String")
-	}
 
 	itemId := args[0]
 	currentQty := args[1]
@@ -2168,10 +2113,10 @@ func (t *SmartContract) addReceiveItemBUSchema(stub shim.ChaincodeStubInterface,
 	replenishmentRequestId := args[24]
 	replenishmentRequestItemId := args[25]
 	qualityRate := args[26]
-	batchNumberArr := args[27]
-	expiryDateArr := args[28]
-	quantity := args[29]
-	price := args[30]
+	batchArray := args[27]
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
 
 	// ======Check if ReceiveItem Already exists
 
@@ -2185,13 +2130,7 @@ func (t *SmartContract) addReceiveItemBUSchema(stub shim.ChaincodeStubInterface,
 	// ===== Create ReceiveItem Object and Marshal to JSON
 
 	objectType := "ReceiveItemBU"
-	ReceiveItem := &ReceiveItemBUSchema{objectType, itemId, currentQty, requestedQty, receivedQty, bonusQty, batchNumber, lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal, discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, replenishmentRequestId, replenishmentRequestItemId, qualityRate, BatchArray{
-		Batch{
-			BatchNumber: batchNumberArr,
-			ExpiryDate:  expiryDateArr,
-			Quantity:    quantity,
-			Price:       price,
-		}}}
+	ReceiveItem := &ReceiveItemBUSchema{objectType, itemId, currentQty, requestedQty, receivedQty, bonusQty, batchNumber, lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal, discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, replenishmentRequestId, replenishmentRequestItemId, qualityRate, append(ReceiveItemBUSchema{}.BatchArray, batch...)}
 	ReceiveItemJSONasBytes, err := json.Marshal(ReceiveItem)
 
 	if err != nil {
@@ -2274,7 +2213,7 @@ func (t *SmartContract) addWarehouseInventory(stub shim.ChaincodeStubInterface, 
 
 	var err error
 
-	if len(args) != 15 {
+	if len(args) != 9 {
 		return shim.Error("Incorrect Number of Aruments. Expecting 13")
 	}
 
@@ -2308,24 +2247,6 @@ func (t *SmartContract) addWarehouseInventory(stub shim.ChaincodeStubInterface, 
 	if len(args[8]) <= 0 {
 		return shim.Error("9th Argument Must be a Non-Empty String")
 	}
-	if len(args[9]) <= 0 {
-		return shim.Error("10th Argument Must be a Non-Empty String")
-	}
-	if len(args[10]) <= 0 {
-		return shim.Error("11th Argument Must be a Non-Empty String")
-	}
-	if len(args[11]) <= 0 {
-		return shim.Error("12th Argument Must be a Non-Empty String")
-	}
-	if len(args[12]) <= 0 {
-		return shim.Error("13th Argument Must be a Non-Empty String")
-	}
-	if len(args[13]) <= 0 {
-		return shim.Error("13th Argument Must be a Non-Empty String")
-	}
-	if len(args[14]) <= 0 {
-		return shim.Error("13th Argument Must be a Non-Empty String")
-	}
 
 	itemId := args[0]
 	qty := args[1]
@@ -2334,14 +2255,14 @@ func (t *SmartContract) addWarehouseInventory(stub shim.ChaincodeStubInterface, 
 	reorderLevel := args[4]
 	createdAt := args[5]
 	updatedAt := args[6]
-	batchNumber := args[7]
-	expiryDate := args[8]
-	quantity := args[9]
-	price := args[10]
-	tempbatchNumber := args[11]
-	tempexpiryDate := args[12]
-	tempquantity := args[13]
-	tempprice := args[14]
+	batchArray := args[7]
+	tempBatchArray := args[8]
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
+
+	var tempbatch []TempBatch
+	json.Unmarshal([]byte(tempBatchArray), &tempbatch)
 
 	// ======Check if WarehouseInventory Already exists
 
@@ -2355,18 +2276,7 @@ func (t *SmartContract) addWarehouseInventory(stub shim.ChaincodeStubInterface, 
 	// ===== Create WarehouseInventory Object and Marshal to JSON
 
 	objectType := "WarehouseInventory"
-	WarehouseInventory := &WarehouseInventory{objectType, itemId, qty, maximumLevel, minimumLevel, reorderLevel, createdAt, updatedAt, BatchArray{
-		{
-			BatchNumber: batchNumber,
-			ExpiryDate:  expiryDate,
-			Quantity:    quantity,
-			Price:       price,
-		}}, TempBatchArray{TempBatch{
-		BatchNumber: tempbatchNumber,
-		ExpiryDate:  tempexpiryDate,
-		Quantity:    tempquantity,
-		Price:       tempprice,
-	}}}
+	WarehouseInventory := &WarehouseInventory{objectType, itemId, qty, maximumLevel, minimumLevel, reorderLevel, createdAt, updatedAt, append(WarehouseInventory{}.BatchArray, batch...), append(WarehouseInventory{}.TempBatchArray, tempbatch...)}
 	WarehouseInventoryJSONasBytes, err := json.Marshal(WarehouseInventory)
 
 	if err != nil {
@@ -2710,7 +2620,7 @@ func (t *SmartContract) addInternalReturnRequestSchema(stub shim.ChaincodeStubIn
 
 	var err error
 
-	if len(args) != 31 {
+	if len(args) != 27 {
 		return shim.Error("Incorrect Number of Arguments. Expecting 33")
 	}
 
@@ -2798,18 +2708,6 @@ func (t *SmartContract) addInternalReturnRequestSchema(stub shim.ChaincodeStubIn
 	if len(args[26]) <= 0 {
 		return shim.Error("27th Argument Must be a Non-Empty String")
 	}
-	if len(args[27]) <= 0 {
-		return shim.Error("28th Argument Must be a Non-Empty String")
-	}
-	if len(args[28]) <= 0 {
-		return shim.Error("29th Argument Must be a Non-Empty String")
-	}
-	if len(args[29]) <= 0 {
-		return shim.Error("29th Argument Must be a Non-Empty String")
-	}
-	if len(args[30]) <= 0 {
-		return shim.Error("29th Argument Must be a Non-Empty String")
-	}
 
 	returnRequestNo := args[0]
 	generatedBy := args[1]
@@ -2837,11 +2735,10 @@ func (t *SmartContract) addInternalReturnRequestSchema(stub shim.ChaincodeStubIn
 	createdAt := args[23]
 	updatedAt := args[24]
 	batchNo := args[25]
-	batchNumber := args[26]
-	expiryDatePerBatch := args[27]
-	receivedQtyPerBatch := args[28]
-	returnedQtyPerBatch := args[29]
-	price := args[30]
+	batchArray := args[26]
+
+	var batch []ReturnBatch
+	json.Unmarshal([]byte(batchArray), &batch)
 
 	// ======Check if ReceiveItem Already exists
 
@@ -2856,14 +2753,7 @@ func (t *SmartContract) addInternalReturnRequestSchema(stub shim.ChaincodeStubIn
 
 	objectType := "InternalReturnRequest"
 	object := "DamageReport"
-	ReceiveItem := &InternalReturnRequestSchema{objectType, returnRequestNo, generatedBy, dateGenerated, expiryDate, to, from, currentQty, returnedQty, itemId, description, fuId, reason, reasonDetail, buId, DamageReport{object, causedBy, totalDamageCost, date, itemCostPerUnit}, status, replenishmentRequestBU, replenishmentRequestFU, approvedBy, commentNote, createdAt, updatedAt, batchNo, ReturnBatchArray{
-		ReturnBatch{
-			BatchNumber:         batchNumber,
-			ExpiryDatePerBatch:  expiryDatePerBatch,
-			ReceivedQtyPerBatch: receivedQtyPerBatch,
-			ReturnedQtyPerBatch: returnedQtyPerBatch,
-			Price:               price,
-		}}}
+	ReceiveItem := &InternalReturnRequestSchema{objectType, returnRequestNo, generatedBy, dateGenerated, expiryDate, to, from, currentQty, returnedQty, itemId, description, fuId, reason, reasonDetail, buId, DamageReport{object, causedBy, totalDamageCost, date, itemCostPerUnit}, status, replenishmentRequestBU, replenishmentRequestFU, approvedBy, commentNote, createdAt, updatedAt, batchNo, append(InternalReturnRequestSchema{}.ReturnBatchArray, batch...)}
 	ReceiveItemJSONasBytes, err := json.Marshal(ReceiveItem)
 
 	if err != nil {
@@ -2892,7 +2782,7 @@ func (t *SmartContract) addExternalReturnRequestSchema(stub shim.ChaincodeStubIn
 
 	var err error
 
-	if len(args) != 25 {
+	if len(args) != 22 {
 		return shim.Error("Incorrect Number of Arguments. Expecting 33")
 	}
 
@@ -2965,15 +2855,6 @@ func (t *SmartContract) addExternalReturnRequestSchema(stub shim.ChaincodeStubIn
 	if len(args[21]) <= 0 {
 		return shim.Error("22th Argument Must be a Non-Empty String")
 	}
-	if len(args[22]) <= 0 {
-		return shim.Error("23th Argument Must be a Non-Empty String")
-	}
-	if len(args[23]) <= 0 {
-		return shim.Error("24th Argument Must be a Non-Empty String")
-	}
-	if len(args[24]) <= 0 {
-		return shim.Error("25th Argument Must be a Non-Empty String")
-	}
 
 	returnRequestNo := args[0]
 	generatedBy := args[1]
@@ -2996,10 +2877,10 @@ func (t *SmartContract) addExternalReturnRequestSchema(stub shim.ChaincodeStubIn
 	inProgressTime := args[18]
 	createdAt := args[19]
 	updatedAt := args[20]
-	batchNumber := args[21]
-	expiryDateArr := args[22]
-	quantity := args[23]
-	price := args[24]
+	batchArray := args[21]
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
 
 	// ======Check if ReceiveItem Already exists
 
@@ -3014,13 +2895,7 @@ func (t *SmartContract) addExternalReturnRequestSchema(stub shim.ChaincodeStubIn
 
 	objectType := "ExternalReturnRequest"
 	object := "DamageReport"
-	ReceiveItem := &ExternalReturnRequestSchema{objectType, returnRequestNo, generatedBy, generated, dateGenerated, expiryDate, returnedQty, itemId, prId, description, reason, reasonDetail, DamageReport{object, causedBy, totalDamageCost, date, itemCostPerUnit}, status, approvedBy, commentNote, inProgressTime, createdAt, updatedAt, BatchArray{
-		Batch{
-			BatchNumber: batchNumber,
-			ExpiryDate:  expiryDateArr,
-			Quantity:    quantity,
-			Price:       price,
-		}}}
+	ReceiveItem := &ExternalReturnRequestSchema{objectType, returnRequestNo, generatedBy, generated, dateGenerated, expiryDate, returnedQty, itemId, prId, description, reason, reasonDetail, DamageReport{object, causedBy, totalDamageCost, date, itemCostPerUnit}, status, approvedBy, commentNote, inProgressTime, createdAt, updatedAt, append(ExternalReturnRequestSchema{}.BatchArray, batch...)}
 	ReceiveItemJSONasBytes, err := json.Marshal(ReceiveItem)
 
 	if err != nil {
@@ -3083,7 +2958,7 @@ func (t *SmartContract) queryExternalReturnRequest(stub shim.ChaincodeStubInterf
 
 func (t *SmartContract) updateWarehouseInventory(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	if len(args) < 15 {
+	if len(args) < 9 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
 
@@ -3094,17 +2969,10 @@ func (t *SmartContract) updateWarehouseInventory(stub shim.ChaincodeStubInterfac
 	reorderLevel := args[4]
 	createdAt := args[5]
 	updatedAt := args[6]
-	batchNumber := args[7]
-	expiryDate := args[8]
-	quantity := args[9]
-	price := args[10]
-	tempbatchNumber := args[11]
-	tempexpiryDate := args[12]
-	tempquantity := args[13]
-	tempprice := args[14]
+	batchArray := args[7]
+	tempBatchArray := args[8]
 
-	fmt.Println("- start  ", itemId, qty, maximumLevel, minimumLevel, reorderLevel, createdAt, updatedAt, batchNumber,
-		expiryDate, quantity, price, tempbatchNumber, tempexpiryDate, tempquantity, tempprice)
+	fmt.Println("- start  ", itemId, qty, maximumLevel, minimumLevel, reorderLevel, createdAt, updatedAt, batchArray, tempBatchArray)
 
 	responseAsBytes, err := stub.GetState(itemId)
 	if err != nil {
@@ -3119,6 +2987,12 @@ func (t *SmartContract) updateWarehouseInventory(stub shim.ChaincodeStubInterfac
 		return shim.Error(err.Error())
 	}
 
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
+
+	var tempbatch []TempBatch
+	json.Unmarshal([]byte(tempBatchArray), &tempbatch)
+
 	responseToUpdate.Qty = qty
 	responseToUpdate.MaximumLevel = maximumLevel
 	responseToUpdate.MinimumLevel = minimumLevel
@@ -3126,18 +3000,8 @@ func (t *SmartContract) updateWarehouseInventory(stub shim.ChaincodeStubInterfac
 	responseToUpdate.CreatedAt = createdAt
 	responseToUpdate.UpdatedAt = updatedAt
 
-	responseToUpdate.BatchArray = append(responseToUpdate.BatchArray, Batch{
-		BatchNumber: batchNumber,
-		ExpiryDate:  expiryDate,
-		Quantity:    quantity,
-		Price:       price,
-	}) //change the status
-	responseToUpdate.TempBatchArray = append(responseToUpdate.TempBatchArray, TempBatch{
-		BatchNumber: tempbatchNumber,
-		ExpiryDate:  tempexpiryDate,
-		Quantity:    tempquantity,
-		Price:       tempprice,
-	}) //change the status
+	responseToUpdate.BatchArray = append(responseToUpdate.BatchArray, batch...)
+	responseToUpdate.TempBatchArray = append(responseToUpdate.TempBatchArray, tempbatch...) //change the status
 
 	responseJSONasBytes, _ := json.Marshal(responseToUpdate)
 	err = stub.PutState(itemId, responseJSONasBytes) //rewrite
@@ -3720,7 +3584,7 @@ func (t *SmartContract) updatePurchaseRequest(stub shim.ChaincodeStubInterface, 
 
 func (t *SmartContract) updateReplenishmentRequest(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	if len(args) < 36 {
+	if len(args) < 32 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
 
@@ -3742,27 +3606,23 @@ func (t *SmartContract) updateReplenishmentRequest(stub shim.ChaincodeStubInterf
 	description := args[15]
 	rstatus := args[16]
 	rsecondStatus := args[17]
-	batchNumber := args[18]
-	expiryDate := args[19]
-	quantity := args[20]
-	tempbatchNumber := args[21]
-	tempexpiryDate := args[22]
-	tempquantity := args[23]
-	status := args[24]
-	secondStatus := args[25]
-	rrB := args[26]
-	approvedBy := args[27]
-	requesterName := args[28]
-	orderType := args[29]
-	department := args[30]
-	commentNote := args[31]
-	inProgressTime := args[32]
-	completedTime := args[33]
-	createdAt := args[34]
-	updatedAt := args[35]
+	batchArray := args[18]
+	tempBatchArray := args[19]
+	status := args[20]
+	secondStatus := args[21]
+	rrB := args[22]
+	approvedBy := args[23]
+	requesterName := args[24]
+	orderType := args[25]
+	department := args[26]
+	commentNote := args[27]
+	inProgressTime := args[28]
+	completedTime := args[29]
+	createdAt := args[30]
+	updatedAt := args[31]
 	fmt.Println("- start  ", requestNo, generated, generatedBy, dateGenerated, reason, fuId, to, from, comments,
 		itemId, currentQty, requestedQty, recieptUnit, issueUnit, fuItemCost, description, rstatus, rsecondStatus,
-		batchNumber, expiryDate, quantity, tempbatchNumber, tempexpiryDate, tempquantity, status, secondStatus,
+		batchArray, tempBatchArray, status, secondStatus,
 		rrB, approvedBy, requesterName, orderType, department, commentNote, inProgressTime, completedTime, createdAt,
 		updatedAt)
 
@@ -3778,6 +3638,13 @@ func (t *SmartContract) updateReplenishmentRequest(stub shim.ChaincodeStubInterf
 	if err != nil {
 		return shim.Error(err.Error())
 	}
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
+
+	var tempbatch []TempBatch
+	json.Unmarshal([]byte(tempBatchArray), &tempbatch)
+
 	ReplenishmentRequestToUpdate.Generated = generated
 	ReplenishmentRequestToUpdate.GeneratedBy = generatedBy
 	ReplenishmentRequestToUpdate.DateGenerated = dateGenerated
@@ -3795,16 +3662,8 @@ func (t *SmartContract) updateReplenishmentRequest(stub shim.ChaincodeStubInterf
 	ReplenishmentRequestToUpdate.RItem.Description = description
 	ReplenishmentRequestToUpdate.RItem.RStatus = rstatus
 	ReplenishmentRequestToUpdate.RItem.RSecondStatus = rsecondStatus
-	ReplenishmentRequestToUpdate.RItem.BatchArray = append(ReplenishmentRequestToUpdate.RItem.BatchArray, Batch{
-		BatchNumber: batchNumber,
-		ExpiryDate:  expiryDate,
-		Quantity:    quantity,
-	})
-	ReplenishmentRequestToUpdate.RItem.TempBatchArray = append(ReplenishmentRequestToUpdate.RItem.TempBatchArray, TempBatch{
-		BatchNumber: tempbatchNumber,
-		ExpiryDate:  tempexpiryDate,
-		Quantity:    tempquantity,
-	})
+	ReplenishmentRequestToUpdate.RItem.BatchArray = append(ReplenishmentRequestToUpdate.RItem.BatchArray, batch...)
+	ReplenishmentRequestToUpdate.RItem.TempBatchArray = append(ReplenishmentRequestToUpdate.RItem.TempBatchArray, tempbatch...)
 	ReplenishmentRequestToUpdate.Status = status             //change the status
 	ReplenishmentRequestToUpdate.SecondStatus = secondStatus //change the status
 	ReplenishmentRequestToUpdate.RrB = rrB
@@ -3887,7 +3746,7 @@ func (t *SmartContract) updateFunctionalUnit(stub shim.ChaincodeStubInterface, a
 
 func (t *SmartContract) updateFuInventory(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	if len(args) < 14 {
+	if len(args) < 10 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
 
@@ -3899,13 +3758,10 @@ func (t *SmartContract) updateFuInventory(stub shim.ChaincodeStubInterface, args
 	minimumLevel := args[5]
 	createdAt := args[6]
 	updatedAt := args[7]
-	batchNumber := args[8]
-	expiryDate := args[9]
-	quantity := args[10]
-	tempbatchNumber := args[11]
-	tempexpiryDate := args[12]
-	tempquantity := args[13]
-	fmt.Println("- start  ", fuId, itemId, qty, maximumLevel, reorderLevel, minimumLevel, createdAt, updatedAt, batchNumber, expiryDate, quantity, tempbatchNumber, tempexpiryDate, tempquantity)
+	batchArray := args[8]
+	tempBatchArray := args[9]
+
+	fmt.Println("- start  ", fuId, itemId, qty, maximumLevel, reorderLevel, minimumLevel, createdAt, updatedAt, batchArray, tempBatchArray)
 
 	FunctionalUnitAsBytes, err := stub.GetState(fuId)
 	if err != nil {
@@ -3919,6 +3775,13 @@ func (t *SmartContract) updateFuInventory(stub shim.ChaincodeStubInterface, args
 	if err != nil {
 		return shim.Error(err.Error())
 	}
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
+
+	var tempbatch []TempBatch
+	json.Unmarshal([]byte(tempBatchArray), &tempbatch)
+
 	FunctionalUnitToUpdate.ItemId = itemId             //change the status
 	FunctionalUnitToUpdate.Qty = qty                   //change the status
 	FunctionalUnitToUpdate.MaximumLevel = maximumLevel //change the status
@@ -3926,16 +3789,8 @@ func (t *SmartContract) updateFuInventory(stub shim.ChaincodeStubInterface, args
 	FunctionalUnitToUpdate.MinimumLevel = minimumLevel //change the status
 	FunctionalUnitToUpdate.CreatedAt = createdAt       //change the status
 	FunctionalUnitToUpdate.UpdatedAt = updatedAt       //change the status
-	FunctionalUnitToUpdate.BatchArray = append(FunctionalUnitToUpdate.BatchArray, Batch{
-		BatchNumber: batchNumber,
-		ExpiryDate:  expiryDate,
-		Quantity:    quantity,
-	})
-	FunctionalUnitToUpdate.TempBatchArray = append(FunctionalUnitToUpdate.TempBatchArray, TempBatch{
-		BatchNumber: tempbatchNumber,
-		ExpiryDate:  tempexpiryDate,
-		Quantity:    tempquantity,
-	})
+	FunctionalUnitToUpdate.BatchArray = append(FunctionalUnitToUpdate.BatchArray, batch...)
+	FunctionalUnitToUpdate.TempBatchArray = append(FunctionalUnitToUpdate.TempBatchArray, tempbatch...)
 
 	FunctionalUnitJSONasBytes, _ := json.Marshal(FunctionalUnitToUpdate)
 	err = stub.PutState(fuId, FunctionalUnitJSONasBytes) //rewrite the marble
@@ -3953,7 +3808,7 @@ func (t *SmartContract) updateFuInventory(stub shim.ChaincodeStubInterface, args
 
 func (t *SmartContract) updateReceiveItem(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	if len(args) < 33 {
+	if len(args) < 29 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
 
@@ -3984,17 +3839,13 @@ func (t *SmartContract) updateReceiveItem(stub shim.ChaincodeStubInterface, args
 	createdAt := args[24]
 	updatedAt := args[25]
 	returnedQty := args[26]
-	batchNumberArr := args[27]
-	expiryDateArr := args[28]
-	quantity := args[29]
-	price := args[30]
-	qrCode := args[31]
-	unitPrice := args[32]
+	batchArray := args[27]
+	unitPrice := args[28]
 
 	fmt.Println("- start   ", itemId, prId, status, currentQty, requestedQty, receivedQty, bonusQty, batchNumber,
 		lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal,
 		discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, returnedQty,
-		batchNumberArr, expiryDateArr, quantity, price, qrCode, unitPrice)
+		batchArray, unitPrice)
 
 	ReceiveItemAsBytes, err := stub.GetState(itemId)
 	if err != nil {
@@ -4008,6 +3859,10 @@ func (t *SmartContract) updateReceiveItem(stub shim.ChaincodeStubInterface, args
 	if err != nil {
 		return shim.Error(err.Error())
 	}
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
+
 	ReceiveItemToUpdate.PrId = prId
 	ReceiveItemToUpdate.Status = status
 	ReceiveItemToUpdate.CurrentQty = currentQty
@@ -4034,13 +3889,7 @@ func (t *SmartContract) updateReceiveItem(stub shim.ChaincodeStubInterface, args
 	ReceiveItemToUpdate.CreatedAt = createdAt
 	ReceiveItemToUpdate.UpdatedAt = updatedAt
 	ReceiveItemToUpdate.ReturnedQty = returnedQty
-	ReceiveItemToUpdate.BatchArray = append(ReceiveItemToUpdate.BatchArray, Batch{
-		BatchNumber: batchNumberArr,
-		ExpiryDate:  expiryDateArr,
-		Quantity:    quantity,
-		Price:       price,
-		QrCode:      qrCode,
-	})
+	ReceiveItemToUpdate.BatchArray = append(ReceiveItemToUpdate.BatchArray, batch...)
 	ReceiveItemToUpdate.UnitPrice = unitPrice
 
 	ReceiveItemJSONasBytes, _ := json.Marshal(ReceiveItemToUpdate)
@@ -4060,7 +3909,7 @@ func (t *SmartContract) updateReceiveItem(stub shim.ChaincodeStubInterface, args
 
 func (t *SmartContract) updateReceiveItemFU(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	if len(args) < 29 {
+	if len(args) < 26 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
 
@@ -4089,15 +3938,12 @@ func (t *SmartContract) updateReceiveItemFU(stub shim.ChaincodeStubInterface, ar
 	createdAt := args[22]
 	updatedAt := args[23]
 	replenishmentRequestId := args[24]
-	batchNumberArr := args[25]
-	expiryDateArr := args[26]
-	quantity := args[27]
-	price := args[28]
+	batchArray := args[25]
 
 	fmt.Println("- start   ", itemId, currentQty, requestedQty, receivedQty, bonusQty, batchNumber,
 		lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal,
 		discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, replenishmentRequestId,
-		batchNumberArr, expiryDateArr, quantity, price)
+		batchArray)
 
 	ReceiveItemAsBytes, err := stub.GetState(itemId)
 	if err != nil {
@@ -4111,6 +3957,10 @@ func (t *SmartContract) updateReceiveItemFU(stub shim.ChaincodeStubInterface, ar
 	if err != nil {
 		return shim.Error(err.Error())
 	}
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
+
 	ReceiveItemToUpdate.CurrentQty = currentQty
 	ReceiveItemToUpdate.RequestedQty = requestedQty
 	ReceiveItemToUpdate.ReceivedQty = receivedQty
@@ -4135,12 +3985,7 @@ func (t *SmartContract) updateReceiveItemFU(stub shim.ChaincodeStubInterface, ar
 	ReceiveItemToUpdate.CreatedAt = createdAt
 	ReceiveItemToUpdate.UpdatedAt = updatedAt
 	ReceiveItemToUpdate.ReplenishmentRequestId = replenishmentRequestId
-	ReceiveItemToUpdate.BatchArray = append(ReceiveItemToUpdate.BatchArray, Batch{
-		BatchNumber: batchNumberArr,
-		ExpiryDate:  expiryDateArr,
-		Quantity:    quantity,
-		Price:       price,
-	})
+	ReceiveItemToUpdate.BatchArray = append(ReceiveItemToUpdate.BatchArray, batch...)
 	ReceiveItemJSONasBytes, _ := json.Marshal(ReceiveItemToUpdate)
 	err = stub.PutState(itemId, ReceiveItemJSONasBytes) //rewrite the marble
 	if err != nil {
@@ -4158,7 +4003,7 @@ func (t *SmartContract) updateReceiveItemFU(stub shim.ChaincodeStubInterface, ar
 
 func (t *SmartContract) updateReceiveItemBU(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	if len(args) < 31 {
+	if len(args) < 28 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
 
@@ -4189,15 +4034,12 @@ func (t *SmartContract) updateReceiveItemBU(stub shim.ChaincodeStubInterface, ar
 	replenishmentRequestId := args[24]
 	replenishmentRequestItemId := args[25]
 	qualityRate := args[26]
-	batchNumberArr := args[27]
-	expiryDateArr := args[28]
-	quantity := args[29]
-	price := args[30]
+	batchArray := args[27]
 
 	fmt.Println("- start   ", itemId, currentQty, requestedQty, receivedQty, bonusQty, batchNumber,
 		lotNumber, expiryDate, unit, discount, unitDiscount, discountAmount, tax, taxAmount, finalUnitPrice, subTotal,
 		discountAmount2, totalPrice, invoice, dateInvoice, dateReceived, notes, createdAt, updatedAt, replenishmentRequestId,
-		replenishmentRequestItemId, qualityRate, batchNumberArr, expiryDateArr, quantity, price)
+		replenishmentRequestItemId, qualityRate, batchArray)
 
 	ReceiveItemAsBytes, err := stub.GetState(itemId)
 	if err != nil {
@@ -4211,6 +4053,10 @@ func (t *SmartContract) updateReceiveItemBU(stub shim.ChaincodeStubInterface, ar
 	if err != nil {
 		return shim.Error(err.Error())
 	}
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
+
 	ReceiveItemToUpdate.CurrentQty = currentQty
 	ReceiveItemToUpdate.RequestedQty = requestedQty
 	ReceiveItemToUpdate.ReceivedQty = receivedQty
@@ -4237,12 +4083,7 @@ func (t *SmartContract) updateReceiveItemBU(stub shim.ChaincodeStubInterface, ar
 	ReceiveItemToUpdate.ReplenishmentRequestId = replenishmentRequestId
 	ReceiveItemToUpdate.ReplenishmentRequestItemId = replenishmentRequestItemId
 	ReceiveItemToUpdate.QualityRate = qualityRate
-	ReceiveItemToUpdate.BatchArray = append(ReceiveItemToUpdate.BatchArray, Batch{
-		BatchNumber: batchNumberArr,
-		ExpiryDate:  expiryDateArr,
-		Quantity:    quantity,
-		Price:       price,
-	})
+	ReceiveItemToUpdate.BatchArray = append(ReceiveItemToUpdate.BatchArray, batch...)
 	ReceiveItemJSONasBytes, _ := json.Marshal(ReceiveItemToUpdate)
 	err = stub.PutState(itemId, ReceiveItemJSONasBytes) //rewrite the marble
 	if err != nil {
@@ -4580,7 +4421,7 @@ func (t *SmartContract) updateItem(stub shim.ChaincodeStubInterface, args []stri
 
 func (t *SmartContract) updateInternalReturnRequestSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	if len(args) < 31 {
+	if len(args) < 27 {
 		return shim.Error("Incorrect number of arguments. Expecting 14")
 	}
 
@@ -4610,15 +4451,10 @@ func (t *SmartContract) updateInternalReturnRequestSchema(stub shim.ChaincodeStu
 	createdAt := args[23]
 	updatedAt := args[24]
 	batchNo := args[25]
-	batchNumber := args[26]
-	expiryDatePerBatch := args[27]
-	receivedQtyPerBatch := args[28]
-	returnedQtyPerBatch := args[29]
-	price := args[30]
+	returnBatchArray := args[26]
 	fmt.Println("- start  ", returnRequestNo, generatedBy, dateGenerated, expiryDate, to, from, currentQty, returnedQty,
 		itemId, description, fuId, reason, reasonDetail, buId, causedBy, totalDamageCost, date, itemCostPerUnit, status,
-		replenishmentRequestBU, replenishmentRequestFU, approvedBy, commentNote, createdAt, updatedAt, batchNo, batchNumber,
-		expiryDatePerBatch, receivedQtyPerBatch, returnedQtyPerBatch, price)
+		replenishmentRequestBU, replenishmentRequestFU, approvedBy, commentNote, createdAt, updatedAt, batchNo, returnBatchArray)
 
 	PurchaseOrderAsBytes, err := stub.GetState(returnRequestNo)
 	if err != nil {
@@ -4632,6 +4468,9 @@ func (t *SmartContract) updateInternalReturnRequestSchema(stub shim.ChaincodeStu
 	if err != nil {
 		return shim.Error(err.Error())
 	}
+
+	var batch []ReturnBatch
+	json.Unmarshal([]byte(returnBatchArray), &batch)
 
 	PurchaseOrderToUpdate.GeneratedBy = generatedBy     //change the status
 	PurchaseOrderToUpdate.DateGenerated = dateGenerated //change the status
@@ -4658,13 +4497,7 @@ func (t *SmartContract) updateInternalReturnRequestSchema(stub shim.ChaincodeStu
 	PurchaseOrderToUpdate.CreatedAt = createdAt
 	PurchaseOrderToUpdate.UpdatedAt = updatedAt
 	PurchaseOrderToUpdate.BatchNo = batchNo
-	PurchaseOrderToUpdate.ReturnBatchArray = append(PurchaseOrderToUpdate.ReturnBatchArray, ReturnBatch{
-		BatchNumber:         batchNumber,
-		ExpiryDatePerBatch:  expiryDatePerBatch,
-		ReceivedQtyPerBatch: receivedQtyPerBatch,
-		ReturnedQtyPerBatch: returnedQtyPerBatch,
-		Price:               price,
-	})
+	PurchaseOrderToUpdate.ReturnBatchArray = append(PurchaseOrderToUpdate.ReturnBatchArray, batch...)
 
 	PurchaseOrderJSONasBytes, _ := json.Marshal(PurchaseOrderToUpdate)
 	err = stub.PutState(returnRequestNo, PurchaseOrderJSONasBytes) //rewrite the marble
@@ -4683,7 +4516,7 @@ func (t *SmartContract) updateInternalReturnRequestSchema(stub shim.ChaincodeStu
 
 func (t *SmartContract) updateExternalReturnRequestSchema(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	if len(args) < 25 {
+	if len(args) < 22 {
 		return shim.Error("Incorrect number of arguments. Expecting 14")
 	}
 
@@ -4708,14 +4541,10 @@ func (t *SmartContract) updateExternalReturnRequestSchema(stub shim.ChaincodeStu
 	inProgressTime := args[18]
 	createdAt := args[19]
 	updatedAt := args[20]
-	batchNumber := args[21]
-	expiryDateArr := args[22]
-	quantity := args[23]
-	price := args[24]
+	batchArray := args[21]
 	fmt.Println("- start  ", returnRequestNo, generatedBy, generated, dateGenerated, expiryDate, returnedQty,
 		itemId, prId, description, reason, reasonDetail, causedBy, totalDamageCost, date, itemCostPerUnit, status,
-		approvedBy, commentNote, inProgressTime, createdAt, updatedAt, batchNumber,
-		expiryDateArr, quantity, price)
+		approvedBy, commentNote, inProgressTime, createdAt, updatedAt, batchArray)
 
 	PurchaseOrderAsBytes, err := stub.GetState(returnRequestNo)
 	if err != nil {
@@ -4729,6 +4558,9 @@ func (t *SmartContract) updateExternalReturnRequestSchema(stub shim.ChaincodeStu
 	if err != nil {
 		return shim.Error(err.Error())
 	}
+
+	var batch []Batch
+	json.Unmarshal([]byte(batchArray), &batch)
 
 	PurchaseOrderToUpdate.GeneratedBy = generatedBy     //change the status
 	PurchaseOrderToUpdate.Generated = generated         //change the status
@@ -4750,12 +4582,7 @@ func (t *SmartContract) updateExternalReturnRequestSchema(stub shim.ChaincodeStu
 	PurchaseOrderToUpdate.InProgressTime = inProgressTime
 	PurchaseOrderToUpdate.CreatedAt = createdAt
 	PurchaseOrderToUpdate.UpdatedAt = updatedAt
-	PurchaseOrderToUpdate.BatchArray = append(PurchaseOrderToUpdate.BatchArray, Batch{
-		BatchNumber: batchNumber,
-		ExpiryDate:  expiryDateArr,
-		Quantity:    quantity,
-		Price:       price,
-	})
+	PurchaseOrderToUpdate.BatchArray = append(PurchaseOrderToUpdate.BatchArray, batch...)
 
 	PurchaseOrderJSONasBytes, _ := json.Marshal(PurchaseOrderToUpdate)
 	err = stub.PutState(returnRequestNo, PurchaseOrderJSONasBytes) //rewrite the marble

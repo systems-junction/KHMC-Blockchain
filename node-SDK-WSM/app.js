@@ -44,6 +44,7 @@ app.listen(port, function () {
 //----------------------  POST API'S    -----------------------
 //-------------------------------------------------------------
 
+
 app.post('/api/addPurchaseOrder', async function (req, res) {
 
   var request = {
@@ -209,12 +210,8 @@ app.post('/api/addReplenishmentRequest', async function (req, res) {
       req.body.description,
       req.body.rstatus,
       req.body.rsecondStatus,
-      req.body.batchNumber,
-      req.body.expiryDate,
-      req.body.quantity,
-      req.body.tempbatchNumber,
-      req.body.tempexpiryDate,
-      req.body.tempquantity,
+      JSON.stringify(req.body.batchArray),
+      JSON.stringify(req.body.tempBatchArray),
       req.body.status,
       req.body.secondStatus,
       req.body.rrB,
@@ -255,16 +252,13 @@ app.post('/api/addFuInventory', async function (req, res) {
       req.body.minimumLevel,
       req.body.createdAt,
       req.body.updatedAt,
-      req.body.batchNumber,
-      req.body.expiryDate,
-      req.body.quantity,
-      req.body.tempbatchNumber,
-      req.body.tempexpiryDate,
-      req.body.tempquantity
+      JSON.stringify(req.body.batchArray),
+      JSON.stringify(req.body.tempBatchArray),
+
 
     ]
   };
-console.log(req.body);
+console.log(JSON.stringify(req.body.batchArray));
   let response = await invoke.invokeCreate(request);
   if (response) {
     if(response.status == 200)
@@ -288,14 +282,8 @@ app.post('/api/addWarehouseInventory', async function (req, res) {
       req.body.reorderLevel,
       req.body.createdAt,
       req.body.updatedAt,
-      req.body.batchNumber,
-      req.body.expiryDate,
-      req.body.quantity,
-      req.body.price,
-      req.body.tempbatchNumber,
-      req.body.tempexpiryDate,
-      req.body.tempquantity,
-      req.body.tempprice
+      JSON.stringify(req.body.batchArray),
+      JSON.stringify(req.body.tempBatchArray),
 
     ]
   };
@@ -343,11 +331,7 @@ app.post('/api/addReceiveItem', async function (req, res) {
       req.body.createdAt,
       req.body.updatedAt,
       req.body.returnedQty,
-      req.body.batchNumberArr,
-      req.body.expiryDateArr,
-      req.body.quantity,
-      req.body.price,
-      req.body.qrCode,
+      JSON.stringify(req.body.batchArray),
       req.body.unitPrice
 
     ]
@@ -394,11 +378,7 @@ app.post('/api/addReceiveItemFU', async function (req, res) {
       req.body.createdAt ,
       req.body.updatedAt ,
       req.body.replenishmentRequestId ,
-      req.body.batchNumberArr ,
-      req.body.expiryDateArr ,
-      req.body.quantity ,
-      req.body.price 
-
+      JSON.stringify(req.body.batchArray)
     ]
   };
 console.log(req.body);
@@ -445,11 +425,7 @@ app.post('/api/addReceiveItemBU', async function (req, res) {
       req.body.replenishmentRequestId ,
       req.body.replenishmentRequestItemId,
       req.body.qualityRate,
-      req.body.batchNumberArr ,
-      req.body.expiryDateArr ,
-      req.body.quantity ,
-      req.body.price 
-
+      JSON.stringify(req.body.batchArray)
     ]
   };
 console.log(req.body);
@@ -583,16 +559,13 @@ app.post('/api/addInternalReturnRequestSchema', async function (req, res) {
       req.body.createdAt ,
       req.body.updatedAt ,
       req.body.batchNo ,
-      req.body.batchNumber ,
-      req.body.expiryDatePerBatch ,
-      req.body.receivedQtyPerBatch ,
-      req.body.returnedQtyPerBatch ,
-      req.body.price
+      JSON.stringify(req.body.returnBatchArray)
 
 
     ]
   };
-console.log(req.body);
+console.log(JSON.stringify(req.body.returnBatchArray)
+);
   let response = await invoke.invokeCreate(request);
   if (response) {
     if(response.status == 200)
@@ -630,11 +603,7 @@ app.post('/api/addExternalReturnRequestSchema', async function (req, res) {
       req.body.inProgressTime ,
       req.body.createdAt ,
       req.body.updatedAt ,
-      req.body.batchNumber ,
-      req.body.expiryDateArr ,
-      req.body.quantity ,
-      req.body.price
-
+      JSON.stringify(req.body.batchArray)
 
     ]
   };
@@ -726,11 +695,7 @@ app.post('/api/updateReceiveItemFU', async function (req, res) {
       req.body.createdAt ,
       req.body.updatedAt ,
       req.body.replenishmentRequestId ,
-      req.body.batchNumberArr ,
-      req.body.expiryDateArr ,
-      req.body.quantity ,
-      req.body.price 
-
+      JSON.stringify(req.body.batchArray)
     ]
   };
 console.log(req.body);
@@ -777,10 +742,7 @@ app.post('/api/updateReceiveItemBU', async function (req, res) {
       req.body.replenishmentRequestId ,
       req.body.replenishmentRequestItemId,
       req.body.qualityRate,
-      req.body.batchNumberArr ,
-      req.body.expiryDateArr ,
-      req.body.quantity ,
-      req.body.price 
+      JSON.stringify(req.body.batchArray),
 
     ]
   };
@@ -873,11 +835,7 @@ app.post('/api/updateExternalReturnRequestSchema', async function (req, res) {
       req.body.inProgressTime ,
       req.body.createdAt ,
       req.body.updatedAt ,
-      req.body.batchNumber ,
-      req.body.expiryDateArr ,
-      req.body.quantity ,
-      req.body.price
-
+      JSON.stringify(req.body.batchArray)
 
     ]
   };
@@ -924,12 +882,7 @@ app.post('/api/updateInternalReturnRequestSchema', async function (req, res) {
       req.body.createdAt ,
       req.body.updatedAt ,
       req.body.batchNo ,
-      req.body.batchNumber ,
-      req.body.expiryDatePerBatch ,
-      req.body.receivedQtyPerBatch ,
-      req.body.returnedQtyPerBatch ,
-      req.body.price
-
+      JSON.stringify(req.body.returnBatchArray)
 
     ]
   };
@@ -1082,12 +1035,8 @@ app.post('/api/updateReplenishmentRequest', async function (req, res) {
       req.body.description,
       req.body.rstatus,
       req.body.rsecondStatus,
-      req.body.batchNumber,
-      req.body.expiryDate,
-      req.body.quantity,
-      req.body.tempbatchNumber,
-      req.body.tempexpiryDate,
-      req.body.tempquantity,
+      JSON.stringify(req.body.batchArray),
+      JSON.stringify(req.body.tempBatchArray),
       req.body.status,
       req.body.secondStatus,
       req.body.rrB,
@@ -1128,13 +1077,8 @@ app.post('/api/updateFuInventory', async function (req, res) {
       req.body.minimumLevel,
       req.body.createdAt,
       req.body.updatedAt,
-      req.body.batchNumber,
-      req.body.expiryDate,
-      req.body.quantity,
-      req.body.tempbatchNumber,
-      req.body.tempexpiryDate,
-      req.body.tempquantity
-
+      JSON.stringify(req.body.batchArray),
+      JSON.stringify(req.body.tempBatchArray)
     ]
   };
 console.log(req.body);
@@ -1161,14 +1105,8 @@ app.post('/api/updateWarehouseInventory', async function (req, res) {
       req.body.reorderLevel,
       req.body.createdAt,
       req.body.updatedAt,
-      req.body.batchNumber,
-      req.body.expiryDate,
-      req.body.quantity,
-      req.body.price,
-      req.body.tempbatchNumber,
-      req.body.tempexpiryDate,
-      req.body.tempquantity,
-      req.body.tempprice
+      JSON.stringify(req.body.batchArray),
+      JSON.stringify(req.body.tempBatchArray)
 
     ]
   };
@@ -1216,11 +1154,7 @@ app.post('/api/updateReceiveItem', async function (req, res) {
       req.body.createdAt,
       req.body.updatedAt,
       req.body.returnedQty,
-      req.body.batchNumberArr,
-      req.body.expiryDateArr,
-      req.body.quantity,
-      req.body.price,
-      req.body.qrCode,
+      JSON.stringify(req.body.batchArray),
       req.body.unitPrice
 
     ]
